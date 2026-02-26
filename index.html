@@ -1,0 +1,1550 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Shahar Zohar — Senior Full Stack & Mobile Developer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=JetBrains+Mono:wght@300;400;500;600&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg:#080c10;--bg2:#0d1117;--surface:#161b22;--surface2:#21262d;
+  --border:#30363d;--border2:#3d444e;--accent:#58e6a8;--adim:rgba(88,230,168,0.1);
+  --accent2:#a78bfa;--accent3:#f97316;--text:#e6edf3;--text2:#8b949e;--text3:#6e7681;
+}
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);line-height:1.6;overflow-x:hidden;min-height:100vh}
+::-webkit-scrollbar{width:4px}::-webkit-scrollbar-track{background:var(--bg)}::-webkit-scrollbar-thumb{background:var(--border2);border-radius:2px}::-webkit-scrollbar-thumb:hover{background:var(--accent)}
+
+/* NAV */
+#nav{position:fixed;top:0;left:0;right:0;z-index:1000;display:flex;align-items:center;justify-content:space-between;padding:0 2rem;height:56px;background:rgba(8,12,16,0.9);backdrop-filter:blur(20px);border-bottom:1px solid var(--border)}
+.nav-logo{font-family:'JetBrains Mono',monospace;font-size:.9rem;color:var(--accent);cursor:pointer;display:flex;align-items:center;gap:.5rem;letter-spacing:.04em}
+.nav-dot{width:7px;height:7px;background:var(--accent);border-radius:50%;animation:pulse 2s infinite}
+@keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.4;transform:scale(.7)}}
+.nav-links{display:flex;align-items:center;gap:.2rem}
+.nbtn{background:none;border:none;color:var(--text2);cursor:pointer;font-family:'Inter',sans-serif;font-size:.84rem;padding:.38rem .9rem;border-radius:6px;transition:all .15s;letter-spacing:.01em}
+.nbtn:hover,.nbtn.active{color:var(--text);background:var(--surface)}
+.nbtn.active{color:var(--accent)}
+.next-link{display:flex;align-items:center;gap:.4rem;padding:.32rem .9rem;border:1px solid var(--border);border-radius:6px;color:var(--text2);text-decoration:none;font-size:.78rem;font-family:'JetBrains Mono',monospace;transition:all .15s;margin-left:.4rem}
+.next-link:hover{border-color:var(--accent);color:var(--accent)}
+
+/* PAGES */
+.page{display:none;min-height:100vh;padding-top:56px}
+.page.active{display:block}
+.pi{max-width:1200px;margin:0 auto;padding:3rem 2rem}
+@keyframes fi{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
+.fi{animation:fi .35s ease forwards}
+
+/* GRID BG */
+.gbg{position:fixed;inset:0;pointer-events:none;z-index:0;background-image:linear-gradient(rgba(88,230,168,.022) 1px,transparent 1px),linear-gradient(90deg,rgba(88,230,168,.022) 1px,transparent 1px);background-size:44px 44px}
+
+/* HERO */
+#page-home .hero{min-height:calc(100vh - 56px);display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:center;max-width:1200px;margin:0 auto;padding:3rem 2rem;position:relative}
+.hero-orb{position:absolute;width:480px;height:480px;border-radius:50%;background:radial-gradient(circle,rgba(88,230,168,.05) 0%,transparent 65%);right:-80px;top:50%;transform:translateY(-50%);pointer-events:none}
+.avail{display:inline-flex;align-items:center;gap:.5rem;background:rgba(88,230,168,.08);border:1px solid rgba(88,230,168,.22);padding:.3rem .85rem;border-radius:20px;font-size:.72rem;font-family:'JetBrains Mono',monospace;color:var(--accent);letter-spacing:.1em;text-transform:uppercase;margin-bottom:1.5rem}
+.avail-dot{width:6px;height:6px;background:var(--accent);border-radius:50%;animation:pulse 1.5s infinite}
+h1.hname{font-family:'Syne',sans-serif;font-size:clamp(2.8rem,5vw,5rem);font-weight:800;line-height:1;letter-spacing:-.03em;margin-bottom:.5rem}
+.htitle{font-family:'Syne',sans-serif;font-size:clamp(1rem,2vw,1.4rem);font-weight:400;color:var(--text2);margin-bottom:1.5rem;letter-spacing:-.01em}
+.htitle span{color:var(--accent)}
+.hbio{color:var(--text2);font-size:.95rem;line-height:1.85;max-width:500px;margin-bottom:2rem;font-weight:300}
+.hctas{display:flex;gap:.75rem;flex-wrap:wrap;margin-bottom:2.5rem}
+.btn{display:inline-flex;align-items:center;gap:.45rem;padding:.68rem 1.4rem;border-radius:8px;font-size:.875rem;font-weight:500;cursor:pointer;transition:all .15s;text-decoration:none;border:none;font-family:'Inter',sans-serif}
+.btn-p{background:var(--accent);color:#080c10;font-weight:700}
+.btn-p:hover{background:#6ef0b9;transform:translateY(-1px)}
+.btn-g{background:var(--surface);color:var(--text);border:1px solid var(--border)}
+.btn-g:hover{border-color:var(--border2);background:var(--surface2)}
+.hstats{display:flex;gap:2rem}
+.hsn{font-family:'Syne',sans-serif;font-size:1.8rem;font-weight:800;color:var(--accent);display:block;line-height:1}
+.hsl{font-size:.72rem;color:var(--text3);text-transform:uppercase;letter-spacing:.1em}
+
+/* TERMINAL */
+.terminal{background:var(--surface);border:1px solid var(--border);border-radius:12px;overflow:hidden;position:relative;z-index:1;box-shadow:0 24px 60px rgba(0,0,0,.55)}
+.tbar{display:flex;align-items:center;gap:.45rem;padding:.72rem 1rem;background:var(--surface2);border-bottom:1px solid var(--border)}
+.tdot{width:12px;height:12px;border-radius:50%}
+.td-r{background:#ff5f57}.td-y{background:#ffbd2e}.td-g{background:#28ca41}
+.ttitle{font-family:'JetBrains Mono',monospace;font-size:.72rem;color:var(--text3);margin:0 auto}
+.tbody{padding:1.25rem 1.5rem;font-family:'JetBrains Mono',monospace;font-size:.78rem;line-height:2}
+.t-prompt{color:var(--accent)}.t-cmd{color:var(--text)}.t-out{color:var(--text2)}
+.t-k{color:#ff79c6}.t-v{color:var(--accent3)}.t-s{color:var(--accent)}.t-c{color:#3d444e}
+.tcur{display:inline-block;width:8px;height:14px;background:var(--accent);vertical-align:middle;animation:blink 1s step-end infinite}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:0}}
+
+/* SECTION HEADER */
+.sh{margin-bottom:2.5rem}
+.sey{font-family:'JetBrains Mono',monospace;font-size:.7rem;color:var(--accent);letter-spacing:.15em;text-transform:uppercase;margin-bottom:.4rem;display:flex;align-items:center;gap:.4rem}
+.sey::before{content:'//';opacity:.45}
+h2.st{font-family:'Syne',sans-serif;font-size:clamp(1.7rem,3vw,2.4rem);font-weight:800;letter-spacing:-.025em}
+.sdesc{color:var(--text2);font-size:.9rem;margin-top:.4rem;font-weight:300;max-width:600px}
+
+/* HOME SECTIONS */
+.hs{padding:2rem 2rem 4rem;max-width:1200px;margin:0 auto}
+.hs-top{display:flex;align-items:flex-end;justify-content:space-between;margin-bottom:1.75rem}
+.va-btn{font-family:'JetBrains Mono',monospace;font-size:.72rem;color:var(--text2);background:none;border:1px solid var(--border);border-radius:6px;padding:.3rem .75rem;cursor:pointer;transition:all .15s;letter-spacing:.05em;text-transform:uppercase}
+.va-btn:hover{border-color:var(--accent);color:var(--accent)}
+
+/* ARTICLE CARDS */
+.afc{background:var(--surface);border:1px solid var(--border);border-radius:10px;display:grid;grid-template-columns:1fr 1fr;margin-bottom:1.5rem;overflow:hidden;cursor:pointer;transition:border-color .2s,box-shadow .2s}
+.afc:hover{border-color:rgba(88,230,168,.3);box-shadow:0 8px 40px rgba(0,0,0,.4)}
+.afc-vis{background:linear-gradient(135deg,#0d1117,#161b22);display:flex;align-items:center;justify-content:center;min-height:220px;overflow:hidden}
+.afc-vis pre{font-family:'JetBrains Mono',monospace;font-size:.7rem;color:rgba(88,230,168,.3);line-height:1.9;padding:1.5rem}
+.afc-body{padding:1.75rem;display:flex;flex-direction:column;justify-content:center}
+.afc-badge{display:inline-flex;align-items:center;gap:.4rem;background:rgba(88,230,168,.08);border:1px solid rgba(88,230,168,.2);color:var(--accent);font-size:.68rem;font-family:'JetBrains Mono',monospace;padding:.18rem .55rem;border-radius:4px;letter-spacing:.08em;margin-bottom:.7rem;width:fit-content}
+.afc-title{font-family:'Syne',sans-serif;font-size:1.25rem;font-weight:800;letter-spacing:-.02em;margin-bottom:.6rem;line-height:1.25}
+.afc-excerpt{font-size:.84rem;color:var(--text2);line-height:1.7;font-weight:300;margin-bottom:.9rem}
+.afc-read{font-family:'JetBrains Mono',monospace;font-size:.72rem;color:var(--accent);display:flex;align-items:center;gap:.35rem}
+
+/* MINI CARDS */
+.mini-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:1rem}
+.mc{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:1.25rem;cursor:pointer;transition:border-color .2s,transform .2s}
+.mc:hover{border-color:rgba(167,139,250,.4);transform:translateY(-2px)}
+
+/* TAGS */
+.tags{display:flex;gap:.35rem;flex-wrap:wrap;margin-bottom:.5rem}
+.tag{font-family:'JetBrains Mono',monospace;font-size:.66rem;padding:.14rem .48rem;border-radius:4px;letter-spacing:.04em;background:var(--surface2);color:var(--text2);border:1px solid var(--border)}
+.tag.android{background:rgba(88,230,168,.07);color:var(--accent);border-color:rgba(88,230,168,.2)}
+.tag.testing{background:rgba(167,139,250,.07);color:var(--accent2);border-color:rgba(167,139,250,.2)}
+.tag.networks{background:rgba(249,115,22,.07);color:var(--accent3);border-color:rgba(249,115,22,.2)}
+.tag.cicd{background:rgba(56,189,248,.07);color:#38bdf8;border-color:rgba(56,189,248,.2)}
+.tag.kotlin{background:rgba(167,139,250,.07);color:var(--accent2);border-color:rgba(167,139,250,.2)}
+
+/* BLOG LIST */
+.filter-bar{display:flex;gap:.45rem;flex-wrap:wrap;align-items:center;margin-bottom:2rem}
+.ft{font-family:'JetBrains Mono',monospace;font-size:.7rem;padding:.32rem .85rem;border:1px solid var(--border);border-radius:20px;cursor:pointer;color:var(--text2);background:var(--surface);transition:all .15s;letter-spacing:.04em}
+.ft.on,.ft:hover{background:var(--adim);border-color:var(--accent);color:var(--accent)}
+.sbox{background:var(--surface);border:1px solid var(--border);color:var(--text);padding:.44rem 1rem;border-radius:8px;font-size:.84rem;font-family:'Inter',sans-serif;width:240px;outline:none;transition:border-color .15s;margin-left:auto}
+.sbox:focus{border-color:var(--accent)}.sbox::placeholder{color:var(--text3)}
+.al{display:flex;flex-direction:column}
+.ar{display:grid;grid-template-columns:90px 1fr 24px;gap:1.5rem;align-items:start;padding:1.4rem 0;border-bottom:1px solid var(--border);cursor:pointer;transition:background .15s;border-radius:0}
+.ar:hover{background:var(--surface);margin:0 -1rem;padding:1.4rem 1rem;border-radius:8px;border-color:transparent}
+.ar:last-child{border-bottom:none}
+.ar-date{font-family:'JetBrains Mono',monospace;font-size:.68rem;color:var(--text3);line-height:1.5;padding-top:.15rem}
+.ar-title{font-family:'Syne',sans-serif;font-size:1.05rem;font-weight:700;color:var(--text);letter-spacing:-.01em;margin-bottom:.35rem;line-height:1.3}
+.ar-excerpt{font-size:.82rem;color:var(--text2);font-weight:300;line-height:1.6;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.ar-arrow{color:var(--text3);font-size:1.1rem;padding-top:.2rem;transition:transform .15s,color .15s}
+.ar:hover .ar-arrow{transform:translateX(4px);color:var(--accent)}
+
+/* ARTICLE READER */
+#page-article{background:var(--bg)}
+.art-nav{display:flex;align-items:center;gap:1rem;padding:1.25rem 2rem;max-width:860px;margin:0 auto}
+.back-btn{display:flex;align-items:center;gap:.5rem;background:none;border:none;color:var(--text2);cursor:pointer;font-size:.84rem;font-family:'Inter',sans-serif;transition:color .15s;padding:0}
+.back-btn:hover{color:var(--accent)}
+.aprogress{position:fixed;top:56px;left:0;right:0;height:2px;background:var(--border);z-index:999}
+.aprogress-fill{height:100%;background:var(--accent);width:0%;transition:width .1s linear}
+.art-wrap{max-width:720px;margin:0 auto;padding:0 2rem 5rem}
+.art-hd{margin-bottom:2rem;padding-top:.5rem}
+.art-hd h1{font-family:'Syne',sans-serif;font-size:clamp(1.8rem,4vw,2.8rem);font-weight:800;letter-spacing:-.025em;line-height:1.1;margin:1rem 0}
+.art-meta{display:flex;align-items:center;gap:1.5rem;padding:1rem 0;border-top:1px solid var(--border);border-bottom:1px solid var(--border);margin-bottom:2.5rem;font-size:.76rem;font-family:'JetBrains Mono',monospace;color:var(--text3)}
+.art-meta a{color:var(--text2);text-decoration:none;transition:color .15s}.art-meta a:hover{color:var(--accent)}
+.art-body{font-size:.975rem;line-height:1.85;color:var(--text2);font-weight:300}
+.art-body h2{font-family:'Syne',sans-serif;font-size:1.45rem;font-weight:800;color:var(--text);margin:2.5rem 0 .9rem;letter-spacing:-.02em}
+.art-body h3{font-family:'Syne',sans-serif;font-size:1.1rem;font-weight:700;color:var(--text);margin:1.8rem 0 .6rem}
+.art-body p{margin-bottom:1.2rem}
+.art-body strong{color:var(--text);font-weight:600}
+.art-body ul,.art-body ol{margin:1rem 0 1.2rem 1.5rem}
+.art-body li{margin-bottom:.45rem}
+.art-body pre{background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:1.25rem 1.5rem;overflow-x:auto;margin:1.5rem 0;font-size:.78rem;line-height:1.75;font-family:'JetBrains Mono',monospace;color:var(--text2)}
+.art-body code{font-family:'JetBrains Mono',monospace;color:var(--accent);background:rgba(88,230,168,.07);padding:.08rem .36rem;border-radius:3px;font-size:.88em}
+.art-body pre code{background:none;padding:0;color:inherit;font-size:inherit}
+.art-body blockquote{border-left:3px solid var(--accent);padding-left:1.25rem;margin:1.5rem 0;color:var(--text2);font-style:italic}
+.art-body a{color:var(--accent);text-decoration:none}.art-body a:hover{text-decoration:underline}
+.art-body hr{border:none;border-top:1px solid var(--border);margin:2rem 0}
+.related{margin-top:3.5rem;padding-top:2rem;border-top:1px solid var(--border)}
+.related h3{font-family:'Syne',sans-serif;font-size:1.1rem;font-weight:800;margin-bottom:1.25rem}
+.rel-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:.75rem}
+.rel-card{background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:.9rem;cursor:pointer;transition:all .15s}
+.rel-card:hover{border-color:rgba(88,230,168,.3);transform:translateY(-2px)}
+.rel-title{font-size:.84rem;font-weight:600;font-family:'Syne',sans-serif;color:var(--text);margin-bottom:.2rem;line-height:1.3}
+.rel-date{font-family:'JetBrains Mono',monospace;font-size:.65rem;color:var(--text3)}
+
+/* PROJECTS */
+.pgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(310px,1fr));gap:1rem}
+.pc{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:1.4rem;transition:all .2s;display:flex;flex-direction:column;cursor:pointer}
+.pc:hover{border-color:rgba(167,139,250,.4);transform:translateY(-3px);box-shadow:0 12px 40px rgba(0,0,0,.4)}
+.pc-top{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:.8rem}
+.pc-icon{width:38px;height:38px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:1.15rem;background:var(--surface2);border:1px solid var(--border)}
+.pc-links{display:flex;gap:.35rem}
+.pc-lb{background:var(--surface2);border:1px solid var(--border);border-radius:5px;color:var(--text2);text-decoration:none;font-family:'JetBrains Mono',monospace;font-size:.68rem;padding:.26rem .55rem;transition:all .15s}
+.pc-lb:hover{border-color:var(--accent2);color:var(--accent2)}
+.pc-name{font-family:'Syne',sans-serif;font-size:1.05rem;font-weight:700;margin-bottom:.4rem}
+.pc-desc{font-size:.83rem;color:var(--text2);line-height:1.65;font-weight:300;flex:1;margin-bottom:.9rem}
+.pc-foot{display:flex;align-items:center;gap:1rem;padding-top:.7rem;border-top:1px solid var(--border);font-family:'JetBrains Mono',monospace;font-size:.72rem;color:var(--text3)}
+.ld{width:10px;height:10px;border-radius:50%;flex-shrink:0}
+.lk{background:#a97bff}.lj{background:#b07219}.lh{background:#e34c26}
+
+/* ABOUT */
+.about-grid{display:grid;grid-template-columns:280px 1fr;gap:3.5rem;align-items:start}
+.av-wrap{position:relative;width:280px}
+.av{width:100%;aspect-ratio:1;border-radius:14px;background:linear-gradient(135deg,var(--surface),var(--surface2));border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:5rem;position:relative;overflow:hidden}
+.av-ring{position:absolute;inset:-7px;border-radius:20px;border:1px solid rgba(88,230,168,.14);pointer-events:none}
+.av-ring2{position:absolute;inset:-16px;border-radius:26px;border:1px solid rgba(88,230,168,.06);pointer-events:none}
+.av-name{font-family:'Syne',sans-serif;font-size:1.5rem;font-weight:800;margin:1rem 0 .2rem}
+.av-role{color:var(--text2);font-size:.88rem;margin-bottom:1.25rem}
+.al-link{display:flex;align-items:center;gap:.65rem;padding:.55rem .9rem;background:var(--surface2);border:1px solid var(--border);border-radius:8px;color:var(--text2);text-decoration:none;font-size:.83rem;transition:all .15s;margin-bottom:.45rem}
+.al-link:hover{border-color:var(--accent);color:var(--accent)}
+.ar-right p{color:var(--text2);font-size:.95rem;line-height:1.85;margin-bottom:1.2rem;font-weight:300}
+.ar-right p strong{color:var(--text);font-weight:600}
+.sk-wrap{margin-top:1.75rem}
+.sk-wrap h3{font-family:'Syne',sans-serif;font-size:1rem;font-weight:700;margin-bottom:1rem}
+.sk-item{margin-bottom:.9rem}
+.sk-row{display:flex;justify-content:space-between;align-items:center;margin-bottom:.32rem}
+.sk-name{font-family:'JetBrains Mono',monospace;font-size:.77rem;color:var(--text)}
+.sk-pct{font-family:'JetBrains Mono',monospace;font-size:.72rem;color:var(--text3)}
+.sk-bg{height:2px;background:var(--border);border-radius:2px;overflow:hidden}
+.sk-fill{height:100%;background:linear-gradient(90deg,var(--accent),var(--accent2));border-radius:2px}
+.exp-tl{margin-top:2rem}
+.exp-tl h3{font-family:'Syne',sans-serif;font-size:1rem;font-weight:700;margin-bottom:1.25rem}
+.exp-item{display:flex;gap:.9rem;margin-bottom:1.4rem}
+.exp-dot-col{display:flex;flex-direction:column;align-items:center}
+.exp-dot{width:9px;height:9px;border-radius:50%;background:var(--accent);flex-shrink:0;margin-top:4px}
+.exp-line{width:1px;background:var(--border);flex:1;margin-top:5px}
+.exp-role{font-family:'Syne',sans-serif;font-size:.9rem;font-weight:700;color:var(--text)}
+.exp-co{font-size:.82rem;color:var(--accent);margin-bottom:.1rem}
+.exp-period{font-family:'JetBrains Mono',monospace;font-size:.68rem;color:var(--text3);margin-bottom:.35rem}
+.exp-desc{font-size:.8rem;color:var(--text2);line-height:1.6;font-weight:300}
+
+/* FOOTER */
+footer{border-top:1px solid var(--border);padding:1.75rem 2rem;display:flex;align-items:center;justify-content:space-between;max-width:1200px;margin:0 auto;font-size:.78rem;color:var(--text3)}
+.fl{font-family:'JetBrains Mono',monospace;color:var(--accent)}
+
+@media(max-width:900px){
+  #page-home .hero{grid-template-columns:1fr}.terminal{display:none}
+  .about-grid{grid-template-columns:1fr}.av-wrap{width:100%;max-width:280px}
+  .afc{grid-template-columns:1fr}.afc-vis{min-height:120px}
+  .nav-links .nbtn{display:none}.nav-links .nbtn.active{display:block}
+}
+@media(max-width:600px){
+  .pi,.hs,.art-wrap{padding-left:1rem;padding-right:1rem}
+  .hstats{gap:1.5rem}.ar{grid-template-columns:1fr;gap:.4rem}
+  footer{flex-direction:column;gap:.5rem;text-align:center}
+}
+</style>
+</head>
+<body>
+<div class="gbg"></div>
+<!-- NAV -->
+<nav id="nav">
+  <div class="nav-logo" onclick="showPage('home')"><span class="nav-dot"></span>sz.dev</div>
+  <div class="nav-links">
+    <button class="nbtn active" id="nb-home" onclick="showPage('home')">Home</button>
+    <button class="nbtn" id="nb-blog" onclick="showPage('blog')">Articles</button>
+    <button class="nbtn" id="nb-projects" onclick="showPage('projects')">Projects</button>
+    <button class="nbtn" id="nb-about" onclick="showPage('about')">About</button>
+    <a class="next-link" href="https://github.com/ShaharZohar" target="_blank">GitHub ↗</a>
+    <a class="next-link" href="https://www.linkedin.com/in/shahar-zohar-b8096649/" target="_blank">LinkedIn ↗</a>
+  </div>
+</nav>
+
+<!-- ========== HOME PAGE ========== -->
+<div class="page active" id="page-home">
+  <div class="hero fi">
+    <div class="hero-orb"></div>
+    <div style="position:relative;z-index:1">
+      <div class="avail"><span class="avail-dot"></span>Senior Full Stack Developer · ServiceNow</div>
+      <h1 class="hname">Shahar<br>Zohar.</h1>
+      <p class="htitle"><span>Full Stack</span> &amp; <span>Android Native</span> · 11 Years</p>
+      <p class="hbio">Senior developer at ServiceNow specializing in mobile native (Java &amp; Kotlin), Java backend services, and SDK development. 11 years delivering enterprise-scale solutions with AI-assisted workflows (Claude · Windsurf · Gemini) and comprehensive test automation.</p>
+      <div class="hctas">
+        <button class="btn btn-p" onclick="showPage('blog')">Read Articles</button>
+        <button class="btn btn-g" onclick="showPage('projects')">View Projects</button>
+        <a class="btn btn-g" href="mailto:codeninjaa@gmail.com" onclick="if(!window.open('mailto:codeninjaa@gmail.com')){navigator.clipboard&&navigator.clipboard.writeText('codeninjaa@gmail.com');alert('Email copied: codeninjaa@gmail.com')}" target="_blank">Contact Me ✉</a>
+      </div>
+      <div class="hstats">
+        <div><span class="hsn">11</span><span class="hsl">Yrs Exp</span></div>
+        <div><span class="hsn">4</span><span class="hsl">Companies</span></div>
+        <div><span class="hsn">18+</span><span class="hsl">Articles</span></div>
+      </div>
+      <div style="margin-top:2rem;display:flex;flex-wrap:wrap;gap:.4rem">
+        <span style="font-family:'JetBrains Mono',monospace;font-size:.66rem;padding:.2rem .6rem;border-radius:4px;background:rgba(88,230,168,.07);color:var(--accent);border:1px solid rgba(88,230,168,.2)">Kotlin</span>
+        <span style="font-family:'JetBrains Mono',monospace;font-size:.66rem;padding:.2rem .6rem;border-radius:4px;background:rgba(88,230,168,.07);color:var(--accent);border:1px solid rgba(88,230,168,.2)">Java</span>
+        <span style="font-family:'JetBrains Mono',monospace;font-size:.66rem;padding:.2rem .6rem;border-radius:4px;background:rgba(167,139,250,.07);color:var(--accent2);border:1px solid rgba(167,139,250,.2)">Android Native</span>
+        <span style="font-family:'JetBrains Mono',monospace;font-size:.66rem;padding:.2rem .6rem;border-radius:4px;background:rgba(167,139,250,.07);color:var(--accent2);border:1px solid rgba(167,139,250,.2)">RxJava</span>
+        <span style="font-family:'JetBrains Mono',monospace;font-size:.66rem;padding:.2rem .6rem;border-radius:4px;background:rgba(249,115,22,.07);color:var(--accent3);border:1px solid rgba(249,115,22,.2)">XMPP</span>
+        <span style="font-family:'JetBrains Mono',monospace;font-size:.66rem;padding:.2rem .6rem;border-radius:4px;background:rgba(249,115,22,.07);color:var(--accent3);border:1px solid rgba(249,115,22,.2)">WebRTC</span>
+        <span style="font-family:'JetBrains Mono',monospace;font-size:.66rem;padding:.2rem .6rem;border-radius:4px;background:rgba(56,189,248,.07);color:#38bdf8;border:1px solid rgba(56,189,248,.2)">Jenkins</span>
+        <span style="font-family:'JetBrains Mono',monospace;font-size:.66rem;padding:.2rem .6rem;border-radius:4px;background:rgba(56,189,248,.07);color:#38bdf8;border:1px solid rgba(56,189,248,.2)">SonarQube</span>
+        <span style="font-family:'JetBrains Mono',monospace;font-size:.66rem;padding:.2rem .6rem;border-radius:4px;background:rgba(56,189,248,.07);color:#38bdf8;border:1px solid rgba(56,189,248,.2)">Appium</span>
+        <span style="font-family:'JetBrains Mono',monospace;font-size:.66rem;padding:.2rem .6rem;border-radius:4px;background:rgba(88,230,168,.07);color:var(--accent);border:1px solid rgba(88,230,168,.2)">MVVM</span>
+        <span style="font-family:'JetBrains Mono',monospace;font-size:.66rem;padding:.2rem .6rem;border-radius:4px;background:rgba(88,230,168,.07);color:var(--accent);border:1px solid rgba(88,230,168,.2)">REST APIs</span>
+        <span style="font-family:'JetBrains Mono',monospace;font-size:.66rem;padding:.2rem .6rem;border-radius:4px;background:rgba(167,139,250,.07);color:var(--accent2);border:1px solid rgba(167,139,250,.2)">Claude · Windsurf</span>
+      </div>
+    </div>
+    <div class="terminal">
+      <div class="tbar">
+        <span class="tdot td-r"></span><span class="tdot td-y"></span><span class="tdot td-g"></span>
+        <span class="ttitle">shahar@servicenow ~ whoami.kt</span>
+      </div>
+      <div class="tbody">
+<span class="t-c">// ServiceNow · Kiryat Ono, Israel 🇮🇱</span>
+<span class="t-k">val</span> <span class="t-cmd">shahar</span> = <span class="t-v">Engineer</span>(
+  <span class="t-cmd">company</span>  = <span class="t-s">"ServiceNow"</span>,
+  <span class="t-cmd">role</span>     = <span class="t-s">"Senior Full Stack Dev"</span>,
+  <span class="t-cmd">since</span>    = <span class="t-v">2019</span>,
+  <span class="t-cmd">mobile</span>   = <span class="t-s">listOf("Kotlin","Java","RxJava","XMPP")</span>,
+  <span class="t-cmd">backend</span>  = <span class="t-s">listOf("Java","REST","SQL","Jenkins")</span>,
+  <span class="t-cmd">quality</span>  = <span class="t-s">listOf("JUnit","Appium","SonarQube")</span>,
+  <span class="t-cmd">ai</span>       = <span class="t-s">listOf("Claude","Windsurf","Gemini")</span>,
+  <span class="t-cmd">exp</span>      = <span class="t-v">11</span>  <span class="t-c">// years</span>
+)
+<span class="t-c">// 🧊 Arctic Code Vault Contributor</span>
+<span class="t-c">// ✉ codeninjaa@gmail.com</span>
+shahar.<span class="t-v">ship</span>()<span class="tcur"></span>
+      </div>
+    </div>
+  </div>
+
+  <div class="hs">
+    <div class="hs-top">
+      <div class="sh" style="margin-bottom:0">
+        <div class="sey">Latest Writing</div>
+        <h2 class="st">Featured Articles</h2>
+      </div>
+      <button class="va-btn" onclick="showPage('blog')">View all →</button>
+    </div>
+    <!-- Company context strip -->
+    <div style="display:flex;gap:.65rem;flex-wrap:wrap;margin-top:1.25rem;margin-bottom:1rem;align-items:center">
+      <span style="font-family:'JetBrains Mono',monospace;font-size:.68rem;color:var(--text3)">Currently writing about:</span>
+      <span style="font-family:'JetBrains Mono',monospace;font-size:.68rem;padding:.18rem .55rem;border-radius:4px;background:rgba(56,189,248,.07);color:#38bdf8;border:1px solid rgba(56,189,248,.2)">CI/CD · Jenkins</span>
+      <span style="font-family:'JetBrains Mono',monospace;font-size:.68rem;padding:.18rem .55rem;border-radius:4px;background:rgba(167,139,250,.07);color:var(--accent2);border:1px solid rgba(167,139,250,.2)">Android Testing</span>
+      <span style="font-family:'JetBrains Mono',monospace;font-size:.68rem;padding:.18rem .55rem;border-radius:4px;background:rgba(249,115,22,.07);color:var(--accent3);border:1px solid rgba(249,115,22,.2)">Mesh Networks</span>
+      <span style="font-family:'JetBrains Mono',monospace;font-size:.68rem;padding:.18rem .55rem;border-radius:4px;background:rgba(88,230,168,.07);color:var(--accent);border:1px solid rgba(88,230,168,.2)">Kotlin</span>
+    </div>
+    <!-- Featured card -->
+    <div class="afc" onclick="openArticle('mesh-networks')" style="margin-top:1.5rem">
+      <div class="afc-vis">
+<pre>// Mesh Network · BLE Advertising
+val advertiser = BluetoothAdapter
+  .getDefaultAdapter()
+  .bluetoothLeAdvertiser
+
+advertiser.startAdvertising(
+  settings, // LOW_LATENCY
+  meshData, // ServiceUUID + payload
+  callback  // track peers 📡
+)
+// FireChat: 4M downloads
+// No internet required ✓</pre>
+      </div>
+      <div class="afc-body">
+        <span class="afc-badge">✦ Featured · Case Study</span>
+        <div class="tags" style="margin-bottom:.7rem"><span class="tag networks">Networks</span><span class="tag">Case Study</span></div>
+        <div class="afc-title">Mesh Networks: Evolution and Activism Case Study</div>
+        <p class="afc-excerpt">From DARPA's 1960s packet radio networks to FireChat enabling protest communication during internet blackouts — how mesh networking evolved and what it means for mobile developers.</p>
+        <span class="afc-read">Read Article →</span>
+      </div>
+    </div>
+    <!-- Mini cards -->
+    <div class="mini-grid" style="margin-top:1rem">
+      <div class="mc" onclick="openArticle('rxjava')">
+        <div class="tags"><span class="tag kotlin">Kotlin</span><span class="tag android">Android</span></div>
+        <div style="font-family:'Syne',sans-serif;font-size:.98rem;font-weight:700;margin-bottom:.35rem;line-height:1.3;margin-top:.35rem">Fundamentals of RxJava with Kotlin</div>
+        <div style="font-size:.8rem;color:var(--text2);font-weight:300;line-height:1.55;margin-bottom:.65rem">Complete guide to Reactive Programming — Observables, operators, Flowable, Single, Completable with Kotlin examples.</div>
+        <div style="font-family:'JetBrains Mono',monospace;font-size:.65rem;color:var(--text3)">Dec 10, 2024</div>
+      </div>
+      <div class="mc" onclick="openArticle('cicd-android')">
+        <div class="tags"><span class="tag cicd">CI/CD</span><span class="tag android">Android</span></div>
+        <div style="font-family:'Syne',sans-serif;font-size:.98rem;font-weight:700;margin-bottom:.35rem;line-height:1.3;margin-top:.35rem">Integrating CI/CD Pipelines with Android Unit Testing</div>
+        <div style="font-size:.8rem;color:var(--text2);font-weight:300;line-height:1.55;margin-bottom:.65rem">Automated test pipelines for Android — early bug detection, consistent quality, streamlined releases with GitHub Actions.</div>
+        <div style="font-family:'JetBrains Mono',monospace;font-size:.65rem;color:var(--text3)">Mar 24, 2025</div>
+      </div>
+      <div class="mc" onclick="openArticle('xmpp')">
+        <div class="tags"><span class="tag networks">Networks</span><span class="tag android">Android</span></div>
+        <div style="font-family:'Syne',sans-serif;font-size:.98rem;font-weight:700;margin-bottom:.35rem;line-height:1.3;margin-top:.35rem">XMPP: Real-Time Mobile Communication</div>
+        <div style="font-size:.8rem;color:var(--text2);font-weight:300;line-height:1.55;margin-bottom:.65rem">How XMPP powers decentralized real-time messaging — from stanzas to Smack library integration in Android.</div>
+        <div style="font-family:'JetBrains Mono',monospace;font-size:.65rem;color:var(--text3)">Feb 23, 2025</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="hs" style="padding-top:0">
+    <div class="hs-top">
+      <div class="sh" style="margin-bottom:0">
+        <div class="sey">Open Source</div>
+        <h2 class="st">Pinned Projects</h2>
+      </div>
+      <button class="va-btn" onclick="showPage('projects')">All repos →</button>
+    </div>
+    <div class="mini-grid" style="margin-top:1.5rem">
+      <div class="pc" onclick="window.open('https://github.com/ShaharZohar/NetGuard-SDK','_blank')">
+        <div class="pc-top"><div class="pc-icon">🛡️</div><div class="pc-links"><a class="pc-lb" href="https://github.com/ShaharZohar/NetGuard-SDK" target="_blank" onclick="event.stopPropagation()">GitHub ↗</a></div></div>
+        <div class="pc-name">NetGuard-SDK</div>
+        <p class="pc-desc">Android network security SDK — per-app firewall and traffic monitoring via Android VPN service. No root required. Roots in TruConnect WiFi SDK work.</p>
+        <div class="pc-foot"><span style="display:flex;align-items:center;gap:.35rem"><span class="ld lj"></span>Java</span><span>🏆 Pinned</span></div>
+      </div>
+      <div class="pc" onclick="window.open('https://github.com/ShaharZohar/BoyoCodeReviewer','_blank')">
+        <div class="pc-top"><div class="pc-icon">🤖</div><div class="pc-links"><a class="pc-lb" href="https://github.com/ShaharZohar/BoyoCodeReviewer" target="_blank" onclick="event.stopPropagation()">GitHub ↗</a></div></div>
+        <div class="pc-name">BoyoCodeReviewer</div>
+        <p class="pc-desc">AI-powered automated code reviewer for Android/Kotlin — reflects daily AI-assisted development workflows used at ServiceNow (Claude, Windsurf, Gemini).</p>
+        <div class="pc-foot"><span style="display:flex;align-items:center;gap:.35rem"><span class="ld lk"></span>Kotlin</span><span>🏆 Pinned</span></div>
+      </div>
+      <div class="pc" onclick="window.open('https://github.com/ShaharZohar/StockTracker','_blank')">
+        <div class="pc-top"><div class="pc-icon">📈</div><div class="pc-links"><a class="pc-lb" href="https://github.com/ShaharZohar/StockTracker" target="_blank" onclick="event.stopPropagation()">GitHub ↗</a></div></div>
+        <div class="pc-name">StockTracker</div>
+        <p class="pc-desc">Real-time stock tracking Android app — live market data, portfolio management, MVVM + Repository pattern, Kotlin Coroutines.</p>
+        <div class="pc-foot"><span style="display:flex;align-items:center;gap:.35rem"><span class="ld lk"></span>Kotlin</span><span>🏆 Pinned</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CONTACT SECTION -->
+  <div style="background:var(--surface);border-top:1px solid var(--border)">
+    <div style="max-width:1200px;margin:0 auto;padding:3rem 2rem;text-align:center">
+      <div style="font-family:'JetBrains Mono',monospace;font-size:.7rem;color:var(--accent);letter-spacing:.15em;text-transform:uppercase;margin-bottom:.5rem">// Get in touch</div>
+      <h2 style="font-family:'Syne',sans-serif;font-size:clamp(1.6rem,3vw,2.2rem);font-weight:800;letter-spacing:-.025em;margin-bottom:.75rem">Open to Opportunities</h2>
+      <p style="color:var(--text2);font-size:.95rem;max-width:480px;margin:0 auto 2rem;font-weight:300;line-height:1.7">Senior Full Stack &amp; Android developer with 11 years at enterprise scale. Let's talk about what we can build together.</p>
+      <div style="display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;align-items:center">
+        <button onclick="navigator.clipboard.writeText('codeninjaa@gmail.com').then(()=>alert('Email copied: codeninjaa@gmail.com')).catch(()=>window.location='mailto:codeninjaa@gmail.com')" style="display:inline-flex;align-items:center;gap:.5rem;background:var(--accent);color:#080c10;font-weight:700;padding:.72rem 1.6rem;border-radius:8px;font-size:.9rem;font-family:'Inter',sans-serif;border:none;cursor:pointer;transition:all .15s" onmouseover="this.style.background='#6ef0b9'" onmouseout="this.style.background='var(--accent)'">✉ codeninjaa@gmail.com</button>
+        <a href="https://www.linkedin.com/in/shahar-zohar-b8096649/" target="_blank" style="display:inline-flex;align-items:center;gap:.5rem;background:var(--surface2);color:var(--text);border:1px solid var(--border);padding:.72rem 1.4rem;border-radius:8px;text-decoration:none;font-size:.9rem;font-family:'Inter',sans-serif;transition:all .15s">💼 LinkedIn ↗</a>
+        <a href="tel:+972587883005" style="display:inline-flex;align-items:center;gap:.5rem;background:var(--surface2);color:var(--text);border:1px solid var(--border);padding:.72rem 1.4rem;border-radius:8px;text-decoration:none;font-size:.9rem;font-family:'Inter',sans-serif;transition:all .15s">📞 +972-587-883-005</a>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    <span class="fl">sz.dev</span>
+    <span>© 2025 Shahar Zohar · ServiceNow · Kiryat Ono, Israel</span>
+    <span>🧊 Arctic Code Vault Contributor</span>
+  </footer>
+</div>
+<!-- ========== BLOG PAGE ========== -->
+<div class="page" id="page-blog">
+  <div class="pi">
+    <div class="sh">
+      <div class="sey">Knowledge Base</div>
+      <h2 class="st">All Articles</h2>
+      <p class="sdesc">Deep dives into Android architecture, network protocols, testing strategies, CI/CD, and more — pulled from the Mobile Architecture Guild.</p>
+    </div>
+    <div class="filter-bar">
+      <span class="ft on" data-f="all">All</span>
+      <span class="ft" data-f="android">Android</span>
+      <span class="ft" data-f="testing">Testing</span>
+      <span class="ft" data-f="networks">Networks</span>
+      <span class="ft" data-f="cicd">CI/CD</span>
+      <span class="ft" data-f="kotlin">Kotlin</span>
+      <input class="sbox" type="text" placeholder="Search articles…" id="sbox" oninput="filterArts()">
+    </div>
+    <div class="al" id="al">
+      <div class="ar" data-c="networks casestudy" onclick="openArticle('mesh-networks')">
+        <div class="ar-date">May 06<br>2025</div>
+        <div><div class="tags"><span class="tag networks">Networks</span><span class="tag">Case Study</span></div><div class="ar-title">Mesh Networks: Evolution and Activism Case Study</div><div class="ar-excerpt">From DARPA's packet radio networks to FireChat enabling protest communication — how mesh networking evolved and what mobile developers need to know about decentralized, resilient apps.</div></div>
+        <div class="ar-arrow">→</div>
+      </div>
+      <div class="ar" data-c="android testing" onclick="openArticle('visible-for-testing')">
+        <div class="ar-date">Mar 27<br>2025</div>
+        <div><div class="tags"><span class="tag android">Android</span><span class="tag testing">Testing</span></div><div class="ar-title">@VisibleForTesting: Advantages &amp; Downsides</div><div class="ar-excerpt">When is it acceptable to relax visibility for unit testing in Kotlin? A nuanced look at the tradeoffs between testability and clean API design.</div></div>
+        <div class="ar-arrow">→</div>
+      </div>
+      <div class="ar" data-c="android testing cicd" onclick="openArticle('cicd-android')">
+        <div class="ar-date">Mar 24<br>2025</div>
+        <div><div class="tags"><span class="tag cicd">CI/CD</span><span class="tag android">Android</span><span class="tag testing">Testing</span></div><div class="ar-title">Integrating CI/CD Pipelines with Android Unit Testing</div><div class="ar-excerpt">A practical guide to automated test pipelines for Android — early bug detection, consistent quality, and streamlined releases through smart CI/CD integration with GitHub Actions.</div></div>
+        <div class="ar-arrow">→</div>
+      </div>
+      <div class="ar" data-c="android testing" onclick="openArticle('local-vs-instrumented')">
+        <div class="ar-date">Mar 24<br>2025</div>
+        <div><div class="tags"><span class="tag android">Android</span><span class="tag testing">Testing</span></div><div class="ar-title">Local Unit Tests vs. Instrumented Tests in Android</div><div class="ar-excerpt">The fundamental difference between JVM-based local unit tests and device-based instrumented tests — and how to choose the right testing strategy for your codebase.</div></div>
+        <div class="ar-arrow">→</div>
+      </div>
+      <div class="ar" data-c="android testing kotlin" onclick="openArticle('spies-kotlin')">
+        <div class="ar-date">Feb 23<br>2025</div>
+        <div><div class="tags"><span class="tag android">Android</span><span class="tag testing">Testing</span><span class="tag kotlin">Kotlin</span></div><div class="ar-title">Using Spies in Android Unit Testing with Kotlin</div><div class="ar-excerpt">Beyond full mocks — spies let you wrap real objects, intercept specific calls, and retain original behavior. Deep dive into Mockito-Kotlin and Mockk spy patterns.</div></div>
+        <div class="ar-arrow">→</div>
+      </div>
+      <div class="ar" data-c="networks android" onclick="openArticle('xmpp')">
+        <div class="ar-date">Feb 23<br>2025</div>
+        <div><div class="tags"><span class="tag networks">Networks</span><span class="tag android">Android</span></div><div class="ar-title">XMPP: The Extensible Backbone for Real-Time Mobile Communication</div><div class="ar-excerpt">How the Extensible Messaging and Presence Protocol powers decentralized real-time communication — and why its open XML-based architecture still matters for mobile engineers.</div></div>
+        <div class="ar-arrow">→</div>
+      </div>
+      <div class="ar" data-c="networks android" onclick="openArticle('sim-cards')">
+        <div class="ar-date">Dec 10<br>2024</div>
+        <div><div class="tags"><span class="tag networks">Networks</span><span class="tag android">Android</span></div><div class="ar-title">SIM Cards and Unique Identifiers (ICCID/MCC-MNC)</div><div class="ar-excerpt">From full-size SIM to eSIM — a technical breakdown of SIM card types, ICCID structure, MCC/MNC codes, and how to access these identifiers in Android.</div></div>
+        <div class="ar-arrow">→</div>
+      </div>
+      <div class="ar" data-c="networks android" onclick="openArticle('adb-network')">
+        <div class="ar-date">Dec 10<br>2024</div>
+        <div><div class="tags"><span class="tag networks">Networks</span><span class="tag android">Android</span></div><div class="ar-title">Monitoring Network Traffic with ADB for Android Developers</div><div class="ar-excerpt">Leveraging ADB, Android Studio Network Profiler, and Charles Proxy to test apps across 4G and 5G conditions — plus what each generation means for the apps you build.</div></div>
+        <div class="ar-arrow">→</div>
+      </div>
+      <div class="ar" data-c="networks" onclick="openArticle('cellular-evolution')">
+        <div class="ar-date">Dec 10<br>2024</div>
+        <div><div class="tags"><span class="tag networks">Networks</span></div><div class="ar-title">The Evolution of Cellular Networks (2G → 5G)</div><div class="ar-excerpt">A comprehensive look at how cellular networks evolved from circuit-switched 2G voice to 5G's network slicing, massive MIMO, and ultra-low latency — and what each era means for developers.</div></div>
+        <div class="ar-arrow">→</div>
+      </div>
+      <div class="ar" data-c="android testing kotlin" onclick="openArticle('unit-tests-basics')">
+        <div class="ar-date">Dec 10<br>2024</div>
+        <div><div class="tags"><span class="tag android">Android</span><span class="tag testing">Testing</span><span class="tag kotlin">Kotlin</span></div><div class="ar-title">Unit Tests with Kotlin — Basics</div><div class="ar-excerpt">A foundational guide to Android unit testing — test types (Branch, Component, UI, E2E), JUnit 5 annotations, Mockito, Mockk, Robolectric, Espresso, and Appium with practical Kotlin code.</div></div>
+        <div class="ar-arrow">→</div>
+      </div>
+      <div class="ar" data-c="kotlin android" onclick="openArticle('rxjava')">
+        <div class="ar-date">Dec 10<br>2024</div>
+        <div><div class="tags"><span class="tag kotlin">Kotlin</span><span class="tag android">Android</span></div><div class="ar-title">Fundamentals of RxJava with Kotlin</div><div class="ar-excerpt">Everything about Reactive Programming in Android — Observables, Observers, operators (map, flatMap), schedulers, and emitter types (Flowable, Maybe, Single, Completable) with examples.</div></div>
+        <div class="ar-arrow">→</div>
+      </div>
+      <div class="ar" data-c="kotlin android" onclick="openArticle('lambda-kotlin')">
+        <div class="ar-date">Dec 10<br>2024</div>
+        <div><div class="tags"><span class="tag kotlin">Kotlin</span><span class="tag android">Android</span></div><div class="ar-title">Lambda Expressions in Kotlin and Best Practices</div><div class="ar-excerpt">From Java's verbose anonymous classes to Kotlin's concise lambda syntax — idiomatic lambda expressions, higher-order functions, and common pitfalls to avoid.</div></div>
+        <div class="ar-arrow">→</div>
+      </div>
+      <div class="ar" data-c="android" onclick="openArticle('android-runtime-jit')">
+        <div class="ar-date">Dec 10<br>2024</div>
+        <div><div class="tags"><span class="tag android">Android</span></div><div class="ar-title">Android Runtime: Just In Time Compilation — Dalvik</div><div class="ar-excerpt">How Android's Dalvik VM used JIT compilation to convert bytecode to machine code at runtime — the mechanics, tradeoffs, and why Google eventually replaced it with AOT.</div></div>
+        <div class="ar-arrow">→</div>
+      </div>
+      <div class="ar" data-c="android" onclick="openArticle('android-runtime-aot')">
+        <div class="ar-date">Dec 10<br>2024</div>
+        <div><div class="tags"><span class="tag android">Android</span></div><div class="ar-title">Android Runtime: Ahead of Time Compilation — AOT / Hybrid JIT</div><div class="ar-excerpt">How Google replaced Dalvik's JIT with AOT compilation in Android Lollipop — 20x faster native execution, the trade-offs, and the modern Profile-Guided Compilation used today.</div></div>
+        <div class="ar-arrow">→</div>
+      </div>
+      <div class="ar" data-c="android" onclick="openArticle('rethinking-architecture')">
+        <div class="ar-date">Dec 10<br>2024</div>
+        <div><div class="tags"><span class="tag android">Android</span></div><div class="ar-title">Rethinking Mobile Architecture: A Developer's Perspective</div><div class="ar-excerpt">A decade of lessons building Android applications — why architecture patterns matter, the importance of clean code, and what makes an exceptional mobile user experience.</div></div>
+        <div class="ar-arrow">→</div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- ========== ARTICLE READER ========== -->
+<div class="page" id="page-article">
+  <div class="aprogress"><div class="aprogress-fill" id="pbar"></div></div>
+  <div class="art-nav">
+    <button class="back-btn" onclick="goBack()">← Back to Articles</button>
+  </div>
+  <div class="art-wrap">
+    <div class="art-hd" id="art-hd"></div>
+    <div class="art-meta" id="art-meta"></div>
+    <div class="art-body" id="art-body"></div>
+    <div class="related" id="related"></div>
+  </div>
+</div>
+
+<!-- ========== PROJECTS PAGE ========== -->
+<div class="page" id="page-projects">
+  <div class="pi">
+    <div class="sh">
+      <div class="sey">Open Source</div>
+      <h2 class="st">GitHub Projects</h2>
+      <p class="sdesc">10 public repositories — Android apps, network security SDKs, AI-powered developer tools, and more.</p>
+    </div>
+    <div class="pgrid">
+      <div class="pc" onclick="window.open('https://github.com/ShaharZohar/Fracas','_blank')">
+        <div class="pc-top"><div class="pc-icon">☕</div><div class="pc-links"><a class="pc-lb" href="https://github.com/ShaharZohar/Fracas" target="_blank" onclick="event.stopPropagation()">↗ View</a></div></div>
+        <div class="pc-name">Fracas</div>
+        <p class="pc-desc">A Java-based project showcasing clean architectural patterns and design principles. Demonstrates scalable application design with well-structured code organization and solid SOLID principles.</p>
+        <div class="pc-foot"><span style="display:flex;align-items:center;gap:.35rem"><span class="ld lj"></span>Java</span><span>⭐ Public</span></div>
+      </div>
+      <div class="pc" onclick="window.open('https://github.com/ShaharZohar/NetGuard-SDK','_blank')">
+        <div class="pc-top"><div class="pc-icon">🛡️</div><div class="pc-links"><a class="pc-lb" href="https://github.com/ShaharZohar/NetGuard-SDK" target="_blank" onclick="event.stopPropagation()">↗ View</a></div></div>
+        <div class="pc-name">NetGuard-SDK</div>
+        <p class="pc-desc">Android network security SDK providing per-app firewall and traffic monitoring capabilities as a reusable library. Enables network access control without root using the Android VPN service.</p>
+        <div class="pc-foot"><span style="display:flex;align-items:center;gap:.35rem"><span class="ld lj"></span>Java</span><span>⭐ Public · Pinned</span></div>
+      </div>
+      <div class="pc" onclick="window.open('https://github.com/ShaharZohar/SimonGame','_blank')">
+        <div class="pc-top"><div class="pc-icon">🎮</div><div class="pc-links"><a class="pc-lb" href="https://github.com/ShaharZohar/SimonGame" target="_blank" onclick="event.stopPropagation()">↗ View</a></div></div>
+        <div class="pc-name">SimonGame</div>
+        <p class="pc-desc">Classic Simon memory game implemented in Kotlin for Android. Clean MVVM architecture with smooth animations and haptic feedback for an engaging, nostalgic user experience.</p>
+        <div class="pc-foot"><span style="display:flex;align-items:center;gap:.35rem"><span class="ld lk"></span>Kotlin</span><span>⭐ Public · Pinned</span></div>
+      </div>
+      <div class="pc" onclick="window.open('https://github.com/ShaharZohar/StockTracker','_blank')">
+        <div class="pc-top"><div class="pc-icon">📈</div><div class="pc-links"><a class="pc-lb" href="https://github.com/ShaharZohar/StockTracker" target="_blank" onclick="event.stopPropagation()">↗ View</a></div></div>
+        <div class="pc-name">StockTracker</div>
+        <p class="pc-desc">Real-time stock tracking Android app built with Kotlin. Features live market data, portfolio management, price alerts, and clean MVVM + Repository pattern architecture with Coroutines.</p>
+        <div class="pc-foot"><span style="display:flex;align-items:center;gap:.35rem"><span class="ld lk"></span>Kotlin</span><span>⭐ Public · Pinned</span></div>
+      </div>
+      <div class="pc" onclick="window.open('https://github.com/ShaharZohar/WeightTrackerApp','_blank')">
+        <div class="pc-top"><div class="pc-icon">⚖️</div><div class="pc-links"><a class="pc-lb" href="https://github.com/ShaharZohar/WeightTrackerApp" target="_blank" onclick="event.stopPropagation()">↗ View</a></div></div>
+        <div class="pc-name">WeightTrackerApp</div>
+        <p class="pc-desc">Personal health tracking web application for monitoring weight progress over time. Features data visualization, trend analysis, and goal-tracking with a clean, responsive UI.</p>
+        <div class="pc-foot"><span style="display:flex;align-items:center;gap:.35rem"><span class="ld lh"></span>HTML</span><span>⭐ Public · Pinned</span></div>
+      </div>
+      <div class="pc" onclick="window.open('https://github.com/ShaharZohar/BoyoCodeReviewer','_blank')">
+        <div class="pc-top"><div class="pc-icon">🤖</div><div class="pc-links"><a class="pc-lb" href="https://github.com/ShaharZohar/BoyoCodeReviewer" target="_blank" onclick="event.stopPropagation()">↗ View</a></div></div>
+        <div class="pc-name">BoyoCodeReviewer</div>
+        <p class="pc-desc">AI-powered automated code reviewer for Android/Kotlin projects. Provides automated feedback, best-practice suggestions, and code quality analysis integrated into the development workflow.</p>
+        <div class="pc-foot"><span style="display:flex;align-items:center;gap:.35rem"><span class="ld lk"></span>Kotlin</span><span>⭐ Public · Pinned</span></div>
+      </div>
+    </div>
+      <!-- Arctic achievement banner -->
+      <div style="margin-top:1.5rem;padding:1rem 1.4rem;background:rgba(249,115,22,.05);border:1px solid rgba(249,115,22,.2);border-radius:10px">
+        <div style="font-family:'JetBrains Mono',monospace;font-size:.68rem;color:var(--accent3);letter-spacing:.08em;text-transform:uppercase;margin-bottom:.5rem">Notable Production Work · Koltrol (2015–2017)</div>
+        <div style="font-family:'Syne',sans-serif;font-weight:700;font-size:.95rem;margin-bottom:.3rem">Meucci — VoIP/GSM Communication App</div>
+        <div style="font-size:.82rem;color:var(--text2);font-weight:300;line-height:1.65">Built from scratch: group calling, instant messaging (XMPP), file sharing, multi-identity support. Implemented WebRTC + Clear2VoIP NDK for real-time comms, WebSocket &amp; XMPP for messaging, in-app purchases. <em style="color:var(--text3)">Private / commercial project.</em></div>
+      </div>
+      <!-- Arctic achievement banner -->
+    <div style="margin-top:2rem;padding:1.4rem 1.6rem;background:var(--surface);border:1px solid var(--border);border-radius:10px;display:flex;align-items:center;gap:1.5rem">
+      <div style="font-size:2.2rem;flex-shrink:0">🧊</div>
+      <div>
+        <div style="font-family:'Syne',sans-serif;font-weight:700;font-size:.95rem;margin-bottom:.2rem">Arctic Code Vault Contributor</div>
+        <div style="font-size:.83rem;color:var(--text2);font-weight:300">Code preserved in GitHub's Arctic Code Vault in Svalbard, Norway — archived for future generations.</div>
+      </div>
+      <a href="https://github.com/ShaharZohar?achievement=arctic-code-vault-contributor&tab=achievements" target="_blank" class="btn btn-g" style="margin-left:auto;white-space:nowrap;flex-shrink:0;font-size:.8rem">View Achievement ↗</a>
+    </div>
+    <div style="text-align:center;margin-top:1.75rem">
+      <a href="https://github.com/ShaharZohar" target="_blank" class="btn btn-g">View all 10 repositories on GitHub ↗</a>
+    </div>
+  </div>
+</div>
+
+<!-- ========== ABOUT PAGE ========== -->
+<div class="page" id="page-about">
+  <div class="pi">
+    <div class="sh">
+      <div class="sey">Background</div>
+      <h2 class="st">About Me</h2>
+    </div>
+    <div class="about-grid">
+      <div>
+        <div class="av-wrap">
+          <div class="av">👨‍💻</div>
+          <div class="av-ring"></div><div class="av-ring2"></div>
+        </div>
+        <div class="av-name">Shahar Zohar</div>
+        <div class="av-role">Senior Full Stack Developer · ServiceNow</div>
+        <a class="al-link" href="mailto:codeninjaa@gmail.com"><span>✉️</span><span>codeninjaa@gmail.com</span></a>
+        <a class="al-link" href="tel:+972587883005"><span>📞</span><span>+972-587-883-005</span></a>
+        <a class="al-link" href="https://github.com/ShaharZohar" target="_blank"><span>⌨️</span><span>github.com/ShaharZohar</span></a>
+        <a class="al-link" href="https://www.linkedin.com/in/shahar-zohar-b8096649/" target="_blank"><span>💼</span><span>linkedin.com/in/shahar-zohar</span></a>
+        <a class="al-link" href="https://mobilearchguild.blogspot.com/" target="_blank"><span>📝</span><span>mobilearchguild.blogspot.com</span></a>
+        <div style="margin-top:1rem">
+          <a href="https://www.linkedin.com/in/shahar-zohar-b8096649/" target="_blank" class="btn btn-p" style="width:100%;justify-content:center;font-size:.82rem">Download CV ↗</a>
+        </div>
+        <div style="margin-top:1.25rem;padding:1rem;background:var(--surface2);border:1px solid var(--border);border-radius:8px">
+          <div style="font-family:'JetBrains Mono',monospace;font-size:.68rem;color:var(--text3);margin-bottom:.7rem;letter-spacing:.08em;text-transform:uppercase">Companies</div>
+          <div style="display:flex;flex-direction:column;gap:.55rem">
+            <div style="display:flex;align-items:center;gap:.6rem"><span style="width:6px;height:6px;border-radius:50%;background:var(--accent);flex-shrink:0"></span><span style="font-size:.8rem;color:var(--text2)">ServiceNow <span style="color:var(--text3);font-size:.72rem">2019–Present</span></span></div>
+            <div style="display:flex;align-items:center;gap:.6rem"><span style="width:6px;height:6px;border-radius:50%;background:var(--accent2);flex-shrink:0"></span><span style="font-size:.8rem;color:var(--text2)">TruConnect Technologies <span style="color:var(--text3);font-size:.72rem">2017–2019</span></span></div>
+            <div style="display:flex;align-items:center;gap:.6rem"><span style="width:6px;height:6px;border-radius:50%;background:var(--accent3);flex-shrink:0"></span><span style="font-size:.8rem;color:var(--text2)">Koltrol <span style="color:var(--text3);font-size:.72rem">2015–2017</span></span></div>
+            <div style="display:flex;align-items:center;gap:.6rem"><span style="width:6px;height:6px;border-radius:50%;background:#38bdf8;flex-shrink:0"></span><span style="font-size:.8rem;color:var(--text2)">Devsense <span style="color:var(--text3);font-size:.72rem">2014–2015</span></span></div>
+          </div>
+        </div>
+        <div style="margin-top:1.25rem;padding:1rem;background:var(--surface2);border:1px solid var(--border);border-radius:8px">
+          <div style="font-family:'JetBrains Mono',monospace;font-size:.68rem;color:var(--text3);margin-bottom:.6rem;letter-spacing:.08em;text-transform:uppercase">Languages</div>
+          <div style="display:flex;flex-direction:column;gap:.4rem">
+            <span style="font-size:.8rem;color:var(--text2)">🇮🇱 Hebrew — Native</span>
+            <span style="font-size:.8rem;color:var(--text2)">🇬🇧 English — Professional</span>
+          </div>
+        </div>
+      </div>
+      <div class="ar-right">
+        <p>I'm a <strong>Senior Full Stack Developer at ServiceNow</strong> based in Kiryat Ono, Israel, with 11 years of experience specializing in mobile native development (Java &amp; Kotlin), Java backend services, and SDK development. I have a proven track record delivering enterprise-scale solutions and driving code quality through comprehensive testing and automation.</p>
+        <p>At ServiceNow I spent 7 years leading Android client development for the enterprise mobile platform — integrating Security, Authentication, Session Management, and third-party systems — before being <strong>promoted to Full Stack</strong> in 2026, expanding into Java backend services, API development, and platform integrations via IntelliJ IDEA and VS Code.</p>
+        <p>I leverage <strong>AI-assisted development</strong> every day — Claude, Windsurf, Gemini, and Perplexity — to enhance code quality, accelerate delivery, and implement best practices. I'm also a <strong>GitHub Arctic Code Vault Contributor</strong>, with code preserved in Svalbard, Norway for future generations. 🧊</p>
+
+        <div class="sk-wrap">
+          <h3>Technical Skills</h3>
+          <div class="sk-item"><div class="sk-row"><span class="sk-name">Android Native · Java &amp; Kotlin</span><span class="sk-pct">98%</span></div><div class="sk-bg"><div class="sk-fill" style="width:98%"></div></div></div>
+          <div class="sk-item"><div class="sk-row"><span class="sk-name">RxJava · Coroutines · MVVM</span><span class="sk-pct">95%</span></div><div class="sk-bg"><div class="sk-fill" style="width:95%"></div></div></div>
+          <div class="sk-item"><div class="sk-row"><span class="sk-name">Java Backend · REST APIs · SQL</span><span class="sk-pct">85%</span></div><div class="sk-bg"><div class="sk-fill" style="width:85%"></div></div></div>
+          <div class="sk-item"><div class="sk-row"><span class="sk-name">Testing · JUnit · Appium · SonarQube</span><span class="sk-pct">90%</span></div><div class="sk-bg"><div class="sk-fill" style="width:90%"></div></div></div>
+          <div class="sk-item"><div class="sk-row"><span class="sk-name">CI/CD · Jenkins · Git Pipelines</span><span class="sk-pct">88%</span></div><div class="sk-bg"><div class="sk-fill" style="width:88%"></div></div></div>
+          <div class="sk-item"><div class="sk-row"><span class="sk-name">Protocols · XMPP · WebRTC · WISPr</span><span class="sk-pct">85%</span></div><div class="sk-bg"><div class="sk-fill" style="width:85%"></div></div></div>
+          <div class="sk-item"><div class="sk-row"><span class="sk-name">AI Tools · Claude · Windsurf · Gemini</span><span class="sk-pct">92%</span></div><div class="sk-bg"><div class="sk-fill" style="width:92%"></div></div></div>
+          <div class="sk-item"><div class="sk-row"><span class="sk-name">SDK Development · Security Integration</span><span class="sk-pct">88%</span></div><div class="sk-bg"><div class="sk-fill" style="width:88%"></div></div></div>
+        </div>
+
+        <div class="exp-tl">
+          <h3>Experience</h3>
+          <div class="exp-item">
+            <div class="exp-dot-col"><div class="exp-dot"></div><div class="exp-line"></div></div>
+            <div>
+              <div class="exp-role">Senior Full Stack Developer</div>
+              <div class="exp-co">ServiceNow</div>
+              <div class="exp-period">2026 – Present · Promoted</div>
+              <div class="exp-desc">Transitioned to full stack — developing Java backend services and platform integrations. Improved test coverage with Appium automation, SonarQube quality monitoring, and Git coverage reports. Daily use of Claude, Windsurf, Gemini, and Perplexity for code quality and delivery.</div>
+            </div>
+          </div>
+          <div class="exp-item">
+            <div class="exp-dot-col"><div class="exp-dot"></div><div class="exp-line"></div></div>
+            <div>
+              <div class="exp-role">Senior Android Developer</div>
+              <div class="exp-co">ServiceNow</div>
+              <div class="exp-period">2019 – 2026 · 7 Years</div>
+              <div class="exp-desc">Led Android client development for ServiceNow's enterprise mobile platform. Designed and implemented mobile components (agile scrum), integrated Security, Authentication, and Session Management systems, and supported multinational teams with direct customer technical support.</div>
+            </div>
+          </div>
+          <div class="exp-item">
+            <div class="exp-dot-col"><div class="exp-dot"></div><div class="exp-line"></div></div>
+            <div>
+              <div class="exp-role">Senior Android Developer</div>
+              <div class="exp-co">TruConnect Technologies</div>
+              <div class="exp-period">2017 – 2019 · 2 Years</div>
+              <div class="exp-desc">Developed WeFi SDK — Data Collection and WiFi Connection Manager modules. Built Captive Portal auto-login via WISPr protocol. Collaborated with global manufacturers on pre-load apps and CTS/GMS compatibility. Worked with Hessian, Firebase, GBQ, and Gradle flavors.</div>
+            </div>
+          </div>
+          <div class="exp-item">
+            <div class="exp-dot-col"><div class="exp-dot"></div><div class="exp-line"></div></div>
+            <div>
+              <div class="exp-role">Senior Android Developer</div>
+              <div class="exp-co">Koltrol · Herzliya</div>
+              <div class="exp-period">2015 – 2017 · 2 Years</div>
+              <div class="exp-desc">Built Meucci from scratch — a VoIP/GSM communication app with group calling, instant messaging (XMPP), file sharing, and multi-identity support. Implemented WebRTC + Clear2VoIP NDK for real-time comms, WebSocket &amp; XMPP for messaging, and in-app purchases.</div>
+            </div>
+          </div>
+          <div class="exp-item">
+            <div class="exp-dot-col"><div class="exp-dot"></div></div>
+            <div>
+              <div class="exp-role">Android Team Leader</div>
+              <div class="exp-co">Devsense · Haifa</div>
+              <div class="exp-period">2014 – 2015 · 1 Year</div>
+              <div class="exp-desc">Led development of 14 native Android apps — Tikitaka, GigaLife, PizzaHut, Gulliver, KeyKer (intelligent keyboard), Emboss Watch Launcher. Built RESTful integrations, SQLite databases, and integrated Google Analytics, Crashlytics, Facebook, Picasso, Glide, AppsFlyer, GCM/FCM push.</div>
+            </div>
+          </div>
+        </div>
+
+        <div style="margin-top:2rem">
+          <h3 style="font-family:'Syne',sans-serif;font-size:1rem;font-weight:700;margin-bottom:1rem">Education &amp; Certifications</h3>
+          <div style="display:flex;flex-direction:column;gap:.7rem">
+            <div style="background:var(--surface2);border:1px solid var(--border);border-radius:8px;padding:.9rem 1.1rem;display:flex;gap:1rem;align-items:flex-start">
+              <span style="font-size:1.4rem;margin-top:.1rem">🏆</span>
+              <div>
+                <div style="font-family:'Syne',sans-serif;font-weight:700;font-size:.88rem;color:var(--text)">CI/CD the DevOps Way with Jenkins</div>
+                <div style="font-size:.76rem;color:var(--accent);margin:.18rem 0">John Bryce College &middot; 2025 &middot; 16-hour intensive certification</div>
+                <div style="font-size:.76rem;color:var(--text2);font-weight:300">Infrastructure-as-code · pipeline automation · microservices CI/CD · Jenkinsfile</div>
+              </div>
+            </div>
+            <div style="background:var(--surface2);border:1px solid var(--border);border-radius:8px;padding:.9rem 1.1rem;display:flex;gap:1rem;align-items:flex-start">
+              <span style="font-size:1.4rem;margin-top:.1rem">🎓</span>
+              <div>
+                <div style="font-family:'Syne',sans-serif;font-weight:700;font-size:.88rem;color:var(--text)">Software Practical Engineer</div>
+                <div style="font-size:.76rem;color:var(--accent);margin:.18rem 0">Tel-Hai Academic College &middot; 2012–2013</div>
+              </div>
+            </div>
+            <div style="background:var(--surface2);border:1px solid var(--border);border-radius:8px;padding:.9rem 1.1rem;display:flex;gap:1rem;align-items:flex-start">
+              <span style="font-size:1.4rem;margin-top:.1rem">📚</span>
+              <div>
+                <div style="font-family:'Syne',sans-serif;font-weight:700;font-size:.88rem;color:var(--text)">High School Diploma</div>
+                <div style="font-size:.76rem;color:var(--accent);margin:.18rem 0">2000–2006 &middot; Majored in Biology &amp; Computer Science</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<script>
+// ============ PAGE NAVIGATION ============
+let prevPage = 'home';
+function showPage(id) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.nbtn').forEach(b => b.classList.remove('active'));
+  document.getElementById('page-' + id).classList.add('active');
+  document.getElementById('nb-' + (id === 'article' ? 'blog' : id))?.classList.add('active');
+  window.scrollTo(0,0);
+}
+function goBack() { showPage('blog'); }
+
+// ============ ARTICLE DATA ============
+const ARTICLES = {
+  'mesh-networks': {
+    title:'Mesh Networks: Evolution and Activism Case Study',
+    date:'May 06, 2025', readTime:'8 min read', tags:['networks','casestudy'],
+    url:'https://mobilearchguild.blogspot.com/2025/05/mesh-networks-evolution-and-activism.html',
+    body:`<h2>Mesh Networks for Mobile Developers</h2>
+<p>Mesh networks have emerged as a critical technology for building resilient communication systems, particularly in scenarios where traditional infrastructure fails or is restricted. For mobile developers, understanding their evolution and real-world applications — like the FireChat app during protests — provides valuable insights into creating robust, decentralized applications.</p>
+<h2>Evolution of Mesh Network Technology</h2>
+<h3>Military Origins and Early Development</h3>
+<p>Mesh networks trace their roots to <strong>military applications</strong> in the 1960s–1970s, when DARPA developed <strong>packet radio networks (PRNET)</strong> to enable battlefield communication without centralized infrastructure. These early systems used a "flooding" mechanism where messages were relayed through every node until reaching the destination.</p>
+<h3>Transition to Civilian Use</h3>
+<ul><li><strong>1990s–2000s:</strong> The rise of <strong>mobile ad hoc networks (MANETs)</strong> and 802.11 Wi-Fi enabled academic and commercial experimentation.</li>
+<li><strong>Hardware advancements:</strong> Early single-radio nodes evolved into multi-radio systems enabling simultaneous transmission/reception on different frequencies.</li>
+<li><strong>Standardization:</strong> Protocols like OLSR (Optimized Link State Routing) and BATMAN emerged, optimizing path selection and scalability.</li></ul>
+<h3>Modern Implementations</h3>
+<p>Today, mesh networks leverage <strong>Bluetooth Low Energy (BLE)</strong> and Wi-Fi Direct for peer-to-peer communication, software-defined solutions like Meshmerize, and unified architectures that simplify integration with existing cellular/Wi-Fi infrastructure.</p>
+<h2>FireChat: A Case Study</h2>
+<p>FireChat creates a <strong>Bluetooth/Wi-Fi mesh network</strong> where devices communicate directly without internet access. During Hong Kong's 2014 Umbrella Movement and Egyptian protests post-Arab Spring, users downloaded FireChat <strong>4 million times</strong> from a single Chinese app store. Protesters organized via topic-based chat rooms, evading government surveillance.</p>
+<pre><code>// BLE Mesh broadcast in Android (Kotlin)
+fun broadcastMeshMessage(message: String) {
+    val advertiser = BluetoothAdapter.getDefaultAdapter().bluetoothLeAdvertiser
+    val settings = AdvertiseSettings.Builder()
+        .setAdvertiseMode(AdvertiseSettings.ADVERTISE_MODE_LOW_LATENCY)
+        .setTxPowerLevel(AdvertiseSettings.ADVERTISE_TX_POWER_HIGH)
+        .setConnectable(false).build()
+    val data = AdvertiseData.Builder()
+        .addServiceUuid(MESH_SERVICE_UUID)
+        .addServiceData(MESH_SERVICE_UUID, message.toByteArray())
+        .build()
+    advertiser.startAdvertising(settings, data, advertiseCallback)
+}</code></pre>
+<h2>Building Mesh-Enabled Apps: Key Considerations</h2>
+<h3>1. Protocol Selection</h3>
+<ul><li>Use <strong>BLE</strong> for low-energy, short-range communication (emergency alerts).</li>
+<li>Implement <strong>Wi-Fi Direct</strong> for high-bandwidth tasks like file sharing.</li></ul>
+<h3>2. Routing Logic</h3>
+<ul><li>Integrate open-source libraries like <strong>libp2p</strong> or <strong>NKN SDK</strong> for decentralized messaging.</li>
+<li>Prioritize <strong>self-healing algorithms</strong> to handle node disconnections.</li></ul>
+<h3>3. Offline-First Design</h3>
+<ul><li>Cache messages locally until a peer node is available.</li>
+<li>Use <strong>conflict-free replicated data types (CRDTs)</strong> for synchronized state management.</li></ul>
+<h3>4. Ethical Considerations</h3>
+<ul><li>Warn users about metadata leaks (device identifiers).</li>
+<li>Avoid centralized logging to protect anonymity.</li></ul>
+<h2>Conclusion</h2>
+<p>Mesh networks have evolved from military-grade systems to accessible tools for circumventing censorship. For mobile developers, they offer a pathway to build <strong>infrastructure-independent apps</strong> resilient to network shutdowns. By leveraging peer-to-peer protocols and offline-first architectures, developers can empower users in scenarios where traditional connectivity fails.</p>`
+  },
+  'visible-for-testing': {
+    title:'@VisibleForTesting: Advantages & Downsides on Android',
+    date:'March 27, 2025', readTime:'4 min read', tags:['android','testing'],
+    url:'https://mobilearchguild.blogspot.com/2025/03/advantages-and-downsides-of-using.html',
+    body:`<p>Using <code>@VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)</code> in Kotlin is acceptable and can be recommended in specific scenarios, but its use should be carefully considered.</p>
+<h2>Advantages</h2>
+<h3>1. Relaxed Visibility for Testing</h3>
+<p>The annotation allows you to relax visibility of methods that would otherwise be private, making them accessible for unit testing without permanently altering production visibility.</p>
+<h3>2. Clear Intent</h3>
+<p>You signal that the relaxed visibility is solely for testing purposes, helping maintain clarity and preventing unintended access in production code.</p>
+<h3>3. Avoiding Code Duplication</h3>
+<p>It helps avoid duplicating logic in public methods just to indirectly test private methods.</p>
+<pre><code>@VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
+fun calculateInternalScore(input: Int): Int {
+    return input * 2 + offset
+}
+
+// In your test:
+@Test
+fun \`internal score calculation is correct\`() {
+    val calculator = ScoreCalculator()
+    assertEquals(42, calculator.calculateInternalScore(21))
+}</code></pre>
+<h2>Best Practices</h2>
+<h3>Test Public Behavior First</h3>
+<p>Private methods should ideally not be tested directly. Focus on testing the public API of the class — it implicitly tests the behavior of private methods. Use <code>@VisibleForTesting</code> only when there's no other practical way to test critical logic.</p>
+<h3>Avoid Over-Reliance</h3>
+<p>Excessive use may indicate a design smell — if too many private methods need direct testing, consider refactoring into smaller, well-tested classes following the Single Responsibility Principle.</p>
+<h2>Downsides and Risks</h2>
+<ul>
+<li><strong>Misuse in Production:</strong> Nothing prevents other developers from calling these methods in production code.</li>
+<li><strong>Lint Warnings Only:</strong> The annotation generates only lint warnings; it does not enforce visibility at compile time.</li>
+<li><strong>Design Signal:</strong> Heavy use suggests the class may need to be broken into smaller units.</li>
+</ul>
+<h2>Conclusion</h2>
+<p><code>@VisibleForTesting</code> is a pragmatic tool for improving testability without completely sacrificing encapsulation. Use it sparingly, prefer testing through the public API first, and treat its presence as a code review discussion point.</p>`
+  },
+  'cicd-android': {
+    title:'Integrating CI/CD Pipelines with Android Unit Testing',
+    date:'March 24, 2025', readTime:'6 min read', tags:['android','testing','cicd'],
+    url:'https://mobilearchguild.blogspot.com/2025/03/integrating-cicd-pipelines-with-android.html',
+    body:`<p>Continuous Integration (CI) and Continuous Deployment (CD) have become essential practices in modern software development, especially for Android. By integrating unit testing into CI/CD pipelines, developers can ensure their apps are reliable, maintainable, and ready for deployment at any time.</p>
+<h2>Why Integrate Unit Testing into CI/CD?</h2>
+<ul>
+<li><strong>Early Bug Detection:</strong> Automated tests run with every code change, catching bugs early.</li>
+<li><strong>Consistent Quality:</strong> Validates functionality before merging changes.</li>
+<li><strong>Faster Development Cycles:</strong> Automates repetitive tasks.</li>
+<li><strong>Streamlined Releases:</strong> Reduces manual effort in testing and deployment.</li>
+</ul>
+<h2>Setting Up GitHub Actions for Android</h2>
+<pre><code># .github/workflows/android-tests.yml
+name: Android CI
+
+on:
+  push:
+    branches: [ main, develop ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Set up JDK 17
+        uses: actions/setup-java@v3
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+      - name: Cache Gradle
+        uses: actions/cache@v3
+        with:
+          path: |
+            ~/.gradle/caches
+            ~/.gradle/wrapper
+          key: gradle-\${{ hashFiles('**/*.gradle*') }}
+      - name: Grant execute permission
+        run: chmod +x gradlew
+      - name: Run unit tests
+        run: ./gradlew test --no-daemon
+      - name: Upload test results
+        uses: actions/upload-artifact@v3
+        if: always()
+        with:
+          name: test-results
+          path: '**/build/reports/tests/'</code></pre>
+<h2>Gradle Configuration</h2>
+<pre><code>// build.gradle.kts (app)
+android {
+    testOptions {
+        unitTests {
+            isIncludeAndroidResources = true
+            isReturnDefaultValues = true
+        }
+    }
+}
+
+dependencies {
+    testImplementation("junit:junit:4.13.2")
+    testImplementation("io.mockk:mockk:1.13.7")
+    testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.7.3")
+    androidTestImplementation("androidx.test.ext:junit:1.1.5")
+    androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
+}</code></pre>
+<h2>Best Practices</h2>
+<ul>
+<li><strong>Run unit tests on every PR</strong> — fast feedback prevents broken code from merging.</li>
+<li><strong>Cache Gradle dependencies</strong> to dramatically speed up build times (often 3-5 minutes saved).</li>
+<li><strong>Separate unit and instrumented tests</strong> — unit tests are fast; instrumented tests need emulators.</li>
+<li><strong>Use test coverage reports</strong> with JaCoCo to track coverage trends over time.</li>
+<li><strong>Fail fast</strong> — run fastest tests first so developers get feedback immediately.</li>
+</ul>
+<h2>Conclusion</h2>
+<p>Integrating CI/CD with Android unit testing transforms your workflow from manual and error-prone to automated and reliable. The investment in pipeline setup pays dividends through every sprint — fewer regressions, faster releases, and confident deployments.</p>`
+  },
+  'local-vs-instrumented': {
+    title:'Local Unit Tests vs. Instrumented Tests in Android',
+    date:'March 24, 2025', readTime:'5 min read', tags:['android','testing'],
+    url:'https://mobilearchguild.blogspot.com/2025/03/understanding-difference-between-local.html',
+    body:`<p>Testing is a critical part of Android development. Android offers two primary types of tests: Local Unit Tests and Instrumented Tests. While both serve unique purposes, understanding their differences helps developers choose the right strategy.</p>
+<h2>Local Unit Tests (src/test/)</h2>
+<p>Local Unit Tests are executed on the <strong>Java Virtual Machine (JVM)</strong> — no Android device or emulator required. They focus on isolated components like business logic, utility functions, or ViewModels. Fast, lightweight, ideal for code that doesn't depend on the Android framework.</p>
+<pre><code>// Local Unit Test Example
+class CalculatorTest {
+    private lateinit var calculator: Calculator
+
+    @Before
+    fun setUp() { calculator = Calculator() }
+
+    @Test
+    fun \`addition returns correct result\`() {
+        assertEquals(5, calculator.add(2, 3))
+    }
+
+    @Test
+    fun \`division by zero throws exception\`() {
+        assertThrows(ArithmeticException::class.java) {
+            calculator.divide(10, 0)
+        }
+    }
+}</code></pre>
+<h2>Instrumented Tests (src/androidTest/)</h2>
+<p>Instrumented Tests run on a <strong>physical Android device or emulator</strong>. They interact with Android framework components — Context, SharedPreferences, Room databases, or UI interactions.</p>
+<pre><code>// Instrumented Test Example
+@RunWith(AndroidJUnit4::class)
+class DatabaseTest {
+    private lateinit var db: AppDatabase
+    private lateinit var userDao: UserDao
+
+    @Before
+    fun createDb() {
+        val context = InstrumentationRegistry.getInstrumentation().targetContext
+        db = Room.inMemoryDatabaseBuilder(context, AppDatabase::class.java).build()
+        userDao = db.userDao()
+    }
+
+    @After fun closeDb() { db.close() }
+
+    @Test
+    fun insertAndRetrieveUser() = runBlocking {
+        val user = User(id = 1, name = "Shahar")
+        userDao.insert(user)
+        val retrieved = userDao.getById(1)
+        assertEquals("Shahar", retrieved?.name)
+    }
+}</code></pre>
+<h2>Key Differences</h2>
+<ul>
+<li><strong>Location:</strong> Local → <code>src/test/</code> | Instrumented → <code>src/androidTest/</code></li>
+<li><strong>Runtime:</strong> Local → JVM | Instrumented → Android device/emulator</li>
+<li><strong>Speed:</strong> Local → Milliseconds | Instrumented → Seconds to minutes</li>
+<li><strong>Best for:</strong> Local → Business logic, ViewModels | Instrumented → UI, DB, system APIs</li>
+</ul>
+<h2>The Testing Pyramid</h2>
+<p>Follow the testing pyramid: many local unit tests (fast, cheap), fewer integration tests, and a small number of UI/instrumented tests (slow, expensive). A good ratio: <strong>70% unit tests, 20% integration, 10% UI tests</strong>.</p>`
+  },
+  'spies-kotlin': {
+    title:'Using Spies in Android Unit Testing with Kotlin',
+    date:'February 23, 2025', readTime:'5 min read', tags:['android','testing','kotlin'],
+    url:'https://mobilearchguild.blogspot.com/2025/02/using-spies-in-android-unit-testing.html',
+    body:`<p>While mocks are invaluable for replacing dependencies with controlled substitutes, sometimes you need a more nuanced approach. Enter the <strong>Spy</strong> — a partial mock that wraps a real object.</p>
+<h2>What is a Spy?</h2>
+<p>A Spy is a <strong>partial mock</strong>. Unlike a full mock that replaces an object entirely, a Spy wraps an existing object. This allows you to: intercept and observe method calls, retain the original object's behavior by default, and selectively override specific methods.</p>
+<h2>Spies with Mockito-Kotlin</h2>
+<pre><code>import org.mockito.kotlin.*
+
+class UserRepositoryTest {
+    private val realDatabase = RealDatabase()
+    private val spyDatabase = spy(realDatabase)
+
+    @Test
+    fun \`spy calls real implementation by default\`() {
+        val result = spyDatabase.getUser(1)
+        assertNotNull(result)
+        verify(spyDatabase).getUser(1)
+    }
+
+    @Test
+    fun \`spy can override specific method\`() {
+        doReturn(User(1, "Mock User")).whenever(spyDatabase).getUser(1)
+        val result = spyDatabase.getUser(1)
+        assertEquals("Mock User", result.name)
+    }
+}</code></pre>
+<h2>Spies with Mockk (Kotlin-native)</h2>
+<pre><code>import io.mockk.*
+
+class AnalyticsServiceTest {
+    private val analyticsService = spyk(AnalyticsService())
+
+    @Test
+    fun \`spy tracks events while calling real logic\`() {
+        analyticsService.trackEvent("button_click", mapOf("id" to "submit"))
+        verify { analyticsService.trackEvent("button_click", any()) }
+    }
+
+    @Test
+    fun \`spy allows partial stubbing\`() {
+        every { analyticsService.isEnabled() } returns false
+        analyticsService.trackEvent("test", emptyMap())
+        verify(exactly = 0) { analyticsService.sendToServer(any()) }
+    }
+}</code></pre>
+<h2>When to Use Spies vs Mocks</h2>
+<ul>
+<li><strong>Use a Mock</strong> when you want to completely replace a dependency with a controlled double.</li>
+<li><strong>Use a Spy</strong> when you want to test a real object but need to verify interactions or stub specific methods.</li>
+<li><strong>Avoid Spies</strong> on third-party dependencies — prefer mocks for code you don't own.</li>
+</ul>
+<h2>Common Pitfalls</h2>
+<ul>
+<li><strong>Real method called during stubbing:</strong> With Mockito, <code>when(spy.method())</code> calls the real method first — use <code>doReturn().when()</code> syntax instead.</li>
+<li><strong>Final classes:</strong> Kotlin classes are final by default. Mockk handles this natively; Mockito requires the <code>mockito-inline</code> artifact.</li>
+</ul>`
+  },
+  'xmpp': {
+    title:'XMPP: The Extensible Backbone for Real-Time Mobile Communication',
+    date:'February 23, 2025', readTime:'6 min read', tags:['networks','android'],
+    url:'https://mobilearchguild.blogspot.com/2025/02/xmpp-extensible-backbone-for-real-time.html',
+    body:`<p>The Extensible Messaging and Presence Protocol (XMPP) stands as a testament to the power of open standards in fostering robust, decentralized, extensible real-time communication.</p>
+<h2>Core Principles</h2>
+<p>XMPP leverages <strong>XML</strong> to structure and exchange data. Its decentralized nature empowers anyone to host an XMPP server — a distributed network akin to email. The fundamental communication units are <strong>stanzas</strong>:</p>
+<ul>
+<li><code>&lt;message&gt;</code> — For transmitting instant messages</li>
+<li><code>&lt;presence&gt;</code> — For broadcasting availability and status</li>
+<li><code>&lt;iq&gt;</code> (Info/Query) — For request-response interactions</li>
+</ul>
+<pre><code>&lt;!-- XMPP message stanza --&gt;
+&lt;message to="user@server.com" type="chat"&gt;
+  &lt;body&gt;Hello from XMPP!&lt;/body&gt;
+  &lt;active xmlns="http://jabber.org/protocol/chatstates"/&gt;
+&lt;/message&gt;</code></pre>
+<h2>XMPP in Android with Smack</h2>
+<pre><code>// Connect to XMPP server using Smack library
+val config = XMPPTCPConnectionConfiguration.builder()
+    .setUsernameAndPassword("shahar", "password")
+    .setXmppDomain("example.com")
+    .setSecurityMode(ConnectionConfiguration.SecurityMode.required)
+    .build()
+
+val connection = XMPPTCPConnection(config)
+connection.connect().login()
+
+// Send a message
+val chat = ChatManager.getInstanceFor(connection)
+    .chatWith(JidCreate.entityBareFrom("user@example.com"))
+chat.send("Hello XMPP!")
+
+// Listen for incoming messages
+connection.addSyncStanzaListener({ stanza ->
+    val message = stanza as Message
+    Log.d("XMPP", "Received: \${message.body}")
+}, MessageTypeFilter.NORMAL_OR_CHAT)</code></pre>
+<h2>Why XMPP for Mobile?</h2>
+<ul>
+<li><strong>Open Standard:</strong> No vendor lock-in; multiple client/server implementations available.</li>
+<li><strong>Extensible:</strong> XMPP Extension Protocols (XEPs) add capabilities — file transfer, voice/video, OMEMO end-to-end encryption.</li>
+<li><strong>Push-friendly:</strong> Works with Android push notification systems via XEP-0357.</li>
+<li><strong>Federation:</strong> XMPP servers can communicate with each other, like email servers.</li>
+</ul>
+<h2>Security for Production Apps</h2>
+<ul>
+<li>Always enforce <strong>TLS/SSL</strong> connections.</li>
+<li>Implement <strong>SASL authentication</strong>.</li>
+<li>Consider <strong>OMEMO end-to-end encryption</strong> for sensitive messages.</li>
+<li>Validate server certificates to prevent MITM attacks.</li>
+</ul>`
+  },
+  'rxjava': {
+    title:'Fundamentals of RxJava with Kotlin',
+    date:'December 10, 2024', readTime:'8 min read', tags:['kotlin','android'],
+    url:'https://mobilearchguild.blogspot.com/2024/12/fundamentals-of-rxjava-with-kotlin.html',
+    body:`<p><strong>Reactive Programming</strong> is a paradigm oriented around data flows and the propagation of change. <strong>RxJava</strong> is a Java-based implementation — one of the most discussed libraries for enabling Reactive Programming in Android development.</p>
+<h2>Adding Dependencies</h2>
+<pre><code>implementation 'io.reactivex.rxjava2:rxjava:2.2.4'
+implementation 'io.reactivex.rxjava2:rxkotlin:2.3.0'
+implementation 'io.reactivex.rxjava2:rxandroid:2.1.0'</code></pre>
+<h2>Observable — The Core Abstraction</h2>
+<pre><code>Observable.fromArray("Apple", "Orange", "Banana")
+    .subscribe { println(it) }
+// Output: Apple, Orange, Banana
+
+// Full observer with all callbacks
+Observable.fromIterable(listOf("Apple", "Orange", "Banana"))
+    .subscribe(
+        { value -> println("Received: \$value") },   // onNext
+        { error -> println("Error: \$error") },       // onError
+        { println("Completed") }                      // onComplete
+    )</code></pre>
+<h2>Key Operators</h2>
+<pre><code>// map — transform each item
+Observable.fromArray(1, 2, 3)
+    .map { it * 2 }
+    .subscribe { println(it) }  // 2, 4, 6
+
+// Practical loading pattern
+loadFromServer()
+    .compose(applySchedulers())
+    .doOnSubscribe { view.showLoadingIndicator() }
+    .doOnTerminate { view.hideLoadingIndicator() }
+    .subscribe(
+        { data -> view.showData(data) },
+        { error -> view.showError(error) }
+    )</code></pre>
+<h2>Emitter Types</h2>
+<ul>
+<li><strong>Observable</strong> — Emits 0 to N items. Most general purpose.</li>
+<li><strong>Flowable</strong> — Like Observable but with Backpressure support for high-volume data streams.</li>
+<li><strong>Single</strong> — Emits exactly one item or an error. Perfect for API calls.</li>
+<li><strong>Maybe</strong> — Emits 0 or 1 item. For optional results.</li>
+<li><strong>Completable</strong> — Emits no items, only completion or error. Fire-and-forget operations.</li>
+</ul>
+<pre><code>// Single — perfect for network calls
+Single.fromCallable { apiService.getUser(userId) }
+    .subscribeOn(Schedulers.io())
+    .observeOn(AndroidSchedulers.mainThread())
+    .subscribe(
+        { user -> showUser(user) },
+        { error -> showError(error) }
+    )</code></pre>
+<blockquote>Observable is the Speaker, Operator is the Translator, and the Observer is the Listener.</blockquote>`
+  },
+  'cellular-evolution': {
+    title:'The Evolution of Cellular Networks (2G → 5G)',
+    date:'December 10, 2024', readTime:'5 min read', tags:['networks'],
+    url:'https://mobilearchguild.blogspot.com/2024/12/the-evolution-of-cellular-networks.html',
+    body:`<p>Cellular networks have revolutionized global communication. Over the years they have evolved significantly, leading to faster speeds, improved reliability, and innovative applications.</p>
+<h2>2G — The Foundation (Circuit-Switched)</h2>
+<p>Primarily designed for voice communication, 2G introduced digital technology replacing analog systems. SMS messaging was enabled. Circuit-switched technology established dedicated connections for the duration of a call.</p>
+<h2>3G — The Mobile Internet Era (Packet-Switched)</h2>
+<p>3G marked a significant leap — faster speeds enabling mobile internet, web browsing, file downloads, and media streaming. Packet-switched technology allowed multiple devices to share network resources efficiently.</p>
+<h2>4G — The Broadband Era</h2>
+<p>4G delivered significantly higher data speeds and lower latency, enabling video calling, online gaming, real-time video streaming. Advanced modulation and MIMO (Multiple-Input Multiple-Output) antennas achieve higher data rates and improved coverage.</p>
+<h2>5G — The Future of Connectivity</h2>
+<ul>
+<li><strong>eMBB (Enhanced Mobile Broadband):</strong> Ultra-high speeds for VR and AR applications.</li>
+<li><strong>URLLC (Ultra-Reliable Low-Latency):</strong> Sub-1ms connections for autonomous vehicles and remote surgery.</li>
+<li><strong>mMTC (Massive Machine-Type):</strong> Billions of IoT devices — smart cities, industrial automation.</li>
+</ul>
+<pre><code>// Detect network type in Android
+val telephonyManager = getSystemService(Context.TELEPHONY_SERVICE) as TelephonyManager
+val networkType = when (telephonyManager.dataNetworkType) {
+    TelephonyManager.NETWORK_TYPE_NR -> "5G"
+    TelephonyManager.NETWORK_TYPE_LTE -> "4G LTE"
+    TelephonyManager.NETWORK_TYPE_HSPAP -> "3G HSPA+"
+    TelephonyManager.NETWORK_TYPE_EDGE -> "2G EDGE"
+    else -> "Unknown"
+}
+Log.d("Network", "Current: \$networkType")</code></pre>`
+  },
+  'sim-cards': {
+    title:'SIM Cards and Unique Identifiers (ICCID/MCC-MNC)',
+    date:'December 10, 2024', readTime:'5 min read', tags:['networks','android'],
+    url:'https://mobilearchguild.blogspot.com/2024/12/sim-cards-and-unique-identifiers.html',
+    body:`<p>SIM cards (Subscriber Identity Modules) are essential components that connect mobile devices to cellular networks. Over the years they have evolved significantly in size and functionality.</p>
+<h2>SIM Card Types</h2>
+<ul>
+<li><strong>Full-size SIM (1FF):</strong> The original, largest size — rarely used today.</li>
+<li><strong>Mini-SIM (2FF):</strong> Once very common, now less so.</li>
+<li><strong>Micro-SIM (3FF):</strong> Still used in some devices.</li>
+<li><strong>Nano-SIM (4FF):</strong> The most common size in modern smartphones.</li>
+<li><strong>eSIM (Embedded SIM):</strong> Digital SIM built into the device — no physical card needed.</li>
+</ul>
+<h2>ICCID (Integrated Circuit Card ID)</h2>
+<p>A unique 19-digit number printed on the SIM card — the SIM's unique identifier regardless of network operator.</p>
+<pre><code>// Getting ICCID in Android (requires READ_PHONE_STATE permission)
+@SuppressLint("HardwareIds")
+fun getSimSerialNumber(): String? {
+    val telephonyManager = getSystemService(Context.TELEPHONY_SERVICE) as TelephonyManager
+    return if (ContextCompat.checkSelfPermission(this,
+            Manifest.permission.READ_PHONE_STATE) == PackageManager.PERMISSION_GRANTED) {
+        telephonyManager.simSerialNumber  // ICCID
+    } else null
+}</code></pre>
+<h2>MCC-MNC: Mobile Country & Network Codes</h2>
+<ul>
+<li><strong>MCC (Mobile Country Code):</strong> 3-digit code identifying the country (425 = Israel, 310 = USA).</li>
+<li><strong>MNC (Mobile Network Code):</strong> 2–3 digit code identifying the specific operator.</li>
+</ul>
+<pre><code>// Getting MCC-MNC in Android
+val telephonyManager = getSystemService(Context.TELEPHONY_SERVICE) as TelephonyManager
+val operator = telephonyManager.networkOperator  // e.g. "42501"
+val mcc = operator.substring(0, 3)  // "425"
+val mnc = operator.substring(3)     // "01"
+
+// Dual-SIM (API 22+)
+val subscriptionManager = getSystemService(Context.TELEPHONY_SUBSCRIPTION_SERVICE)
+    as SubscriptionManager
+subscriptionManager.activeSubscriptionInfoList?.forEach { sub ->
+    Log.d("SIM", "Slot: \${sub.simSlotIndex}, ICCID: \${sub.iccId}")
+}</code></pre>`
+  },
+  'adb-network': {
+    title:'Monitoring Network Traffic with ADB for Android Developers',
+    date:'December 10, 2024', readTime:'5 min read', tags:['networks','android'],
+    url:'https://mobilearchguild.blogspot.com/2024/12/monitoring-network-traffic-with-adb-for.html',
+    body:`<p>Understanding 4G and 5G nuances can significantly impact your app development and testing strategies. Here's how to monitor, analyze and simulate network conditions on Android.</p>
+<h2>Android Studio Network Profiler</h2>
+<p>Android Studio's Network Profiler is your first stop — View → Tool Windows → Profiler → select device → click Network for real-time traffic visualization.</p>
+<h2>ADB Commands for Network Analysis</h2>
+<pre><code># Capture all traffic with tcpdump via ADB
+adb shell tcpdump -i any -w /sdcard/capture.pcap
+
+# Pull for Wireshark analysis
+adb pull /sdcard/capture.pcap ~/Desktop/
+
+# Monitor stats per app UID
+adb shell cat /proc/net/xt_qtaguid/stats
+
+# Simulate throttled network (1Mbps, 400ms latency)
+adb shell tc qdisc add dev eth0 root tbf rate 1mbit burst 32kbit latency 400ms
+
+# Remove simulation
+adb shell tc qdisc del dev eth0 root</code></pre>
+<h2>Detecting Network Bandwidth Programmatically</h2>
+<pre><code>class NetworkMonitor(private val context: Context) {
+    private val cm = context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+
+    fun getBandwidthCategory(): String {
+        val caps = cm.getNetworkCapabilities(cm.activeNetwork) ?: return "NONE"
+        return when {
+            caps.hasTransport(NetworkCapabilities.TRANSPORT_WIFI) -> "WiFi (HIGH)"
+            caps.linkDownstreamBandwidthKbps > 20_000 -> "5G (VERY HIGH)"
+            caps.linkDownstreamBandwidthKbps > 5_000  -> "4G LTE (HIGH)"
+            caps.linkDownstreamBandwidthKbps > 1_000  -> "3G (MEDIUM)"
+            else -> "2G/Edge (LOW)"
+        }
+    }
+}</code></pre>
+<h2>Charles Proxy for HTTPS Interception</h2>
+<pre><code># Route device traffic through Charles
+adb shell settings put global http_proxy 192.168.1.100:8888
+
+# Install Charles SSL cert on device for HTTPS inspection
+
+# Clear proxy when done
+adb shell settings delete global http_proxy</code></pre>`
+  },
+  'unit-tests-basics': {
+    title:'Unit Tests with Kotlin — Basics',
+    date:'December 10, 2024', readTime:'7 min read', tags:['android','testing','kotlin'],
+    url:'https://mobilearchguild.blogspot.com/2024/12/unit-tests-with-kotlin-basics.html',
+    body:`<p>A unit test is a small piece of code that invokes another piece of code and checks the correctness of some assumptions. If the assumptions are wrong, the unit test fails.</p>
+<h2>Test Types</h2>
+<ul>
+<li><strong>Branch Testing:</strong> Runs over a branch before merging — "White Box" testing of current work.</li>
+<li><strong>Component Testing:</strong> Tests multiple functionalities as a single code unit to identify defects at connection points.</li>
+<li><strong>UI Testing:</strong> Validates GUI against business requirements — buttons, alignment, input fields.</li>
+<li><strong>End-to-End Testing:</strong> Mimics real-world use — database, network, other systems.</li>
+<li><strong>Performance Testing:</strong> Checks system performance requirements under stress and load.</li>
+</ul>
+<h2>Basics of a Good Unit Test</h2>
+<ul>
+<li><strong>Easy to write</strong> — developers write many tests, so it should be quick to code them.</li>
+<li><strong>Readable</strong> — a good test tells a story about a behavioral aspect.</li>
+<li><strong>Reliable</strong> — fails only when there's a real bug, not due to flakiness.</li>
+<li><strong>Fast</strong> — if tests are slow, developers skip running them.</li>
+</ul>
+<h2>JUnit 5 Annotations</h2>
+<pre><code>class CalculatorTest {
+    private lateinit var calc: Calculator
+
+    @BeforeEach fun setUp() { calc = Calculator() }
+    @AfterEach fun tearDown() { /* cleanup */ }
+
+    @Test
+    fun \`addition returns correct result\`() {
+        assertEquals(5, calc.add(2, 3))
+    }
+
+    @ParameterizedTest
+    @ValueSource(ints = [1, 2, 3, 4, 5])
+    fun \`value is positive\`(value: Int) {
+        assertTrue(value > 0)
+    }
+
+    @RepeatedTest(3)
+    fun \`test runs three times\`(info: RepetitionInfo) {
+        println("Repetition \${info.currentRepetition}")
+    }
+}</code></pre>
+<h2>Mocking Libraries</h2>
+<ul>
+<li><strong>Mockito</strong> — The classic Java/Kotlin mocking framework. Use <code>mockito-kotlin</code> for idiomatic Kotlin support.</li>
+<li><strong>Mockk</strong> — Kotlin-native library with native support for final classes, object mocking, coroutines, and more.</li>
+<li><strong>PowerMock</strong> — Allows mocking static, final, and private methods. Use sparingly.</li>
+</ul>
+<pre><code>// Mockk example
+@Test
+fun \`repository returns user from API\`() = runTest {
+    val mockApi = mockk&lt;ApiService&gt;()
+    coEvery { mockApi.getUser(1) } returns User(1, "Shahar")
+
+    val repo = UserRepository(mockApi)
+    val result = repo.getUser(1)
+
+    assertEquals("Shahar", result.name)
+    coVerify { mockApi.getUser(1) }
+}</code></pre>
+<h2>Test Libraries</h2>
+<ul>
+<li><strong>Robolectric:</strong> Simulates Android runtime on JVM — run UI tests without an emulator.</li>
+<li><strong>Espresso:</strong> Google's UI testing framework for instrumented tests.</li>
+<li><strong>Appium:</strong> Cross-platform mobile automation for native, web, and hybrid apps.</li>
+</ul>`
+  },
+  'lambda-kotlin': {
+    title:'Lambda Expressions in Kotlin and Best Practices',
+    date:'December 10, 2024', readTime:'5 min read', tags:['kotlin','android'],
+    url:'https://mobilearchguild.blogspot.com/2024/12/lambda-expressions-in-kotlin-and-best.html',
+    body:`<p>Since Java 8, we've been exposed to lambdas. Kotlin uses them extensively — they make code more readable and concise. A lambda (lambda expression) is a block of code that can be used directly as a value — the equivalent of an anonymous function without the <code>fun</code> keyword.</p>
+<h2>From Java to Kotlin Lambdas</h2>
+<pre><code>// Java — verbose anonymous class
+button.setOnClickListener(new View.OnClickListener() {
+    @Override
+    public void onClick(View v) {
+        System.out.println("Clicked!");
+    }
+});
+
+// Kotlin — clean lambda
+button.setOnClickListener { println("Clicked!") }</code></pre>
+<h2>Lambda Syntax</h2>
+<pre><code>// Basic lambda
+val multiply: (Int, Int) -> Int = { a, b -> a * b }
+println(multiply(3, 4)) // 12
+
+// With 'it' shorthand (single parameter)
+val numbers = listOf(1, 2, 3, 4, 5)
+val doubled = numbers.map { it * 2 }
+val evens = numbers.filter { it % 2 == 0 }
+
+// Higher-order functions
+fun operate(a: Int, b: Int, op: (Int, Int) -> Int): Int = op(a, b)
+val result = operate(10, 5) { x, y -> x + y }</code></pre>
+<h2>Best Practices</h2>
+<ul>
+<li><strong>Prefer trailing lambda syntax</strong> when the last parameter is a lambda: <code>list.forEach { ... }</code></li>
+<li><strong>Use 'it' for single parameters</strong> unless the parameter name improves clarity.</li>
+<li><strong>Avoid capturing mutable variables</strong> — lambdas capturing <code>var</code> can cause unexpected behavior.</li>
+<li><strong>Use inline functions</strong> for lambdas called in tight loops to avoid object allocation overhead.</li>
+<li><strong>Named lambda parameters</strong> improve readability for complex multi-line lambdas.</li>
+</ul>
+<pre><code>// Good: descriptive parameter in complex lambda
+list.forEach { user ->
+    val formattedName = user.name.uppercase()
+    val age = calculateAge(user.birthDate)
+    repository.save(User(formattedName, age))
+}
+
+// Inline function — no lambda object allocation
+inline fun performAction(action: () -> Unit) {
+    println("Before")
+    action()
+    println("After")
+}</code></pre>`
+  },
+  'android-runtime-jit': {
+    title:'Android Runtime: Just In Time Compilation — Dalvik',
+    date:'December 10, 2024', readTime:'6 min read', tags:['android'],
+    url:'https://mobilearchguild.blogspot.com/2024/12/android-runtime-just-in-time.html',
+    body:`<p>When running a build on Android Studio, the compiler generates an APK. Part of that APK are <strong>.dex (Dalvik Executable)</strong> files containing the app's source code in low-level bytecode designed for a software interpreter.</p>
+<h2>Dalvik and the JIT Approach</h2>
+<p>When running the app, bytecode in .dex files is translated at runtime into machine code — instructions processed by the CPU. Dalvik used <strong>Just-In-Time (JIT) compilation</strong>:</p>
+<ul>
+<li>The .class files contain standard Oracle JVM Java bytecodes.</li>
+<li>Android's <strong>dx tool</strong> converts JVM bytecodes to Dalvik bytecodes (.dex format).</li>
+<li>At runtime, the Dalvik JIT compiler translates bytecode to native machine code on-the-fly.</li>
+</ul>
+<h2>Dalvik Bytecodes Conversion</h2>
+<pre><code>// Build pipeline (simplified):
+// .java / .kt → .class (JVM bytecode)
+//           → .dex (Dalvik bytecode via dx/d8)
+//           → APK (packaged)
+
+// At runtime:
+// .dex bytecode → JIT compiler → native machine code → CPU execution</code></pre>
+<h2>JIT Advantages</h2>
+<ul>
+<li><strong>Faster app install:</strong> No pre-compilation step during installation.</li>
+<li><strong>Adaptive optimization:</strong> JIT can optimize hot paths based on actual runtime usage.</li>
+<li><strong>Lower storage footprint:</strong> No pre-compiled native code stored on device.</li>
+</ul>
+<h2>JIT Limitations</h2>
+<ul>
+<li><strong>Slower startup:</strong> Cold starts require JIT compilation before execution.</li>
+<li><strong>Battery drain:</strong> Continuous compilation consumes CPU cycles at runtime.</li>
+<li><strong>Memory overhead:</strong> JIT compiler itself occupies RAM.</li>
+</ul>
+<p>These limitations led Google to introduce AOT compilation in Android Lollipop (5.0) — replacing Dalvik entirely with the Android Runtime (ART).</p>`
+  },
+  'android-runtime-aot': {
+    title:'Android Runtime: Ahead of Time Compilation — AOT / Hybrid JIT',
+    date:'December 10, 2024', readTime:'6 min read', tags:['android'],
+    url:'https://mobilearchguild.blogspot.com/2024/12/android-runtime-ahead-of-time.html',
+    body:`<p>Google replaced Dalvik's JIT compiler with an <strong>ahead-of-time (AOT) compiler</strong> that translates bytecode to native machine code during installation.</p>
+<h2>AOT: Ahead-of-Time Compilation (≤ Lollipop)</h2>
+<p>First introduced in Android L (5.0), AOT was the complete opposite of Dalvik's approach. Instead of interpreting code at runtime, code was <strong>compiled during installation</strong>. When the app ran, native machine code was already prepared.</p>
+<ul>
+<li>Running native machine code is up to <strong>20x faster</strong> than JIT interpretation.</li>
+<li>Smoother app performance and lower battery usage during runtime.</li>
+</ul>
+<h2>AOT Lifecycle</h2>
+<pre><code>// AOT lifecycle:
+// Install → dex2oat compiles .dex → .oat (native code)
+// Launch  → Load pre-compiled .oat → Execute directly on CPU
+// (No runtime compilation overhead)
+
+// AOT generates OAT files:
+// /data/dalvik-cache/arm64/system@app@MyApp.apk@classes.dex</code></pre>
+<h2>AOT Limitations</h2>
+<ul>
+<li><strong>Slow installation:</strong> Full compilation at install time takes significant time.</li>
+<li><strong>Large storage footprint:</strong> Pre-compiled native code consumes extra storage.</li>
+<li><strong>Cannot use runtime type information</strong> the way JIT can.</li>
+</ul>
+<h2>Modern: Profile-Guided Compilation (Android 7+)</h2>
+<p>Android Nougat introduced a <strong>hybrid JIT/AOT approach</strong>: apps start with an interpreter, the JIT profile records hot methods, and during device charging ART compiles the hot methods AOT.</p>
+<pre><code>// Modern compilation timeline:
+// First launch  → Interpreted (fast install)
+// Repeated use  → JIT compiles hot methods + records profile
+// Device charges → Background dex2oat uses profile → AOT hot methods
+// Subsequent launches → Hot paths run as fast native code</code></pre>
+<p>This approach gives the best of both worlds — fast installs AND fast execution — while keeping storage usage reasonable by only AOT-compiling the most-used code paths.</p>`
+  },
+  'rethinking-architecture': {
+    title:"Rethinking Mobile Architecture: A Developer's Perspective",
+    date:'December 10, 2024', readTime:'3 min read', tags:['android'],
+    url:'https://mobilearchguild.blogspot.com/2024/12/rethinking-mobile-architecture.html',
+    body:`<p>Inspired by the elegance and efficiency of mobile architectures, I've dedicated the past decade to crafting exceptional Android applications. My journey has been a continuous exploration of innovative design patterns and robust development practices.</p>
+<h2>Why Architecture Matters</h2>
+<p>A strong foundation in application architecture is crucial for creating exceptional user experiences. Poor architecture leads to technical debt that compounds over time — slowing development, introducing bugs, and making the codebase fragile and hard to test.</p>
+<h2>The Patterns That Shaped My Thinking</h2>
+<ul>
+<li><strong>MVVM (Model-View-ViewModel):</strong> The gold standard for Android — clean separation between UI and business logic, excellent testability with ViewModels surviving configuration changes.</li>
+<li><strong>Clean Architecture (Uncle Bob):</strong> Domain layer independence means business logic is completely separate from Android framework dependencies — testable with pure JVM unit tests.</li>
+<li><strong>Repository Pattern:</strong> Single source of truth for data — abstracts away whether data comes from network, database, or cache.</li>
+</ul>
+<pre><code>// Clean Architecture example
+// Domain layer (pure Kotlin, zero Android dependencies)
+class GetUserUseCase(private val userRepository: UserRepository) {
+    suspend operator fun invoke(userId: Int): Result&lt;User&gt; {
+        return userRepository.getUser(userId)
+    }
+}
+
+// ViewModel (Android layer)
+class UserViewModel(private val getUserUseCase: GetUserUseCase) : ViewModel() {
+    val user = MutableStateFlow&lt;User?&gt;(null)
+
+    fun loadUser(id: Int) {
+        viewModelScope.launch {
+            getUserUseCase(id).onSuccess { user.value = it }
+        }
+    }
+}</code></pre>
+<h2>Principles I Live By</h2>
+<ul>
+<li><strong>Test-Driven Development:</strong> Write the test first — it forces you to design testable, modular code.</li>
+<li><strong>Dependency Injection:</strong> Use Hilt/Koin to decouple components and enable testing.</li>
+<li><strong>Single Responsibility:</strong> Each class should have one, and only one, reason to change.</li>
+<li><strong>Offline-First:</strong> Design for network failure — cache aggressively, sync opportunistically.</li>
+</ul>
+<p>Welcome to the Mobile Architecture Guild — where I share these insights and my ongoing exploration of what makes mobile software truly excellent.</p>`
+  }
+};
+// ============ RENDER ARTICLE ============
+function openArticle(id) {
+  const a = ARTICLES[id];
+  if (!a) return;
+  prevPage = document.querySelector('.page.active')?.id?.replace('page-','') || 'blog';
+
+  // Tags HTML
+  const tagMap = {android:'android',testing:'testing',networks:'networks',cicd:'cicd',kotlin:'kotlin',casestudy:''};
+  const tagsHtml = a.tags.map(t => `<span class="tag ${t}">${t.charAt(0).toUpperCase()+t.slice(1)}</span>`).join('');
+
+  document.getElementById('art-hd').innerHTML = `
+    <div class="tags">${tagsHtml}</div>
+    <h1>${a.title}</h1>`;
+
+  document.getElementById('art-meta').innerHTML = `
+    <span>📅 ${a.date}</span>
+    <span>⏱ ${a.readTime}</span>
+    <a href="${a.url}" target="_blank">View on Blogger ↗</a>`;
+
+  document.getElementById('art-body').innerHTML = a.body;
+
+  // Related articles
+  const related = Object.entries(ARTICLES)
+    .filter(([k]) => k !== id)
+    .slice(0, 4);
+  document.getElementById('related').innerHTML = `
+    <h3>More Articles</h3>
+    <div class="rel-grid">
+      ${related.map(([k,r]) => `
+        <div class="rel-card" onclick="openArticle('${k}')">
+          <div class="tags" style="margin-bottom:.3rem">${r.tags.slice(0,2).map(t=>`<span class="tag ${t}">${t}</span>`).join('')}</div>
+          <div class="rel-title">${r.title}</div>
+          <div class="rel-date">${r.date}</div>
+        </div>`).join('')}
+    </div>`;
+
+  showPage('article');
+
+  // Progress bar
+  const pbar = document.getElementById('pbar');
+  const artWrap = document.querySelector('.art-wrap');
+  function updateProgress() {
+    const scrolled = window.scrollY;
+    const totalH = document.documentElement.scrollHeight - window.innerHeight;
+    const pct = totalH > 0 ? (scrolled / totalH) * 100 : 0;
+    pbar.style.width = pct + '%';
+  }
+  window.removeEventListener('scroll', window._progressHandler);
+  window._progressHandler = updateProgress;
+  window.addEventListener('scroll', updateProgress);
+  updateProgress();
+}
+
+// ============ FILTER & SEARCH ============
+function filterArts() {
+  const activeFilter = document.querySelector('.ft.on')?.dataset.f || 'all';
+  const search = document.getElementById('sbox')?.value?.toLowerCase() || '';
+  document.querySelectorAll('#al .ar').forEach(row => {
+    const cats = row.dataset.c || '';
+    const title = row.querySelector('.ar-title')?.textContent?.toLowerCase() || '';
+    const excerpt = row.querySelector('.ar-excerpt')?.textContent?.toLowerCase() || '';
+    const matchFilter = activeFilter === 'all' || cats.includes(activeFilter);
+    const matchSearch = !search || title.includes(search) || excerpt.includes(search) || cats.includes(search);
+    row.style.display = matchFilter && matchSearch ? '' : 'none';
+  });
+}
+
+document.querySelectorAll('.ft').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.ft').forEach(b => b.classList.remove('on'));
+    btn.classList.add('on');
+    filterArts();
+  });
+});
+
+// ============ INIT ============
+// Show correct page based on hash (optional)
+const hash = location.hash.replace('#','');
+if (hash && ['home','blog','projects','about'].includes(hash)) showPage(hash);
+</script>
+</body>
+</html>
