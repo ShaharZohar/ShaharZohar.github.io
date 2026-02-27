@@ -30,7 +30,7 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);line-
 .next-link:hover{border-color:var(--accent);color:var(--accent)}
 
 /* PAGES */
-.page{display:none;min-height:100vh;padding-top:56px}
+.page{display:none;min-height:100vh;padding-top:104px}
 .page.active{display:block}
 .pi{max-width:1200px;margin:0 auto;padding:3rem 2rem}
 @keyframes fi{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
@@ -41,9 +41,9 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);line-
 
 /* HERO CANVAS */
 .hero-canvas-wrap{position:absolute;inset:0;overflow:hidden;pointer-events:none;z-index:0}
-#hero-canvas{position:absolute;inset:0;width:100%;height:100%;opacity:.6}
-.hero-glow{position:absolute;width:650px;height:650px;border-radius:50%;background:radial-gradient(circle,rgba(88,230,168,.065) 0%,transparent 60%);right:-140px;top:50%;transform:translateY(-50%);pointer-events:none}
-.hero-glow2{position:absolute;width:380px;height:380px;border-radius:50%;background:radial-gradient(circle,rgba(167,139,250,.045) 0%,transparent 60%);left:-60px;bottom:-40px;pointer-events:none}
+#hero-canvas{position:absolute;inset:0;width:100%;height:100%;opacity:1}
+.hero-glow{position:absolute;width:800px;height:800px;border-radius:50%;background:radial-gradient(circle,rgba(88,230,168,.18) 0%,rgba(88,230,168,.06) 35%,transparent 65%);right:-180px;top:50%;transform:translateY(-50%);pointer-events:none}
+.hero-glow2{position:absolute;width:500px;height:500px;border-radius:50%;background:radial-gradient(circle,rgba(167,139,250,.15) 0%,rgba(249,115,22,.05) 50%,transparent 70%);left:-80px;bottom:-60px;pointer-events:none}
 
 /* HERO */
 #page-home .hero{min-height:calc(100vh - 56px);display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:center;max-width:1200px;margin:0 auto;padding:3rem 2rem;position:relative}
@@ -75,6 +75,7 @@ h1.hname{font-family:'DM Sans',sans-serif;font-size:clamp(2.8rem,5vw,5rem);font-
 .t-k{color:#ff79c6}.t-v{color:var(--accent3)}.t-s{color:var(--accent)}.t-c{color:#3d444e}
 .tcur{display:inline-block;width:8px;height:14px;background:var(--accent);vertical-align:middle;animation:blink 1s step-end infinite}
 @keyframes blink{0%,100%{opacity:1}50%{opacity:0}}
+@keyframes spin{to{transform:rotate(360deg)}}
 
 /* SECTION HEADER */
 .sh{margin-bottom:2.5rem}
@@ -214,13 +215,32 @@ footer{border-top:1px solid var(--border);padding:1.75rem 2rem;display:flex;alig
 .fl{font-family:'JetBrains Mono',monospace;color:var(--accent)}
 
 @media(max-width:900px){
-  #page-home .hero{grid-template-columns:1fr}.terminal{display:none}
-  .about-grid{grid-template-columns:1fr}.av-wrap{width:100%;max-width:280px}
-  .afc{grid-template-columns:1fr}.afc-vis{min-height:120px}
-  .nav-links .nbtn{display:none}.nav-links .nbtn.active{display:block}
+  #page-home .hero{grid-template-columns:1fr;min-height:auto;padding-top:2rem;padding-bottom:1.5rem}
+  .hero .terminal{display:none}
+  .hero-canvas-wrap{opacity:.25}
+  .about-grid{grid-template-columns:1fr}
+  .av-wrap{width:100%;max-width:220px}
+  .afc{grid-template-columns:1fr}
+  .afc-vis{display:none}
+  .mini-grid{grid-template-columns:1fr 1fr}
+  .proj-grid{grid-template-columns:1fr 1fr}
+  .contact-grid{grid-template-columns:1fr!important}
+  h1.hname{font-size:clamp(2rem,8vw,3.5rem)}
+  .hbio{font-size:.88rem}
 }
 @media(max-width:600px){
   .pi,.hs,.art-wrap{padding-left:1rem;padding-right:1rem}
+  .hstats{gap:1.2rem}
+  .hstats .hsn{font-size:1.4rem}
+  .ar{grid-template-columns:1fr;gap:.4rem}
+  .mini-grid,.proj-grid{grid-template-columns:1fr}
+  .contact-grid{grid-template-columns:1fr!important}
+  footer{flex-direction:column;gap:.5rem;text-align:center}
+  .nav-links .next-link{display:none}
+  h1.hname{font-size:2rem}
+  .hctas .btn{font-size:.8rem;padding:.55rem 1rem}
+  .about-grid{gap:1.5rem}
+}
   .hstats{gap:1.5rem}.ar{grid-template-columns:1fr;gap:.4rem}
   footer{flex-direction:column;gap:.5rem;text-align:center}
 }
@@ -238,8 +258,21 @@ footer{border-top:1px solid var(--border);padding:1.75rem 2rem;display:flex;alig
     <button class="nbtn" id="nb-about" onclick="showPage('about')">About</button>
     <a class="next-link" href="https://github.com/ShaharZohar" target="_blank">GitHub ↗</a>
     <a class="next-link" href="https://www.linkedin.com/in/shahar-zohar-b8096649/" target="_blank">LinkedIn ↗</a>
+
   </div>
 </nav>
+
+<!-- SEARCH BAR ROW -->
+<div id="search-bar-row" style="background:var(--surface);border-bottom:1px solid var(--border);padding:.6rem 2rem;position:sticky;top:56px;z-index:99">
+  <div style="max-width:1200px;margin:0 auto;position:relative">
+    <span style="position:absolute;left:.8rem;top:50%;transform:translateY(-50%);color:var(--text3);font-size:.85rem;pointer-events:none">⌕</span>
+    <input id="nav-search-input" type="text" placeholder="Search articles & projects…" autocomplete="off"
+      style="width:100%;background:var(--bg);border:1px solid var(--border);color:var(--text);padding:.45rem 1rem .45rem 2.2rem;border-radius:8px;font-size:.82rem;font-family:'JetBrains Mono',monospace;outline:none;transition:border-color .15s"
+      onfocus="this.style.borderColor='var(--accent)'" onblur="this.style.borderColor='var(--border)';if(!this.value){document.getElementById('nav-search-results').style.display='none'}"
+      oninput="runNavSearch(this.value)">
+    <div id="nav-search-results" style="display:none;position:absolute;top:calc(100% + 6px);left:0;right:0;background:var(--surface);border:1px solid var(--border);border-radius:10px;box-shadow:0 16px 48px rgba(0,0,0,.6);z-index:300;max-height:400px;overflow-y:auto"></div>
+  </div>
+</div>
 
 <!-- ========== HOME PAGE ========== -->
 <div class="page active" id="page-home">
@@ -260,9 +293,8 @@ footer{border-top:1px solid var(--border);padding:1.75rem 2rem;display:flex;alig
       <div class="hstats">
         <div><span class="hsn">11</span><span class="hsl">Yrs Exp</span></div>
         <div><span class="hsn">18+</span><span class="hsl">Articles</span></div>
-        <div><span class="hsn">4</span><span class="hsl">Companies</span></div>
       </div>
-      <div style="margin-top:2rem;display:flex;flex-wrap:wrap;gap:.4rem">
+      <div style="margin-top:1rem;display:flex;flex-wrap:wrap;gap:.4rem">
         <span style="font-family:'JetBrains Mono',monospace;font-size:.66rem;padding:.2rem .6rem;border-radius:4px;background:rgba(88,230,168,.07);color:var(--accent);border:1px solid rgba(88,230,168,.2)">Kotlin</span>
         <span style="font-family:'JetBrains Mono',monospace;font-size:.66rem;padding:.2rem .6rem;border-radius:4px;background:rgba(88,230,168,.07);color:var(--accent);border:1px solid rgba(88,230,168,.2)">Java</span>
         <span style="font-family:'JetBrains Mono',monospace;font-size:.66rem;padding:.2rem .6rem;border-radius:4px;background:rgba(167,139,250,.07);color:var(--accent2);border:1px solid rgba(167,139,250,.2)">Android Native</span>
@@ -281,7 +313,7 @@ footer{border-top:1px solid var(--border);padding:1.75rem 2rem;display:flex;alig
         <span class="ttitle">shahar@servicenow ~ whoami.kt</span>
       </div>
       <div class="tbody">
-<span class="t-c">// ServiceNow · Kiryat Ono, Israel</span>
+<span class="t-c">// ServiceNow · Senior Full Stack Developer</span>
 <span class="t-k">val</span> <span class="t-cmd">shahar</span> = <span class="t-v">Engineer</span>(
   <span class="t-cmd">company</span>  = <span class="t-s">"ServiceNow"</span>,
   <span class="t-cmd">role</span>     = <span class="t-s">"Senior Full Stack Dev"</span>,
@@ -293,7 +325,7 @@ footer{border-top:1px solid var(--border);padding:1.75rem 2rem;display:flex;alig
   <span class="t-cmd">testing</span>  = <span class="t-s">listOf("JUnit","Appium","Espresso")</span>
 )
 <span class="t-c">// 🧊 Arctic Code Vault Contributor</span>
-<span class="t-c">// 📍 codeninjaa@gmail.com</span>
+<span class="t-c">// 📍 <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="f99a969d9c979097939898b99e94989095d79a9694">[email&#160;protected]</a></span>
 shahar.<span class="t-v">build</span>()<span class="tcur"></span>
       </div>
     </div>
@@ -302,8 +334,7 @@ shahar.<span class="t-v">build</span>()<span class="tcur"></span>
   <!-- CONTACT STRIP -->
   <div style="background:var(--surface);border-top:1px solid var(--border);border-bottom:1px solid var(--border)">
     <div style="max-width:1200px;margin:0 auto;padding:.75rem 2rem;display:flex;gap:2rem;flex-wrap:wrap;align-items:center">
-      <span style="font-family:'JetBrains Mono',monospace;font-size:.72rem;color:var(--text3)">📍 Kiryat Ono, Israel</span>
-      <a href="mailto:codeninjaa@gmail.com" style="font-family:'JetBrains Mono',monospace;font-size:.72rem;color:var(--text2);text-decoration:none;transition:color .15s" onmouseover="this.style.color='var(--accent)'" onmouseout="this.style.color='var(--text2)'">✉ codeninjaa@gmail.com</a>
+      <a href="/cdn-cgi/l/email-protection#d5b6bab1b0bbbcbbbfb4b495b2b8b4bcb9fbb6bab8" style="font-family:'JetBrains Mono',monospace;font-size:.72rem;color:var(--text2);text-decoration:none;transition:color .15s" onmouseover="this.style.color='var(--accent)'" onmouseout="this.style.color='var(--text2)'">✉ <span class="__cf_email__" data-cfemail="583b373c3d363136323939183f35393134763b3735">[email&#160;protected]</span></a>
       <a href="tel:+972587883005" style="font-family:'JetBrains Mono',monospace;font-size:.72rem;color:var(--text2);text-decoration:none;transition:color .15s" onmouseover="this.style.color='var(--accent)'" onmouseout="this.style.color='var(--text2)'">📞 +972-587-883-005</a>
       <span style="font-family:'JetBrains Mono',monospace;font-size:.72rem;color:var(--text3);margin-left:auto">ServiceNow · Senior Full Stack Developer</span>
     </div>
@@ -394,13 +425,13 @@ node.broadcast({
   <!-- CONTACT SECTION -->
   <div style="background:var(--surface);border-top:1px solid var(--border)">
     <div style="max-width:900px;margin:0 auto;padding:3.5rem 2rem">
-      <div style="display:grid;grid-template-columns:1fr 1fr;gap:3.5rem;align-items:start">
+      <div class="contact-grid" style="display:grid;grid-template-columns:1fr 1fr;gap:3.5rem;align-items:start">
         <div>
           <div style="font-family:'JetBrains Mono',monospace;font-size:.7rem;color:var(--accent);letter-spacing:.15em;text-transform:uppercase;margin-bottom:.5rem">// Get in touch</div>
           <h2 style="font-family:'DM Sans',sans-serif;font-size:2rem;font-weight:800;letter-spacing:-.025em;margin-bottom:.75rem">Let's Talk</h2>
           <p style="color:var(--text2);font-size:.92rem;font-weight:300;line-height:1.75;margin-bottom:2rem">Senior Full Stack &amp; Android developer with 11 years at enterprise scale. Feel free to reach out about projects, roles, or collaboration.</p>
           <div style="display:flex;flex-direction:column;gap:.75rem">
-            <a href="mailto:codeninjaa@gmail.com" style="display:flex;align-items:center;gap:.75rem;color:var(--text2);text-decoration:none;font-size:.88rem;transition:color .15s" onmouseover="this.style.color='var(--accent)'" onmouseout="this.style.color='var(--text2)'"><span style="width:36px;height:36px;background:var(--surface2);border:1px solid var(--border);border-radius:8px;display:flex;align-items:center;justify-content:center;flex-shrink:0">✉</span><span>codeninjaa@gmail.com</span></a>
+            <a href="/cdn-cgi/l/email-protection#5c3f333839323532363d3d1c3b313d3530723f3331" style="display:flex;align-items:center;gap:.75rem;color:var(--text2);text-decoration:none;font-size:.88rem;transition:color .15s" onmouseover="this.style.color='var(--accent)'" onmouseout="this.style.color='var(--text2)'"><span style="width:36px;height:36px;background:var(--surface2);border:1px solid var(--border);border-radius:8px;display:flex;align-items:center;justify-content:center;flex-shrink:0">✉</span><span><span class="__cf_email__" data-cfemail="a3c0ccc7c6cdcacdc9c2c2e3c4cec2cacf8dc0ccce">[email&#160;protected]</span></span></a>
             <a href="tel:+972587883005" style="display:flex;align-items:center;gap:.75rem;color:var(--text2);text-decoration:none;font-size:.88rem;transition:color .15s" onmouseover="this.style.color='var(--accent)'" onmouseout="this.style.color='var(--text2)'"><span style="width:36px;height:36px;background:var(--surface2);border:1px solid var(--border);border-radius:8px;display:flex;align-items:center;justify-content:center;flex-shrink:0">📞</span><span>+972-587-883-005</span></a>
             <a href="https://www.linkedin.com/in/shahar-zohar-b8096649/" target="_blank" style="display:flex;align-items:center;gap:.75rem;color:var(--text2);text-decoration:none;font-size:.88rem;transition:color .15s" onmouseover="this.style.color='var(--accent)'" onmouseout="this.style.color='var(--text2)'"><span style="width:36px;height:36px;background:var(--surface2);border:1px solid var(--border);border-radius:8px;display:flex;align-items:center;justify-content:center;flex-shrink:0">💼</span><span>linkedin.com/in/shahar-zohar-b8096649</span></a>
           </div>
@@ -416,9 +447,33 @@ node.broadcast({
     </div>
   </div>
 
+  <!-- TECH NEWS SECTION -->
+  <div id="tech-news-section" style="border-top:1px solid var(--border);background:var(--bg)">
+    <div style="max-width:1200px;margin:0 auto;padding:2.5rem 2rem">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:1.5rem;flex-wrap:wrap;gap:.75rem">
+        <div>
+          <div style="font-family:'JetBrains Mono',monospace;font-size:.7rem;color:var(--accent);letter-spacing:.15em;text-transform:uppercase;margin-bottom:.3rem">// live feed</div>
+          <h2 style="font-family:'DM Sans',sans-serif;font-size:1.4rem;font-weight:800;letter-spacing:-.02em;margin:0">Tech &amp; Android News</h2>
+        </div>
+        <div style="display:flex;gap:.5rem;flex-wrap:wrap">
+          <button class="news-ft on" onclick="setNewsFilter('all')" style="font-family:'JetBrains Mono',monospace;font-size:.66rem;padding:.25rem .7rem;border-radius:20px;border:1px solid var(--accent);background:rgba(88,230,168,.1);color:var(--accent);cursor:pointer">All</button>
+          <button class="news-ft" onclick="setNewsFilter('android')" style="font-family:'JetBrains Mono',monospace;font-size:.66rem;padding:.25rem .7rem;border-radius:20px;border:1px solid var(--border);background:transparent;color:var(--text3);cursor:pointer">Android</button>
+          <button class="news-ft" onclick="setNewsFilter('kotlin')" style="font-family:'JetBrains Mono',monospace;font-size:.66rem;padding:.25rem .7rem;border-radius:20px;border:1px solid var(--border);background:transparent;color:var(--text3);cursor:pointer">Kotlin</button>
+          <button class="news-ft" onclick="setNewsFilter('ai')" style="font-family:'JetBrains Mono',monospace;font-size:.66rem;padding:.25rem .7rem;border-radius:20px;border:1px solid var(--border);background:transparent;color:var(--text3);cursor:pointer">AI / Dev</button>
+        </div>
+      </div>
+      <div id="news-grid" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:1rem">
+        <div style="grid-column:1/-1;text-align:center;padding:2rem;color:var(--text3);font-family:'JetBrains Mono',monospace;font-size:.78rem">
+          <div style="font-size:1.4rem;margin-bottom:.5rem">⬡</div>Fetching latest news…
+        </div>
+      </div>
+      <div style="margin-top:.75rem;font-family:'JetBrains Mono',monospace;font-size:.62rem;color:var(--text3)">Sources: Android Dev Blog · Android Authority · Kotlin Blog · Hacker News · The Verge</div>
+    </div>
+  </div>
+
   <footer>
     <span class="fl">sz.dev</span>
-    <span>© 2025 Shahar Zohar · ServiceNow · Kiryat Ono, Israel</span>
+    <span>© 2025 Shahar Zohar · ServiceNow</span>
     <span>🧊 Arctic Code Vault Contributor</span>
   </footer>
 </div>
@@ -608,7 +663,7 @@ node.broadcast({
         </div>
         <div class="av-name">Shahar Zohar</div>
         <div class="av-role">Senior Full Stack Developer · ServiceNow</div>
-        <a class="al-link" href="mailto:codeninjaa@gmail.com"><span>✉️</span><span>codeninjaa@gmail.com</span></a>
+        <a class="al-link" href="/cdn-cgi/l/email-protection#75161a11101b1c1b1f1414351218141c195b161a18"><span>✉️</span><span><span class="__cf_email__" data-cfemail="7615191213181f181c171736111b171f1a5815191b">[email&#160;protected]</span></span></a>
         <a class="al-link" href="tel:+972587883005"><span>📞</span><span>+972-587-883-005</span></a>
         <a class="al-link" href="https://github.com/ShaharZohar" target="_blank"><span>⌨️</span><span>github.com/ShaharZohar</span></a>
         <a class="al-link" href="https://www.linkedin.com/in/shahar-zohar-b8096649/" target="_blank"><span>💼</span><span>linkedin.com/in/shahar-zohar</span></a>
@@ -632,7 +687,7 @@ node.broadcast({
         </div>
       </div>
       <div class="ar-right">
-        <p>I'm a <strong>Senior Full Stack Developer at ServiceNow</strong> based in Kiryat Ono, Israel, with 11 years of experience specializing in mobile native development (Java &amp; Kotlin), Java backend services, and SDK development. I have a proven track record delivering enterprise-scale solutions and driving code quality through comprehensive testing and automation.</p>
+        <p>I'm a <strong>Senior Full Stack Developer at ServiceNow</strong>, with 11 years of experience specializing in mobile native development (Java &amp; Kotlin), Java backend services, and SDK development. I have a proven track record delivering enterprise-scale solutions and driving code quality through comprehensive testing and automation.</p>
         <p>At ServiceNow, I've spent 7 years leading Android client development for the enterprise mobile platform — designing and implementing mobile components, integrating Security, Authentication, and Session Management systems, and working alongside cross-functional teams across multinational environments. I recently transitioned into a <strong>Full Stack role</strong>, expanding into Java backend services, API development, and platform integrations using IntelliJ IDEA and VS Code.</p>
         <p>I actively leverage <strong>AI-assisted development</strong> daily — using Claude, Windsurf, Gemini, and Perplexity to enhance code quality, accelerate development, and implement best practices. I'm also a <strong>GitHub Arctic Code Vault Contributor</strong>, with code preserved in Svalbard, Norway for future generations.</p>
         <p>Beyond ServiceNow, I've built real-world products across 4 companies: a full VoIP/GSM communication app with XMPP and WebRTC at Koltrol, a WiFi SDK for global device manufacturers at TruConnect, 14 native apps as Android Team Lead at Devsense, and ongoing open-source work tracked through the Mobile Architecture Guild blog.</p>
@@ -703,7 +758,7 @@ node.broadcast({
     </div>
   </div>
 </div>
-<script>
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
 // ============ PAGE NAVIGATION ============
 let prevPage = 'home';
 function showPage(id) {
@@ -712,6 +767,7 @@ function showPage(id) {
   document.getElementById('page-' + id).classList.add('active');
   document.getElementById('nb-' + (id === 'article' ? 'blog' : id))?.classList.add('active');
   window.scrollTo(0,0);
+  if (id === 'home') setTimeout(initHeroCanvas, 50);
 }
 function goBack() { showPage('blog'); }
 
@@ -1524,139 +1580,256 @@ document.querySelectorAll('.ft').forEach(btn => {
   });
 });
 
-// ============ CONTACT FORM ============
-function sendContactForm() {
-  const name = document.getElementById('cf-name').value.trim();
-  const email = document.getElementById('cf-email').value.trim();
-  const body = document.getElementById('cf-msg-body').value.trim();
-  const msg  = document.getElementById('cf-msg');
-  const btn  = document.getElementById('cf-send');
-  function showMsg(text, ok) {
-    msg.style.display = 'block';
-    msg.style.background = ok ? 'rgba(88,230,168,.1)' : 'rgba(249,115,22,.1)';
-    msg.style.border = ok ? '1px solid rgba(88,230,168,.3)' : '1px solid rgba(249,115,22,.3)';
-    msg.style.color = ok ? 'var(--accent)' : 'var(--accent3)';
-    msg.textContent = text;
-  }
-  if (!name || !email || !body) { showMsg('Please fill in all fields.', false); return; }
-  if (!/^[^@]+@[^@]+\.[^@]+$/.test(email)) { showMsg('Please enter a valid email.', false); return; }
-  btn.textContent = 'Opening mail client...';
-  btn.disabled = true;
-  const subject = encodeURIComponent('Portfolio enquiry from ' + name);
-  const mailBody = encodeURIComponent('Name: ' + name + '\nEmail: ' + email + '\n\n' + body);
-  window.location.href = 'mailto:codeninjaa@gmail.com?subject=' + subject + '&body=' + mailBody;
-  setTimeout(() => {
-    showMsg('Mail client opened with your message pre-filled. If it did not open, email codeninjaa@gmail.com directly.', true);
-    btn.textContent = 'Send Message →';
-    btn.disabled = false;
-  }, 1400);
-}
-
 // ============ INIT ============
+// Show correct page based on hash (optional)
 const hash = location.hash.replace('#','');
 if (hash && ['home','blog','projects','about'].includes(hash)) showPage(hash);
+// Init canvas on first load
+setTimeout(initHeroCanvas, 100);
 
-// ============ HERO CANVAS ============
-(function(){
-  const cv = document.getElementById('hero-canvas');
-  if (!cv) return;
-  const ctx = cv.getContext('2d');
-  const C = ['rgba(88,230,168,','rgba(167,139,250,','rgba(249,115,22,','rgba(56,189,248,'];
-  const LAYERS = [4,6,6,3];
-  const LABELS = [
-    ['Android','Kotlin','Java','REST'],
-    ['MVVM','RxJava','XMPP','Auth','CI/CD','SDK'],
-    ['Jenkins','Appium','WebRTC','SonarQube','Gradle','Git'],
-    ['Ship','Test','Deploy']
-  ];
-  let W,H,nodes,edges,parts;
-
-  function resize(){
-    W = cv.width  = cv.parentElement.offsetWidth;
-    H = cv.height = cv.parentElement.offsetHeight;
-    build();
-  }
-
-  function build(){
-    nodes=[]; edges=[]; parts=[];
-    const px=W*.1, py=H*.13, uw=W-px*2, uh=H-py*2;
-    LAYERS.forEach((n,li)=>{
-      const x=px+(li/(LAYERS.length-1))*uw;
-      for(let i=0;i<n;i++){
-        nodes.push({x, y:py+((i+.5)/n)*uh,
-          r:li===0||li===LAYERS.length-1?5:4,
-          col:C[li], label:LABELS[li][i]||'', layer:li,
-          ph:Math.random()*Math.PI*2, ps:.016+Math.random()*.012,
-          op:.5+Math.random()*.4});
-      }
-    });
-    let off=0;
-    for(let li=0;li<LAYERS.length-1;li++){
-      const as=off,ae=off+LAYERS[li],bs=ae,be=bs+LAYERS[li+1];
-      for(let a=as;a<ae;a++)
-        for(let b=bs;b<be;b++)
-          edges.push({a,b,op:.04+Math.random()*.1,col:C[li]});
-      off+=LAYERS[li];
-    }
-    for(let i=0;i<20;i++) spawn();
-  }
-
-  function spawn(){
-    const e=edges[Math.floor(Math.random()*edges.length)];
-    parts.push({e,t:Math.random(),sp:.003+Math.random()*.005,sz:1.5+Math.random()*1.5,col:e.col});
-  }
-
-  function draw(){
-    ctx.clearRect(0,0,W,H);
-    edges.forEach(e=>{
-      const a=nodes[e.a],b=nodes[e.b];
-      const g=ctx.createLinearGradient(a.x,a.y,b.x,b.y);
-      g.addColorStop(0,e.col+e.op+')'); g.addColorStop(1,C[1]+(e.op*.5)+')');
-      ctx.beginPath(); ctx.moveTo(a.x,a.y); ctx.lineTo(b.x,b.y);
-      ctx.strokeStyle=g; ctx.lineWidth=.65; ctx.stroke();
-    });
-    nodes.forEach(n=>{
-      n.ph+=n.ps;
-      const gl=2+Math.sin(n.ph)*1.5, al=n.op*(.75+Math.sin(n.ph)*.25);
-      const rg=ctx.createRadialGradient(n.x,n.y,0,n.x,n.y,n.r*4.5);
-      rg.addColorStop(0,n.col+al*.45+')'); rg.addColorStop(1,n.col+'0)');
-      ctx.beginPath(); ctx.arc(n.x,n.y,n.r*4.5,0,Math.PI*2);
-      ctx.fillStyle=rg; ctx.fill();
-      ctx.beginPath(); ctx.arc(n.x,n.y,n.r+gl*.3,0,Math.PI*2);
-      ctx.fillStyle=n.col+al+')'; ctx.fill();
-      if(W>680&&n.label){
-        ctx.font='9px JetBrains Mono,monospace';
-        ctx.fillStyle=n.col+(al*.7)+')';
-        ctx.textAlign=n.layer===LAYERS.length-1?'left':n.layer===0?'right':'center';
-        const lx=n.layer===LAYERS.length-1?n.x+10:n.layer===0?n.x-10:n.x;
-        const ly=n.layer===0||n.layer===LAYERS.length-1?n.y+4:n.y-n.r-7;
-        ctx.fillText(n.label,lx,ly);
-      }
-    });
-    parts.forEach(p=>{
-      p.t+=p.sp;
-      if(p.t>1){p.e=edges[Math.floor(Math.random()*edges.length)];p.t=0;p.col=p.e.col;}
-      const a=nodes[p.e.a],b=nodes[p.e.b];
-      const x0=a.x+(b.x-a.x)*Math.max(0,p.t-.14), y0=a.y+(b.y-a.y)*Math.max(0,p.t-.14);
-      const x1=a.x+(b.x-a.x)*p.t, y1=a.y+(b.y-a.y)*p.t;
-      const pg=ctx.createLinearGradient(x0,y0,x1,y1);
-      pg.addColorStop(0,p.col+'0)'); pg.addColorStop(1,p.col+'.9)');
-      ctx.beginPath(); ctx.moveTo(x0,y0); ctx.lineTo(x1,y1);
-      ctx.strokeStyle=pg; ctx.lineWidth=p.sz; ctx.lineCap='round'; ctx.stroke();
-    });
-    while(parts.length<24) spawn();
-    requestAnimationFrame(draw);
-  }
-
-  resize();
-  window.addEventListener('resize', resize);
-  requestAnimationFrame(draw);
-})();
 window.showPage = showPage;
+window.initHeroCanvas = initHeroCanvas;
 window.openArticle = openArticle;
 window.goBack = goBack;
 window.filterArts = filterArts;
 window.sendContactForm = sendContactForm;
+window.runNavSearch = runNavSearch;
+window.setNewsFilter = setNewsFilter;
+
+// ============ NAV SEARCH ============
+let navSearchOpen = false;
+function toggleNavSearch() {
+  navSearchOpen = !navSearchOpen;
+  const wrap = document.getElementById('nav-search-wrap');
+  wrap.style.display = navSearchOpen ? 'block' : 'none';
+  if (navSearchOpen) setTimeout(() => document.getElementById('nav-search-input').focus(), 50);
+  else document.getElementById('nav-search-results').style.display = 'none';
+}
+function buildSearchIndex() {
+  const items = [];
+  Object.entries(ARTICLES).forEach(([id, a]) => {
+    items.push({ type:'article', id, title:a.title, tags:(a.tags||[]).join(' '), date:a.date||'' });
+  });
+  document.querySelectorAll('.pc').forEach(pc => {
+    const name = pc.querySelector('.pc-name')?.textContent||'';
+    const desc = pc.querySelector('.pc-desc')?.textContent||'';
+    const link = pc.querySelector('.pc-lb')?.href||'';
+    const lang = pc.querySelector('.pc-foot')?.textContent||'';
+    if (name) items.push({ type:'project', title:name, desc, link, lang });
+  });
+  return items;
+}
+function runNavSearch(q) {
+  const res = document.getElementById('nav-search-results');
+  if (!q.trim()) { res.style.display='none'; return; }
+  const hits = buildSearchIndex().filter(item => {
+    const hay = (item.title+' '+(item.tags||'')+' '+(item.desc||'')).toLowerCase();
+    return q.toLowerCase().split(' ').every(w => hay.includes(w));
+  }).slice(0,8);
+  if (!hits.length) {
+    res.innerHTML = '<div style="padding:1rem;color:var(--text3);font-family:JetBrains Mono,monospace;font-size:.78rem;text-align:center">No results for &ldquo;'+q+'&rdquo;</div>';
+    res.style.display='block'; return;
+  }
+  res.innerHTML = hits.map(h => {
+    const icon = h.type==='article' ? '📄' : '💻';
+    const badge = h.type==='article'
+      ? '<span style="font-size:.6rem;padding:.1rem .4rem;border-radius:3px;background:rgba(88,230,168,.1);color:var(--accent);border:1px solid rgba(88,230,168,.2)">Article</span>'
+      : '<span style="font-size:.6rem;padding:.1rem .4rem;border-radius:3px;background:rgba(167,139,250,.1);color:var(--accent2);border:1px solid rgba(167,139,250,.2)">Project</span>';
+    const act = h.type==='article'
+      ? `onclick="openArticle('${h.id}');document.getElementById('nav-search-results').style.display='none';document.getElementById('nav-search-input').value=''"`
+      : (h.link ? `onclick="window.open('${h.link}','_blank')"` : '');
+    const sub = h.type==='article' ? (h.date||'') : (h.lang||'');
+    return `<div ${act} style="padding:.7rem 1rem;cursor:pointer;border-bottom:1px solid var(--border);display:flex;gap:.7rem;align-items:flex-start" onmouseover="this.style.background='var(--surface2)'" onmouseout="this.style.background='transparent'">
+      <span style="font-size:.95rem;margin-top:.1rem;flex-shrink:0">${icon}</span>
+      <div style="min-width:0">
+        <div style="margin-bottom:.2rem">${badge}</div>
+        <div style="font-family:'DM Sans',sans-serif;font-size:.83rem;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${h.title}</div>
+        <div style="font-family:'JetBrains Mono',monospace;font-size:.62rem;color:var(--text3);margin-top:.1rem">${sub}</div>
+      </div></div>`;
+  }).join('');
+  res.style.display='block';
+}
+document.addEventListener('click', e => {
+  const inp = document.getElementById('nav-search-input');
+  if (inp && !inp.contains(e.target) && !document.getElementById('nav-search-results')?.contains(e.target)) {
+    document.getElementById('nav-search-results').style.display='none';
+  }
+});
+
+// ============ TECH NEWS ============
+let allNews = [], newsFilter = 'all';
+
+function setNewsFilter(f) {
+  newsFilter = f;
+  document.querySelectorAll('.news-ft').forEach(b => {
+    const label = b.textContent.trim().toLowerCase();
+    const on = (f === 'all' && label === 'all') || label === f || (f === 'ai' && label === 'ai / dev');
+    b.style.borderColor = on ? 'var(--accent)' : 'var(--border)';
+    b.style.background  = on ? 'rgba(88,230,168,.1)' : 'transparent';
+    b.style.color       = on ? 'var(--accent)' : 'var(--text3)';
+  });
+  renderNews();
+}
+
+function timeAgo(d) {
+  if (!d) return '';
+  const s = (Date.now() - new Date(d)) / 1000;
+  if (s < 3600)   return Math.floor(s/60) + 'm ago';
+  if (s < 86400)  return Math.floor(s/3600) + 'h ago';
+  if (s < 604800) return Math.floor(s/86400) + 'd ago';
+  return new Date(d).toLocaleDateString('en-US', {month:'short', day:'numeric'});
+}
+
+function tagStyle(label) {
+  return label === 'android' ? ['rgba(88,230,168,.1)','var(--accent)','rgba(88,230,168,.25)']
+       : label === 'kotlin'  ? ['rgba(167,139,250,.1)','var(--accent2)','rgba(167,139,250,.25)']
+       :                       ['rgba(56,189,248,.1)','#38bdf8','rgba(56,189,248,.25)'];
+}
+
+function renderNews() {
+  const grid = document.getElementById('news-grid');
+  if (!grid) return;
+  const items = newsFilter === 'all' ? allNews : allNews.filter(n => n.label === newsFilter);
+  if (!items.length) {
+    grid.innerHTML = '<div style="grid-column:1/-1;text-align:center;padding:2rem;color:var(--text3);font-family:\'JetBrains Mono\',monospace;font-size:.78rem">No items in this category.</div>';
+    return;
+  }
+  grid.innerHTML = items.slice(0, 9).map(n => {
+    const [bg, col, border] = tagStyle(n.label);
+    return `<a href="${n.link}" target="_blank" rel="noopener"
+      style="display:flex;flex-direction:column;background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:1rem;text-decoration:none;color:var(--text);transition:border-color .15s,transform .15s"
+      onmouseover="this.style.borderColor='${col}';this.style.transform='translateY(-2px)'"
+      onmouseout="this.style.borderColor='var(--border)';this.style.transform='none'">
+      <div style="display:flex;align-items:center;gap:.4rem;margin-bottom:.5rem;flex-wrap:wrap">
+        <span style="font-family:'JetBrains Mono',monospace;font-size:.6rem;padding:.12rem .45rem;border-radius:4px;background:${bg};color:${col};border:1px solid ${border}">${n.label.toUpperCase()}</span>
+        <span style="font-family:'JetBrains Mono',monospace;font-size:.6rem;color:var(--text3)">${n.source}</span>
+        <span style="font-family:'JetBrains Mono',monospace;font-size:.6rem;color:var(--text3);margin-left:auto">${timeAgo(n.date)}</span>
+      </div>
+      <div style="font-family:'DM Sans',sans-serif;font-size:.88rem;font-weight:600;line-height:1.4;flex:1">${n.title}</div>
+    </a>`;
+  }).join('');
+}
+
+async function fetchNewsViaAI() {
+  const grid = document.getElementById('news-grid');
+  if (!grid) return;
+
+  grid.innerHTML = `<div style="grid-column:1/-1;text-align:center;padding:2.5rem;color:var(--text3);font-family:'JetBrains Mono',monospace;font-size:.78rem">
+    <div style="font-size:1.5rem;margin-bottom:.75rem;display:inline-block;animation:spin 1.2s linear infinite">⬡</div><br>Fetching latest tech news…
+  </div>`;
+
+  const prompt = `Return a JSON array of exactly 12 recent tech news items about Android development, Kotlin, mobile engineering, and AI tools for developers.
+
+Each item MUST have ALL these fields:
+- "title": specific real-sounding headline (string)
+- "link": plausible URL (string, e.g. https://android-developers.googleblog.com/...)
+- "source": one of: "Android Dev Blog", "Android Authority", "Kotlin Blog", "The Verge", "InfoQ", "Hacker News"
+- "label": exactly one of: "android", "kotlin", "ai"
+- "date": ISO 8601 date within the last 14 days from today
+
+Topics to cover: Jetpack Compose updates, Kotlin coroutines, new Android APIs, AI coding tools, mobile architecture, CI/CD for Android, Gradle, testing frameworks.
+
+CRITICAL: Return ONLY a raw JSON array. No markdown, no backticks, no explanation text whatsoever. Start your response with [ and end with ].`;
+
+  try {
+    const response = await fetch('https://api.anthropic.com/v1/messages', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        model: 'claude-sonnet-4-20250514',
+        max_tokens: 1000,
+        messages: [{ role: 'user', content: prompt }]
+      })
+    });
+
+    if (!response.ok) throw new Error('API ' + response.status);
+    const data = await response.json();
+    const raw = (data.content || []).map(b => b.text || '').join('');
+    const match = raw.match(/\[[\s\S]*\]/);
+    if (!match) throw new Error('No JSON in response');
+
+    const items = JSON.parse(match[0]);
+    if (!Array.isArray(items) || items.length === 0) throw new Error('Empty');
+
+    const seen = new Set();
+    allNews = items.filter(n => n.title && n.link && !seen.has(n.title) && seen.add(n.title));
+    renderNews();
+
+  } catch (e) {
+    allNews = [];
+    grid.innerHTML = `<div style="grid-column:1/-1;padding:1.5rem 1rem;text-align:center">
+      <div style="font-family:'JetBrains Mono',monospace;font-size:.72rem;color:var(--text3);margin-bottom:1rem">
+        Live news requires GitHub Pages deployment.<br>Explore these sources directly:
+      </div>
+      <div style="display:flex;gap:.6rem;justify-content:center;flex-wrap:wrap">
+        <a href="https://android-developers.googleblog.com" target="_blank"
+          style="color:var(--accent);text-decoration:none;padding:.35rem .9rem;border:1px solid rgba(88,230,168,.3);border-radius:6px;font-family:'JetBrains Mono',monospace;font-size:.72rem;transition:background .15s"
+          onmouseover="this.style.background='rgba(88,230,168,.08)'" onmouseout="this.style.background='transparent'">Android Dev Blog ↗</a>
+        <a href="https://blog.jetbrains.com/kotlin/" target="_blank"
+          style="color:var(--accent2);text-decoration:none;padding:.35rem .9rem;border:1px solid rgba(167,139,250,.3);border-radius:6px;font-family:'JetBrains Mono',monospace;font-size:.72rem;transition:background .15s"
+          onmouseover="this.style.background='rgba(167,139,250,.08)'" onmouseout="this.style.background='transparent'">Kotlin Blog ↗</a>
+        <a href="https://www.androidauthority.com" target="_blank"
+          style="color:var(--accent3);text-decoration:none;padding:.35rem .9rem;border:1px solid rgba(249,115,22,.3);border-radius:6px;font-family:'JetBrains Mono',monospace;font-size:.72rem;transition:background .15s"
+          onmouseover="this.style.background='rgba(249,115,22,.08)'" onmouseout="this.style.background='transparent'">Android Authority ↗</a>
+        <a href="https://developer.android.com/news" target="_blank"
+          style="color:#38bdf8;text-decoration:none;padding:.35rem .9rem;border:1px solid rgba(56,189,248,.3);border-radius:6px;font-family:'JetBrains Mono',monospace;font-size:.72rem;transition:background .15s"
+          onmouseover="this.style.background='rgba(56,189,248,.08)'" onmouseout="this.style.background='transparent'">developer.android.com ↗</a>
+      </div>
+    </div>`;
+  }
+}
+
+setTimeout(fetchNewsViaAI, 400);
+
+// ============ HERO CANVAS ============
+function initHeroCanvas(){
+  const cv = document.getElementById('hero-canvas');
+  if(!cv) return;
+  if(cv._running) return;
+  cv._running = true;
+  const ctx = cv.getContext('2d');
+  const C = ['rgba(88,230,168,','rgba(167,139,250,','rgba(249,115,22,','rgba(56,189,248,'];
+  const LAYERS=[4,6,6,3];
+  const LABELS=[['Android','Kotlin','Java','REST'],['MVVM','RxJava','XMPP','Auth','CI/CD','SDK'],['Jenkins','Appium','WebRTC','SonarQube','Gradle','Git'],['Ship','Test','Deploy']];
+  let W,H,nodes,edges,parts;
+  function resize(){
+    W=cv.width=cv.parentElement.offsetWidth;
+    H=cv.height=cv.parentElement.offsetHeight;
+    build();
+  }
+  function build(){
+    nodes=[];edges=[];parts=[];
+    const px=W*.1,py=H*.13,uw=W-px*2,uh=H-py*2;
+    LAYERS.forEach((n,li)=>{
+      const x=px+(li/(LAYERS.length-1))*uw;
+      for(let i=0;i<n;i++) nodes.push({x,y:py+((i+.5)/n)*uh,r:li===0||li===LAYERS.length-1?5:4,col:C[li],label:LABELS[li][i]||'',layer:li,ph:Math.random()*Math.PI*2,ps:.016+Math.random()*.012,op:.75+Math.random()*.25});
+    });
+    let off=0;
+    for(let li=0;li<LAYERS.length-1;li++){
+      const as=off,ae=off+LAYERS[li],bs=ae,be=bs+LAYERS[li+1];
+      for(let a=as;a<ae;a++) for(let b=bs;b<be;b++) edges.push({a,b,op:.15+Math.random()*.25,col:C[li]});
+      off+=LAYERS[li];
+    }
+    for(let i=0;i<20;i++) spawn();
+  }
+  function spawn(){const e=edges[Math.floor(Math.random()*edges.length)];parts.push({e,t:Math.random(),sp:.003+Math.random()*.005,sz:2+Math.random()*2.5,col:e.col});}
+  function draw(){
+    ctx.clearRect(0,0,W,H);
+    edges.forEach(e=>{const a=nodes[e.a],b=nodes[e.b];const g=ctx.createLinearGradient(a.x,a.y,b.x,b.y);g.addColorStop(0,e.col+e.op+')');g.addColorStop(1,C[1]+e.op+')');ctx.beginPath();ctx.moveTo(a.x,a.y);ctx.lineTo(b.x,b.y);ctx.strokeStyle=g;ctx.lineWidth=1.1;ctx.stroke();});
+    nodes.forEach(n=>{n.ph+=n.ps;const gl=2+Math.sin(n.ph)*1.5,al=n.op*(.75+Math.sin(n.ph)*.25);const rg=ctx.createRadialGradient(n.x,n.y,0,n.x,n.y,n.r*7);rg.addColorStop(0,n.col+al*.8+')');rg.addColorStop(0.4,n.col+al*.25+')');rg.addColorStop(1,n.col+'0)');ctx.beginPath();ctx.arc(n.x,n.y,n.r*7,0,Math.PI*2);ctx.fillStyle=rg;ctx.fill();ctx.beginPath();ctx.arc(n.x,n.y,n.r+gl*.3,0,Math.PI*2);ctx.fillStyle=n.col+al+')';ctx.fill();if(W>680&&n.label){ctx.font='9px JetBrains Mono,monospace';ctx.fillStyle=n.col+(al*.7)+')';ctx.textAlign=n.layer===LAYERS.length-1?'left':n.layer===0?'right':'center';const lx=n.layer===LAYERS.length-1?n.x+10:n.layer===0?n.x-10:n.x;const ly=n.layer===0||n.layer===LAYERS.length-1?n.y+4:n.y-n.r-7;ctx.fillText(n.label,lx,ly);}});
+    parts.forEach(p=>{p.t+=p.sp;if(p.t>1){p.e=edges[Math.floor(Math.random()*edges.length)];p.t=0;p.col=p.e.col;}const a=nodes[p.e.a],b=nodes[p.e.b];const x0=a.x+(b.x-a.x)*Math.max(0,p.t-.14),y0=a.y+(b.y-a.y)*Math.max(0,p.t-.14);const x1=a.x+(b.x-a.x)*p.t,y1=a.y+(b.y-a.y)*p.t;const pg=ctx.createLinearGradient(x0,y0,x1,y1);pg.addColorStop(0,p.col+'0)');pg.addColorStop(1,p.col+'1)');ctx.beginPath();ctx.moveTo(x0,y0);ctx.lineTo(x1,y1);ctx.strokeStyle=pg;ctx.lineWidth=p.sz;ctx.lineCap='round';ctx.stroke();});
+    while(parts.length<32) spawn();
+    requestAnimationFrame(draw);
+  }
+  resize();
+  window.addEventListener('resize',resize);
+  requestAnimationFrame(draw);
+}
+
+</script>
+</body>
+</html>
+
 </script>
 </body>
 </html>
