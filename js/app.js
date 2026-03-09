@@ -1,0 +1,420 @@
+// ============================================================
+// app.js — public portfolio site logic
+// ============================================================
+
+import {
+  getPublishedArticles,
+  getArticleBySlug,
+  fetchGitHubRepos,
+  getReposConfig,
+  formatDate,
+  timeAgo
+} from './firebase.js';
+
+// ── STATE ────────────────────────────────────────────────────
+let allArticles  = [];
+let allRepos     = [];
+let currentPage  = 'home';
+
+// ── BOOT ─────────────────────────────────────────────────────
+document.addEventListener('DOMContentLoaded', () => {
+  setupNav();
+  setupSearch();
+  initHeroCanvas();
+  loadAndRenderAll();
+
+  // hash-based routing
+  const hash = location.hash.replace('#/', '');
+  if (hash.startsWith('article/')) {
+    showPage('article');
+    openArticleBySlug(hash.replace('article/', ''));
+  } else if (['articles','projects','about','contact'].includes(hash)) {
+    showPage(hash);
+  } else {
+    showPage('home');
+  }
+});
+
+async function loadAndRenderAll() {
+  try {
+    const [arts, repos, reposCfg] = await Promise.all([
+      getPublishedArticles().catch(() => []),
+      fetchGitHubRepos().catch(() => []),
+      getReposConfig().catch(() => ({ hidden: new Set(), pinned: new Set() }))
+    ]);
+    allArticles = arts;
+    allRepos = repos
+      .filter(r => !reposCfg.hidden.has(r.name))
+      .map(r => ({ ...r, pinned: reposCfg.pinned.has(r.name) }))
+      .sort((a, b) => (b.pinned ? 1 : 0) - (a.pinned ? 1 : 0));
+
+    renderHomeFeatured();
+    renderArticlesPage();
+    renderProjectsPage();
+    loadTechNews();
+  } catch (e) {
+    console.error('Load error:', e);
+  }
+}
+
+// ── NAVIGATION ──────────────────────────────────────────────
+function setupNav() {
+  document.querySelectorAll('[data-page]').forEach(el => {
+    el.addEventListener('click', e => {
+      e.preventDefault();
+      showPage(el.dataset.page);
+    });
+  });
+}
+
+export function showPage(id) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.nbtn').forEach(b => b.classList.remove('active'));
+  const page = document.getElementById(`page-${id}`);
+  if (page) page.classList.add('active');
+  const nbtn = document.getElementById(`nb-${id === 'article' ? 'articles' : id}`);
+  if (nbtn) nbtn.classList.add('active');
+  window.scrollTo(0, 0);
+  currentPage = id;
+  location.hash = id === 'home' ? '' : `/${id}`;
+  if (id === 'home') setTimeout(initHeroCanvas, 60);
+}
+window.showPage = showPage;
+
+// ── HOME FEATURED ────────────────────────────────────────────
+function renderHomeFeatured() {
+  // Featured articles (latest 3)
+  const el = document.getElementById('home-articles');
+  if (!el) return;
+  const featured = allArticles.slice(0, 3);
+  if (!featured.length) { el.innerHTML = '<p class="mono" style="color:var(--text3);font-size:.8rem">No articles yet.</p>'; return; }
+  el.innerHTML = featured.map(a => articleCardHTML(a)).join('');
+  el.querySelectorAll('.art-card').forEach((c, i) => {
+    c.addEventListener('click', () => openArticle(featured[i]));
+  });
+
+  // Featured repos (latest 4)
+  const rel = document.getElementById('home-repos');
+  if (!rel) return;
+  const featuredRepos = allRepos.slice(0, 4);
+  rel.innerHTML = featuredRepos.map(r => repoCardHTML(r)).join('');
+}
+
+// ── ARTICLES PAGE ────────────────────────────────────────────
+function renderArticlesPage() {
+  const el   = document.getElementById('articles-grid');
+  const count = document.getElementById('articles-count');
+  if (!el) return;
+  if (!allArticles.length) {
+    el.innerHTML = emptyState('No articles yet', 'Articles will appear here once published from the admin panel.');
+    return;
+  }
+  el.innerHTML = allArticles.map(a => articleCardHTML(a)).join('');
+  el.querySelectorAll('.art-card').forEach((c, i) => {
+    c.addEventListener('click', () => openArticle(allArticles[i]));
+  });
+  if (count) count.textContent = allArticles.length;
+
+  // Tag filter
+  const tags = [...new Set(allArticles.flatMap(a => a.tags || []))];
+  renderTagFilters(tags);
+}
+
+function renderTagFilters(tags) {
+  const el = document.getElementById('tag-filters');
+  if (!el) return;
+  el.innerHTML = `<button class="btn btn-sm btn-ghost active" onclick="filterByTag(null)" id="filter-all">All</button>` +
+    tags.map(t => `<button class="btn btn-sm btn-ghost" onclick="filterByTag('${t}')" id="filter-${t}">${t}</button>`).join('');
+}
+
+window.filterByTag = function(tag) {
+  document.querySelectorAll('[id^="filter-"]').forEach(b => b.classList.remove('active'));
+  document.getElementById(tag ? `filter-${tag}` : 'filter-all')?.classList.add('active');
+  const grid = document.getElementById('articles-grid');
+  if (!grid) return;
+  const filtered = tag ? allArticles.filter(a => (a.tags || []).includes(tag)) : allArticles;
+  grid.innerHTML = filtered.map(a => articleCardHTML(a)).join('');
+  grid.querySelectorAll('.art-card').forEach((c, i) => {
+    c.addEventListener('click', () => openArticle(filtered[i]));
+  });
+};
+
+// ── ARTICLE READER ───────────────────────────────────────────
+function openArticle(art) {
+  showPage('article');
+  document.getElementById('art-title').textContent  = art.title;
+  document.getElementById('art-date').textContent   = formatDate(art.date);
+  document.getElementById('art-tags').innerHTML     = (art.tags || []).map(t => `<span class="tag ${tagClass(t)}">${t}</span>`).join('');
+  document.getElementById('art-body').innerHTML     = art.content || '';
+  document.getElementById('art-back').onclick       = () => showPage('articles');
+  location.hash = `/article/${art.slug || art.id}`;
+  // Reading time
+  const words = (art.content || '').replace(/<[^>]+>/g, '').split(/\s+/).length;
+  const mins  = Math.max(1, Math.round(words / 200));
+  const rt    = document.getElementById('art-readtime');
+  if (rt) rt.textContent = `${mins} min read`;
+}
+
+async function openArticleBySlug(slug) {
+  try {
+    const art = await getArticleBySlug(slug);
+    if (art) openArticle(art);
+    else showPage('articles');
+  } catch { showPage('articles'); }
+}
+
+// ── PROJECTS PAGE ────────────────────────────────────────────
+function renderProjectsPage() {
+  const el    = document.getElementById('projects-grid');
+  const count = document.getElementById('projects-count');
+  if (!el) return;
+  if (!allRepos.length) {
+    el.innerHTML = emptyState('No repositories found', 'Public repositories will appear here automatically.');
+    return;
+  }
+  el.innerHTML = allRepos.map(r => repoCardHTML(r)).join('');
+  if (count) count.textContent = allRepos.length;
+
+  // Language filter
+  const langs = [...new Set(allRepos.map(r => r.language).filter(Boolean))];
+  const lf = document.getElementById('lang-filters');
+  if (lf) {
+    lf.innerHTML = `<button class="btn btn-sm btn-ghost active" onclick="filterByLang(null)" id="lf-all">All</button>` +
+      langs.map(l => `<button class="btn btn-sm btn-ghost" onclick="filterByLang('${l}')" id="lf-${l}">${l}</button>`).join('');
+  }
+}
+
+window.filterByLang = function(lang) {
+  document.querySelectorAll('[id^="lf-"]').forEach(b => b.classList.remove('active'));
+  document.getElementById(lang ? `lf-${lang}` : 'lf-all')?.classList.add('active');
+  const grid = document.getElementById('projects-grid');
+  if (!grid) return;
+  const filtered = lang ? allRepos.filter(r => r.language === lang) : allRepos;
+  grid.innerHTML = filtered.map(r => repoCardHTML(r)).join('');
+};
+
+// ── SEARCH ───────────────────────────────────────────────────
+function setupSearch() {
+  const input = document.getElementById('search-input');
+  const dd    = document.getElementById('search-dropdown');
+  if (!input || !dd) return;
+
+  input.addEventListener('input', () => {
+    const q = input.value.trim().toLowerCase();
+    if (!q) { dd.style.display = 'none'; return; }
+    const results = [
+      ...allArticles.filter(a => (a.title + ' ' + (a.tags||[]).join(' ')).toLowerCase().includes(q))
+        .slice(0, 5).map(a => ({ type: 'article', title: a.title, sub: formatDate(a.date), action: () => openArticle(a) })),
+      ...allRepos.filter(r => (r.name + ' ' + (r.description||'')).toLowerCase().includes(q))
+        .slice(0, 5).map(r => ({ type: 'repo', title: r.name, sub: r.language || '', action: () => window.open(r.html_url, '_blank') }))
+    ].slice(0, 8);
+
+    if (!results.length) {
+      dd.innerHTML = '<div style="padding:1rem;text-align:center;color:var(--text3);font-family:var(--mono);font-size:.78rem">No results</div>';
+    } else {
+      dd.innerHTML = results.map((r, i) =>
+        `<div class="search-result" data-i="${i}" style="padding:.75rem 1rem;cursor:pointer;border-bottom:1px solid var(--border);display:flex;gap:.75rem;align-items:center;transition:background .1s">
+          <span style="font-size:.9rem">${r.type === 'article' ? '📄' : '💻'}</span>
+          <div>
+            <div style="font-size:.84rem;font-weight:600">${r.title}</div>
+            <div style="font-family:var(--mono);font-size:.62rem;color:var(--text3)">${r.type.toUpperCase()} · ${r.sub}</div>
+          </div>
+        </div>`
+      ).join('');
+      dd.querySelectorAll('.search-result').forEach((el, i) => {
+        el.addEventListener('mouseover', () => el.style.background = 'var(--surface2)');
+        el.addEventListener('mouseout',  () => el.style.background = 'transparent');
+        el.addEventListener('click', () => { results[i].action(); dd.style.display = 'none'; input.value = ''; });
+      });
+    }
+    dd.style.display = 'block';
+  });
+
+  document.addEventListener('click', e => {
+    if (!e.target.closest('#search-row')) dd.style.display = 'none';
+  });
+}
+
+// ── TECH NEWS (Claude API) ───────────────────────────────────
+async function loadTechNews() {
+  const grid = document.getElementById('news-grid');
+  if (!grid) return;
+
+  grid.innerHTML = `<div style="grid-column:1/-1;text-align:center;padding:2.5rem;color:var(--text3);font-family:var(--mono);font-size:.78rem">
+    <div class="spinner" style="margin:0 auto .75rem"></div>Fetching latest tech news…
+  </div>`;
+
+  try {
+    const res = await fetch('https://api.anthropic.com/v1/messages', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        model: 'claude-sonnet-4-20250514',
+        max_tokens: 1200,
+        messages: [{ role: 'user', content: `Return a JSON array of 9 current tech news items about Android, Kotlin, and AI developer tools. Each object: {"title":"...","link":"...","source":"...","label":"android"|"kotlin"|"ai","date":"ISO date last 14 days"}. Return ONLY the JSON array, nothing else.` }]
+      })
+    });
+    const data = await res.json();
+    const text = (data.content||[]).map(b=>b.text||'').join('');
+    const m = text.match(/\[[\s\S]*\]/);
+    if (!m) throw new Error('no json');
+    const items = JSON.parse(m[0]);
+    renderNews(items);
+  } catch {
+    grid.innerHTML = newsLinks();
+  }
+}
+
+window.setNewsFilter = function(f) {
+  document.querySelectorAll('.news-ft').forEach(b => {
+    const on = (f === 'all' && b.textContent.trim() === 'All') || b.textContent.toLowerCase().trim() === f || (f==='ai' && b.textContent.trim()==='AI / Dev');
+    b.style.borderColor = on ? 'var(--accent)' : 'var(--border)';
+    b.style.background  = on ? 'rgba(88,230,168,.1)' : 'transparent';
+    b.style.color       = on ? 'var(--accent)' : 'var(--text3)';
+  });
+  const all = Array.from(document.querySelectorAll('.news-card'));
+  all.forEach(c => c.style.display = (f === 'all' || c.dataset.label === f) ? '' : 'none');
+};
+
+function renderNews(items) {
+  const grid = document.getElementById('news-grid');
+  if (!grid) return;
+  const tagMap = { android: ['rgba(88,230,168,.1)','var(--accent)','rgba(88,230,168,.25)'], kotlin: ['rgba(167,139,250,.1)','var(--accent2)','rgba(167,139,250,.25)'], ai: ['rgba(56,189,248,.1)','#38bdf8','rgba(56,189,248,.25)'] };
+  grid.innerHTML = items.map(n => {
+    const [bg,col,br] = tagMap[n.label] || tagMap.ai;
+    const ago = (() => { try { const s=(Date.now()-new Date(n.date))/1000; if(s<86400) return Math.floor(s/3600)+'h ago'; return Math.floor(s/86400)+'d ago'; } catch{ return ''; } })();
+    return `<a href="${n.link}" target="_blank" rel="noopener" class="news-card" data-label="${n.label}"
+      onmouseover="this.style.borderColor='${col}'" onmouseout="this.style.borderColor='var(--border)'">
+      <div class="news-meta">
+        <span style="background:${bg};color:${col};border:1px solid ${br};padding:.1rem .4rem;border-radius:3px">${n.label.toUpperCase()}</span>
+        <span style="color:var(--text3)">${n.source}</span>
+        <span style="margin-left:auto;color:var(--text3)">${ago}</span>
+      </div>
+      <div class="news-title">${n.title}</div>
+    </a>`;
+  }).join('');
+}
+
+function newsLinks() {
+  return `<div style="grid-column:1/-1;padding:1.5rem;text-align:center">
+    <div style="font-family:var(--mono);font-size:.72rem;color:var(--text3);margin-bottom:1rem">Browse sources directly:</div>
+    <div style="display:flex;gap:.6rem;justify-content:center;flex-wrap:wrap">
+      <a href="https://android-developers.googleblog.com" target="_blank" class="btn btn-sm btn-ghost">Android Dev Blog ↗</a>
+      <a href="https://blog.jetbrains.com/kotlin/" target="_blank" class="btn btn-sm btn-ghost">Kotlin Blog ↗</a>
+      <a href="https://www.androidauthority.com" target="_blank" class="btn btn-sm btn-ghost">Android Authority ↗</a>
+    </div>
+  </div>`;
+}
+
+// ── CONTACT FORM ─────────────────────────────────────────────
+window.sendContactForm = function() {
+  const name  = document.getElementById('cf-name')?.value.trim()  || '';
+  const email = document.getElementById('cf-email')?.value.trim() || '';
+  const body  = document.getElementById('cf-body')?.value.trim()  || '';
+  const msg   = document.getElementById('cf-msg');
+  const btn   = document.getElementById('cf-send');
+
+  const show = (txt, ok) => {
+    if (!msg) return;
+    msg.style.cssText = `display:block;padding:.75rem 1rem;border-radius:8px;font-size:.84rem;margin-bottom:1rem;background:${ok?'rgba(88,230,168,.1)':'rgba(248,81,73,.1)'};border:1px solid ${ok?'rgba(88,230,168,.3)':'rgba(248,81,73,.3)'};color:${ok?'var(--accent)':'var(--red)'}`;
+    msg.textContent = txt;
+  };
+
+  if (!name || !email || !body) { show('Please fill in all fields.', false); return; }
+  if (!/^[^@]+@[^@]+\.[^@]+$/.test(email)) { show('Enter a valid email address.', false); return; }
+
+  const subject  = encodeURIComponent(`Portfolio contact from ${name}`);
+  const mailBody = encodeURIComponent(`Name: ${name}\nEmail: ${email}\n\n${body}`);
+  window.location.href = `mailto:codeninjaa@gmail.com?subject=${subject}&body=${mailBody}`;
+
+  if (btn) { btn.textContent = 'Opening mail client…'; btn.disabled = true; }
+  setTimeout(() => {
+    show('✓ Mail client opened! If nothing happened, email codeninjaa@gmail.com directly.', true);
+    if (btn) { btn.textContent = 'Send Message →'; btn.disabled = false; }
+  }, 1500);
+};
+
+// ── CARD HTML HELPERS ────────────────────────────────────────
+function articleCardHTML(a) {
+  const words  = (a.content || '').replace(/<[^>]+>/g, '').split(/\s+/).length;
+  const mins   = Math.max(1, Math.round(words / 200));
+  const tags   = (a.tags || []).map(t => `<span class="tag ${tagClass(t)}">${t}</span>`).join('');
+  const excerpt = (a.excerpt || (a.content || '').replace(/<[^>]+>/g,'').slice(0, 120) + '…');
+  return `<div class="art-card fi">
+    <div class="tags">${tags}</div>
+    <h3>${a.title}</h3>
+    <p class="excerpt">${excerpt}</p>
+    <div class="meta"><span>${formatDate(a.date)}</span><span class="read-time">${mins} min read</span></div>
+  </div>`;
+}
+
+function repoCardHTML(r) {
+  const color = langColor(r.language);
+  const topics = (r.topics || []).slice(0,3).map(t=>`<span class="tag tag-default">${t}</span>`).join('');
+  return `<div class="proj-card fi ${r.pinned ? 'proj-pinned':''}" onclick="window.open('${r.html_url}','_blank')">
+    <div class="proj-name">${r.name}${r.pinned ? ' <span class="badge badge-purple" style="margin-left:.4rem">Pinned</span>':''}</div>
+    <p class="proj-desc">${r.description || 'No description.'}</p>
+    ${topics ? `<div style="display:flex;gap:.3rem;flex-wrap:wrap">${topics}</div>` : ''}
+    <div class="proj-footer">
+      ${r.language ? `<span class="lang-dot" style="background:${color}"></span><span>${r.language}</span>` : ''}
+      <span class="proj-stars">⭐ ${r.stargazers_count}</span>
+      <span>🍴 ${r.forks_count}</span>
+      <span style="margin-left:auto">Updated ${timeAgo({ toDate: () => new Date(r.updated_at) })}</span>
+    </div>
+  </div>`;
+}
+
+function emptyState(title, sub) {
+  return `<div style="grid-column:1/-1;text-align:center;padding:3rem 1rem">
+    <div style="font-size:2rem;margin-bottom:.75rem">📭</div>
+    <div style="font-weight:700;margin-bottom:.35rem">${title}</div>
+    <div style="font-family:var(--mono);font-size:.78rem;color:var(--text3)">${sub}</div>
+  </div>`;
+}
+
+function tagClass(tag) {
+  const t = (tag || '').toLowerCase();
+  if (['android','java','kotlin'].includes(t)) return 'tag-android';
+  if (t === 'kotlin') return 'tag-kotlin';
+  if (['ai','ml','llm'].includes(t)) return 'tag-ai';
+  if (['cicd','ci/cd','jenkins','devops'].includes(t)) return 'tag-cicd';
+  return 'tag-default';
+}
+
+function langColor(lang) {
+  const map = { JavaScript:'#f1e05a', TypeScript:'#3178c6', Kotlin:'#A97BFF', Java:'#b07219', Python:'#3572A5', 'C++':'#f34b7d', Swift:'#F05138', Dart:'#00B4AB', Go:'#00ADD8', Rust:'#dea584', HTML:'#e34c26', CSS:'#563d7c', Shell:'#89e051' };
+  return map[lang] || '#8b949e';
+}
+
+// ── HERO CANVAS ──────────────────────────────────────────────
+function initHeroCanvas() {
+  const cv = document.getElementById('hero-canvas');
+  if (!cv) return;
+  if (cv._running) return;
+  cv._running = true;
+  const ctx = cv.getContext('2d');
+  const C = ['rgba(88,230,168,','rgba(167,139,250,','rgba(249,115,22,','rgba(56,189,248,'];
+  const LAYERS = [4,6,6,3];
+  const LABELS = [['Android','Kotlin','Java','REST'],['MVVM','RxJava','XMPP','Auth','CI/CD','SDK'],['Jenkins','Appium','WebRTC','SonarQube','Gradle','Git'],['Ship','Test','Deploy']];
+  let W,H,nodes,edges,parts;
+  function resize() { W=cv.width=cv.parentElement.offsetWidth; H=cv.height=cv.parentElement.offsetHeight; build(); }
+  function build() {
+    nodes=[]; edges=[]; parts=[];
+    const px=W*.1,py=H*.13,uw=W-px*2,uh=H-py*2;
+    LAYERS.forEach((n,li)=>{ const x=px+(li/(LAYERS.length-1))*uw; for(let i=0;i<n;i++) nodes.push({x,y:py+((i+.5)/n)*uh,r:li===0||li===LAYERS.length-1?5:4,col:C[li],label:LABELS[li][i]||'',layer:li,ph:Math.random()*Math.PI*2,ps:.016+Math.random()*.012,op:.75+Math.random()*.25}); });
+    let off=0; for(let li=0;li<LAYERS.length-1;li++){const as=off,ae=off+LAYERS[li],bs=ae,be=bs+LAYERS[li+1]; for(let a=as;a<ae;a++) for(let b=bs;b<be;b++) edges.push({a,b,op:.15+Math.random()*.25,col:C[li]}); off+=LAYERS[li]; }
+    for(let i=0;i<20;i++) spawn();
+  }
+  function spawn(){const e=edges[Math.floor(Math.random()*edges.length)];parts.push({e,t:Math.random(),sp:.003+Math.random()*.005,sz:2+Math.random()*2.5,col:e.col});}
+  function draw(){
+    ctx.clearRect(0,0,W,H);
+    edges.forEach(e=>{const a=nodes[e.a],b=nodes[e.b];const g=ctx.createLinearGradient(a.x,a.y,b.x,b.y);g.addColorStop(0,e.col+e.op+')');g.addColorStop(1,C[1]+e.op+')');ctx.beginPath();ctx.moveTo(a.x,a.y);ctx.lineTo(b.x,b.y);ctx.strokeStyle=g;ctx.lineWidth=1.1;ctx.stroke();});
+    nodes.forEach(n=>{n.ph+=n.ps;const gl=2+Math.sin(n.ph)*1.5,al=n.op*(.75+Math.sin(n.ph)*.25);const rg=ctx.createRadialGradient(n.x,n.y,0,n.x,n.y,n.r*7);rg.addColorStop(0,n.col+al*.8+')');rg.addColorStop(.4,n.col+al*.25+')');rg.addColorStop(1,n.col+'0)');ctx.beginPath();ctx.arc(n.x,n.y,n.r*7,0,Math.PI*2);ctx.fillStyle=rg;ctx.fill();ctx.beginPath();ctx.arc(n.x,n.y,n.r+gl*.3,0,Math.PI*2);ctx.fillStyle=n.col+al+')';ctx.fill();if(W>680&&n.label){ctx.font='9px JetBrains Mono,monospace';ctx.fillStyle=n.col+(al*.7)+')';ctx.textAlign=n.layer===LAYERS.length-1?'left':n.layer===0?'right':'center';const lx=n.layer===LAYERS.length-1?n.x+10:n.layer===0?n.x-10:n.x;const ly=n.layer===0||n.layer===LAYERS.length-1?n.y+4:n.y-n.r-7;ctx.fillText(n.label,lx,ly);}});
+    parts.forEach(p=>{p.t+=p.sp;if(p.t>1){p.e=edges[Math.floor(Math.random()*edges.length)];p.t=0;p.col=p.e.col;}const a=nodes[p.e.a],b=nodes[p.e.b];const x0=a.x+(b.x-a.x)*Math.max(0,p.t-.14),y0=a.y+(b.y-a.y)*Math.max(0,p.t-.14);const x1=a.x+(b.x-a.x)*p.t,y1=a.y+(b.y-a.y)*p.t;const pg=ctx.createLinearGradient(x0,y0,x1,y1);pg.addColorStop(0,p.col+'0)');pg.addColorStop(1,p.col+'1)');ctx.beginPath();ctx.moveTo(x0,y0);ctx.lineTo(x1,y1);ctx.strokeStyle=pg;ctx.lineWidth=p.sz;ctx.lineCap='round';ctx.stroke();});
+    while(parts.length<32) spawn();
+    requestAnimationFrame(draw);
+  }
+  resize();
+  window.addEventListener('resize', resize);
+  requestAnimationFrame(draw);
+}
