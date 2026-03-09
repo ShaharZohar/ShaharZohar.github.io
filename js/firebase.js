@@ -45,7 +45,7 @@ export const firebaseConfig = {
 };
 
 // ── RECAPTCHA SITE KEY ────────────────────────────────────────
-const RECAPTCHA_SITE_KEY = "6LefKIUsAAAAAOKo-3LjfGGaAGA1eTPtCt3jJj9d";
+const RECAPTCHA_SITE_KEY = "6LddOIUsAAAAAI-KBW47Ty8OOfw_nO_Wa5NCa0yS";
 
 // ── INIT ─────────────────────────────────────────────────────
 const app  = initializeApp(firebaseConfig);
