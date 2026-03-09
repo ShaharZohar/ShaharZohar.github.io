@@ -235,7 +235,14 @@ function setupSearch() {
   });
 }
 
-// ── TECH NEWS (Claude API) ───────────────────────────────────
+// ── TECH NEWS (RSS feeds via rss2json) ───────────────────────
+const NEWS_FEEDS = [
+  { url: 'https://androidauthority.com/feed/', label: 'android', source: 'Android Authority' },
+  { url: 'https://android-developers.googleblog.com/atom.xml', label: 'android', source: 'Android Dev Blog' },
+  { url: 'https://blog.jetbrains.com/kotlin/feed/', label: 'kotlin', source: 'Kotlin Blog' },
+  { url: 'https://hnrss.org/frontpage', label: 'ai', source: 'Hacker News' },
+];
+
 async function loadTechNews() {
   const grid = document.getElementById('news-grid');
   if (!grid) return;
@@ -245,20 +252,26 @@ async function loadTechNews() {
   </div>`;
 
   try {
-    const res = await fetch('https://api.anthropic.com/v1/messages', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        model: 'claude-sonnet-4-20250514',
-        max_tokens: 1200,
-        messages: [{ role: 'user', content: `Return a JSON array of 9 current tech news items about Android, Kotlin, and AI developer tools. Each object: {"title":"...","link":"...","source":"...","label":"android"|"kotlin"|"ai","date":"ISO date last 14 days"}. Return ONLY the JSON array, nothing else.` }]
-      })
-    });
-    const data = await res.json();
-    const text = (data.content||[]).map(b=>b.text||'').join('');
-    const m = text.match(/\[[\s\S]*\]/);
-    if (!m) throw new Error('no json');
-    const items = JSON.parse(m[0]);
+    const results = await Promise.allSettled(
+      NEWS_FEEDS.map(f =>
+        fetch(`https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(f.url)}&count=4`)
+          .then(r => r.json())
+          .then(d => (d.items || []).map(item => ({
+            title: item.title,
+            link:  item.link,
+            source: f.source,
+            label: f.label,
+            date:  item.pubDate
+          })))
+      )
+    );
+
+    const items = results
+      .flatMap(r => r.status === 'fulfilled' ? r.value : [])
+      .sort((a, b) => new Date(b.date) - new Date(a.date))
+      .slice(0, 9);
+
+    if (!items.length) throw new Error('no items');
     renderNews(items);
   } catch {
     grid.innerHTML = newsLinks();
