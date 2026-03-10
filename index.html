@@ -98,33 +98,16 @@
     </div>
   </div>
 
-  <!-- Projects -->
-  <div class="section-bg">
+  <!-- Projects (inline, same grid as Projects page) -->
+  <div id="home-projects-anchor" class="section-bg">
     <div class="page-wrap">
-      <div class="section-header" style="display:flex;align-items:center;justify-content:space-between">
-        <div>
-          <p class="accent-label">// open source</p>
-          <h2>Projects <span id="home-projects-count" style="font-size:1rem;font-weight:400;color:var(--text3);font-family:var(--mono)"></span></h2>
-        </div>
+      <div class="section-header">
+        <p class="accent-label">// open source</p>
+        <h2>Projects <span id="projects-count" style="font-size:1rem;font-weight:400;color:var(--text3);font-family:var(--mono)"></span></h2>
+        <p>All public repositories from GitHub, updated live.</p>
       </div>
-      <div id="home-lang-filters" style="display:flex;gap:.4rem;flex-wrap:wrap;margin-bottom:1.75rem"></div>
-      <div class="proj-grid" id="home-repos">
-        <div style="grid-column:1/-1;text-align:center;padding:2rem;color:var(--text3);font-family:var(--mono);font-size:.78rem"><span class="spinner"></span></div>
-      </div>
-    </div>
-  </div>
-
-  <!-- Articles -->
-  <div class="section">
-    <div class="page-wrap">
-      <div class="section-header" style="display:flex;align-items:center;justify-content:space-between">
-        <div>
-          <p class="accent-label">// blog</p>
-          <h2>Articles</h2>
-        </div>
-        <button class="btn btn-ghost" data-page="articles">View all →</button>
-      </div>
-      <div class="art-grid" id="home-articles">
+      <div id="lang-filters" style="display:flex;gap:.4rem;flex-wrap:wrap;margin-bottom:1.75rem"></div>
+      <div class="proj-grid" id="projects-grid">
         <div style="grid-column:1/-1;text-align:center;padding:2rem;color:var(--text3);font-family:var(--mono);font-size:.78rem"><span class="spinner"></span></div>
       </div>
     </div>
@@ -190,20 +173,7 @@
   </div>
 </div>
 
-<!-- ══════════ PROJECTS ══════════════════════════════════════ -->
-<div id="page-projects" class="page">
-  <div class="page-wrap" style="padding-top:3rem;padding-bottom:4rem">
-    <div class="section-header">
-      <p class="accent-label">// open source</p>
-      <h2>Projects <span id="projects-count" style="font-size:1rem;font-weight:400;color:var(--text3);font-family:var(--mono)"></span></h2>
-      <p>All public repositories from GitHub, updated live.</p>
-    </div>
-    <div id="lang-filters" style="display:flex;gap:.4rem;flex-wrap:wrap;margin-bottom:1.75rem"></div>
-    <div class="proj-grid" id="projects-grid">
-      <div style="grid-column:1/-1;text-align:center;padding:3rem;color:var(--text3);font-family:var(--mono);font-size:.78rem"><span class="spinner"></span></div>
-    </div>
-  </div>
-</div>
+
 
 <!-- ══════════ ABOUT ═════════════════════════════════════════ -->
 <div id="page-about" class="page">
@@ -313,7 +283,7 @@
 // Update hero stats once data loads (polled from app.js via DOM)
 const statsObs = new MutationObserver(() => {
   const artGrid  = document.getElementById('home-articles');
-  const projGrid = document.getElementById('home-repos');
+  const projGrid = document.getElementById('projects-grid');
   if (artGrid && !artGrid.querySelector('.spinner')) {
     const count = artGrid.querySelectorAll('.art-card').length;
     const el = document.getElementById('stat-articles');

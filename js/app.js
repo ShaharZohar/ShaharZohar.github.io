@@ -50,7 +50,6 @@ async function loadAndRenderAll() {
 
     renderHomeFeatured();
     renderArticlesPage();
-    renderProjectsPage();
     loadTechNews();
   } catch (e) {
     console.error('Load error:', e);
@@ -68,6 +67,15 @@ function setupNav() {
 }
 
 export function showPage(id) {
+  // 'projects' is now inlined on the home page — scroll to it
+  if (id === 'projects') {
+    showPage('home');
+    setTimeout(() => {
+      const anchor = document.getElementById('home-projects-anchor');
+      if (anchor) anchor.scrollIntoView({ behavior: 'smooth' });
+    }, 60);
+    return;
+  }
   document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
   document.querySelectorAll('.nbtn').forEach(b => b.classList.remove('active'));
   const page = document.getElementById(`page-${id}`);
@@ -83,19 +91,6 @@ window.showPage = showPage;
 
 // ── HOME FEATURED ────────────────────────────────────────────
 function renderHomeFeatured() {
-  // Articles (latest 3)
-  const el = document.getElementById('home-articles');
-  if (el) {
-    const featured = allArticles.slice(0, 3);
-    if (!featured.length) { el.innerHTML = '<p class="mono" style="color:var(--text3);font-size:.8rem">No articles yet.</p>'; }
-    else {
-      el.innerHTML = featured.map(a => articleCardHTML(a)).join('');
-      el.querySelectorAll('.art-card').forEach((c, i) => {
-        c.addEventListener('click', () => openArticle(featured[i]));
-      });
-    }
-  }
-
   // Full Projects section with language filters
   const rel = document.getElementById('home-repos');
   if (!rel) return;
@@ -117,7 +112,7 @@ function renderHomeFeatured() {
 
 window.homeFilterByLang = function(lang) {
   document.querySelectorAll('[id^="hlf-"]').forEach(b => b.classList.remove('active'));
-  document.getElementById(lang ? \`hlf-\${lang}\` : 'hlf-all')?.classList.add('active');
+  document.getElementById(lang ? `hlf-${lang}` : 'hlf-all')?.classList.add('active');
   const grid = document.getElementById('home-repos');
   if (!grid) return;
   const filtered = lang ? allRepos.filter(r => r.language === lang) : allRepos;
@@ -186,36 +181,6 @@ async function openArticleBySlug(slug) {
     else showPage('articles');
   } catch { showPage('articles'); }
 }
-
-// ── PROJECTS PAGE ────────────────────────────────────────────
-function renderProjectsPage() {
-  const el    = document.getElementById('projects-grid');
-  const count = document.getElementById('projects-count');
-  if (!el) return;
-  if (!allRepos.length) {
-    el.innerHTML = emptyState('No repositories found', 'Public repositories will appear here automatically.');
-    return;
-  }
-  el.innerHTML = allRepos.map(r => repoCardHTML(r)).join('');
-  if (count) count.textContent = allRepos.length;
-
-  // Language filter
-  const langs = [...new Set(allRepos.map(r => r.language).filter(Boolean))];
-  const lf = document.getElementById('lang-filters');
-  if (lf) {
-    lf.innerHTML = `<button class="btn btn-sm btn-ghost active" onclick="filterByLang(null)" id="lf-all">All</button>` +
-      langs.map(l => `<button class="btn btn-sm btn-ghost" onclick="filterByLang('${l}')" id="lf-${l}">${l}</button>`).join('');
-  }
-}
-
-window.filterByLang = function(lang) {
-  document.querySelectorAll('[id^="lf-"]').forEach(b => b.classList.remove('active'));
-  document.getElementById(lang ? `lf-${lang}` : 'lf-all')?.classList.add('active');
-  const grid = document.getElementById('projects-grid');
-  if (!grid) return;
-  const filtered = lang ? allRepos.filter(r => r.language === lang) : allRepos;
-  grid.innerHTML = filtered.map(r => repoCardHTML(r)).join('');
-};
 
 // ── SEARCH ───────────────────────────────────────────────────
 function setupSearch() {
