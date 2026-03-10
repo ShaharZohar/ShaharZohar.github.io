@@ -37,22 +37,40 @@ document.addEventListener('DOMContentLoaded', () => {
 
 async function loadAndRenderAll() {
   try {
-    const [arts, repos, reposCfg] = await Promise.all([
-      getPublishedArticles().catch(() => []),
-      fetchGitHubRepos().catch(() => []),
-      getReposConfig().catch(() => ({ hidden: new Set(), pinned: new Set() }))
-    ]);
+    // Fetch GitHub repos directly — no AppCheck needed, public API
+    let repos = [];
+    try {
+      repos = await fetchGitHubRepos();
+      console.log('[portfolio] GitHub repos fetched:', repos.length);
+    } catch (e) {
+      console.error('[portfolio] GitHub fetch failed:', e);
+    }
+
+    // Fetch Firestore data — may fail if AppCheck is blocking
+    let arts = [];
+    let reposCfg = { hidden: new Set(), pinned: new Set() };
+    try {
+      [arts, reposCfg] = await Promise.all([
+        getPublishedArticles(),
+        getReposConfig().catch(() => ({ hidden: new Set(), pinned: new Set() }))
+      ]);
+      console.log('[portfolio] Articles fetched:', arts.length);
+    } catch (e) {
+      console.error('[portfolio] Firestore fetch failed:', e);
+    }
+
     allArticles = arts;
     allRepos = repos
       .filter(r => !reposCfg.hidden.has(r.name))
       .map(r => ({ ...r, pinned: reposCfg.pinned.has(r.name) }))
       .sort((a, b) => (b.pinned ? 1 : 0) - (a.pinned ? 1 : 0));
 
+    console.log('[portfolio] allRepos after filter:', allRepos.length);
     renderHomeFeatured();
     renderArticlesPage();
     loadTechNews();
   } catch (e) {
-    console.error('Load error:', e);
+    console.error('[portfolio] Load error:', e);
   }
 }
 
