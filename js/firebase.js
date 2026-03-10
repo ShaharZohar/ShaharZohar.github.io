@@ -53,15 +53,13 @@ export const auth = getAuth(app);
 export const db   = getFirestore(app);
 
 // ── APP CHECK ────────────────────────────────────────────────
-// AppCheck disabled — reCAPTCHA key needs to be fixed first.
-// Re-enable once the correct v3 key is registered in Firebase Console.
-//
-// if (RECAPTCHA_SITE_KEY !== "YOUR_RECAPTCHA_V3_SITE_KEY") {
-//   initializeAppCheck(app, {
-//     provider: new ReCaptchaV3Provider(RECAPTCHA_SITE_KEY),
-//     isTokenAutoRefreshEnabled: true
-//   });
-// }
+
+ if (RECAPTCHA_SITE_KEY !== "YOUR_RECAPTCHA_V3_SITE_KEY") {
+   initializeAppCheck(app, {
+     provider: new ReCaptchaV3Provider(RECAPTCHA_SITE_KEY),
+     isTokenAutoRefreshEnabled: true
+   });
+ }
 
 // ── AUTH HELPERS ─────────────────────────────────────────────
 export const login  = (email, pw) => signInWithEmailAndPassword(auth, email, pw);
