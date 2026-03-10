@@ -92,28 +92,28 @@ window.showPage = showPage;
 // ── HOME FEATURED ────────────────────────────────────────────
 function renderHomeFeatured() {
   // Full Projects section with language filters
-  const rel = document.getElementById('home-repos');
+  const rel = document.getElementById('projects-grid');
   if (!rel) return;
   if (!allRepos.length) {
     rel.innerHTML = emptyState('No repositories found', 'Public repositories will appear here automatically.');
     return;
   }
   rel.innerHTML = allRepos.map(r => repoCardHTML(r)).join('');
-  const count = document.getElementById('home-projects-count');
+  const count = document.getElementById('projects-count');
   if (count) count.textContent = allRepos.length;
 
   const langs = [...new Set(allRepos.map(r => r.language).filter(Boolean))];
-  const lf = document.getElementById('home-lang-filters');
+  const lf = document.getElementById('lang-filters');
   if (lf) {
-    lf.innerHTML = `<button class="btn btn-sm btn-ghost active" onclick="homeFilterByLang(null)" id="hlf-all">All</button>` +
-      langs.map(l => `<button class="btn btn-sm btn-ghost" onclick="homeFilterByLang('${l}')" id="hlf-${l}">${l}</button>`).join('');
+    lf.innerHTML = `<button class="btn btn-sm btn-ghost active" onclick="filterByLang(null)" id="lf-all">All</button>` +
+      langs.map(l => `<button class="btn btn-sm btn-ghost" onclick="filterByLang('${l}')" id="lf-${l}">${l}</button>`).join('');
   }
 }
 
-window.homeFilterByLang = function(lang) {
-  document.querySelectorAll('[id^="hlf-"]').forEach(b => b.classList.remove('active'));
-  document.getElementById(lang ? `hlf-${lang}` : 'hlf-all')?.classList.add('active');
-  const grid = document.getElementById('home-repos');
+window.filterByLang = function(lang) {
+  document.querySelectorAll('[id^="lf-"]').forEach(b => b.classList.remove('active'));
+  document.getElementById(lang ? `lf-${lang}` : 'lf-all')?.classList.add('active');
+  const grid = document.getElementById('projects-grid');
   if (!grid) return;
   const filtered = lang ? allRepos.filter(r => r.language === lang) : allRepos;
   grid.innerHTML = filtered.map(r => repoCardHTML(r)).join('');
