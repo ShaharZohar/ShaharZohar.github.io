@@ -68,7 +68,6 @@ async function loadAndRenderAll() {
     console.log('[portfolio] allRepos after filter:', allRepos.length);
     renderHomeFeatured();
     renderArticlesPage();
-    loadTechNews();
   } catch (e) {
     console.error('[portfolio] Load error:', e);
   }
@@ -183,7 +182,8 @@ function openArticle(art) {
   document.getElementById('art-date').textContent   = formatDate(art.date);
   document.getElementById('art-tags').innerHTML     = (art.tags || []).map(t => `<span class="tag ${tagClass(t)}">${t}</span>`).join('');
   document.getElementById('art-body').innerHTML     = art.content || '';
-  document.getElementById('art-back').onclick       = () => showPage('articles');
+  const backBtn = document.getElementById('art-back');
+  if (backBtn) { backBtn.style.display = allArticles.length ? '' : 'none'; backBtn.onclick = () => showPage('articles'); }
   location.hash = `/article/${art.slug || art.id}`;
   // Reading time
   const words = (art.content || '').replace(/<[^>]+>/g, '').split(/\s+/).length;
@@ -241,91 +241,6 @@ function setupSearch() {
     if (!e.target.closest('#search-row')) dd.style.display = 'none';
   });
 }
-
-// ── TECH NEWS (RSS feeds via rss2json) ───────────────────────
-const NEWS_FEEDS = [
-  { url: 'https://androidauthority.com/feed/', label: 'android', source: 'Android Authority' },
-  { url: 'https://android-developers.googleblog.com/atom.xml', label: 'android', source: 'Android Dev Blog' },
-  { url: 'https://blog.jetbrains.com/kotlin/feed/', label: 'kotlin', source: 'Kotlin Blog' },
-  { url: 'https://hnrss.org/frontpage', label: 'ai', source: 'Hacker News' },
-];
-
-async function loadTechNews() {
-  const grid = document.getElementById('news-grid');
-  if (!grid) return;
-
-  grid.innerHTML = `<div style="grid-column:1/-1;text-align:center;padding:2.5rem;color:var(--text3);font-family:var(--mono);font-size:.78rem">
-    <div class="spinner" style="margin:0 auto .75rem"></div>Fetching latest tech news…
-  </div>`;
-
-  try {
-    const results = await Promise.allSettled(
-      NEWS_FEEDS.map(f =>
-        fetch(`https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(f.url)}&count=4`)
-          .then(r => r.json())
-          .then(d => (d.items || []).map(item => ({
-            title: item.title,
-            link:  item.link,
-            source: f.source,
-            label: f.label,
-            date:  item.pubDate
-          })))
-      )
-    );
-
-    const items = results
-      .flatMap(r => r.status === 'fulfilled' ? r.value : [])
-      .sort((a, b) => new Date(b.date) - new Date(a.date))
-      .slice(0, 9);
-
-    if (!items.length) throw new Error('no items');
-    renderNews(items);
-  } catch {
-    grid.innerHTML = newsLinks();
-  }
-}
-
-window.setNewsFilter = function(f) {
-  document.querySelectorAll('.news-ft').forEach(b => {
-    const on = (f === 'all' && b.textContent.trim() === 'All') || b.textContent.toLowerCase().trim() === f || (f==='ai' && b.textContent.trim()==='AI / Dev');
-    b.style.borderColor = on ? 'var(--accent)' : 'var(--border)';
-    b.style.background  = on ? 'rgba(88,230,168,.1)' : 'transparent';
-    b.style.color       = on ? 'var(--accent)' : 'var(--text3)';
-  });
-  const all = Array.from(document.querySelectorAll('.news-card'));
-  all.forEach(c => c.style.display = (f === 'all' || c.dataset.label === f) ? '' : 'none');
-};
-
-function renderNews(items) {
-  const grid = document.getElementById('news-grid');
-  if (!grid) return;
-  const tagMap = { android: ['rgba(88,230,168,.1)','var(--accent)','rgba(88,230,168,.25)'], kotlin: ['rgba(167,139,250,.1)','var(--accent2)','rgba(167,139,250,.25)'], ai: ['rgba(56,189,248,.1)','#38bdf8','rgba(56,189,248,.25)'] };
-  grid.innerHTML = items.map(n => {
-    const [bg,col,br] = tagMap[n.label] || tagMap.ai;
-    const ago = (() => { try { const s=(Date.now()-new Date(n.date))/1000; if(s<86400) return Math.floor(s/3600)+'h ago'; return Math.floor(s/86400)+'d ago'; } catch{ return ''; } })();
-    return `<a href="${n.link}" target="_blank" rel="noopener" class="news-card" data-label="${n.label}"
-      onmouseover="this.style.borderColor='${col}'" onmouseout="this.style.borderColor='var(--border)'">
-      <div class="news-meta">
-        <span style="background:${bg};color:${col};border:1px solid ${br};padding:.1rem .4rem;border-radius:3px">${n.label.toUpperCase()}</span>
-        <span style="color:var(--text3)">${n.source}</span>
-        <span style="margin-left:auto;color:var(--text3)">${ago}</span>
-      </div>
-      <div class="news-title">${n.title}</div>
-    </a>`;
-  }).join('');
-}
-
-function newsLinks() {
-  return `<div style="grid-column:1/-1;padding:1.5rem;text-align:center">
-    <div style="font-family:var(--mono);font-size:.72rem;color:var(--text3);margin-bottom:1rem">Browse sources directly:</div>
-    <div style="display:flex;gap:.6rem;justify-content:center;flex-wrap:wrap">
-      <a href="https://android-developers.googleblog.com" target="_blank" class="btn btn-sm btn-ghost">Android Dev Blog ↗</a>
-      <a href="https://blog.jetbrains.com/kotlin/" target="_blank" class="btn btn-sm btn-ghost">Kotlin Blog ↗</a>
-      <a href="https://www.androidauthority.com" target="_blank" class="btn btn-sm btn-ghost">Android Authority ↗</a>
-    </div>
-  </div>`;
-}
-
 // ── CONTACT FORM ─────────────────────────────────────────────
 window.sendContactForm = function() {
   const name  = document.getElementById('cf-name')?.value.trim()  || '';
@@ -371,9 +286,10 @@ function articleCardHTML(a) {
 function repoCardHTML(r) {
   const color = langColor(r.language);
   const topics = (r.topics || []).slice(0,3).map(t=>`<span class="tag tag-default">${t}</span>`).join('');
+  const desc = r.description ? '<p class="proj-desc">' + r.description + '</p>' : '';
   return `<div class="proj-card fi ${r.pinned ? 'proj-pinned':''}" onclick="window.open('${r.html_url}','_blank')">
     <div class="proj-name">${r.name}${r.pinned ? ' <span class="badge badge-purple" style="margin-left:.4rem">Pinned</span>':''}</div>
-    ${r.description ? `<p class="proj-desc">${r.description}</p>` : ''}
+    ${desc}
     ${topics ? `<div style="display:flex;gap:.3rem;flex-wrap:wrap">${topics}</div>` : ''}
     <div class="proj-footer">
       ${r.language ? `<span class="lang-dot" style="background:${color}"></span><span>${r.language}</span>` : ''}

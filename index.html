@@ -120,29 +120,6 @@
   </footer>
 </div>
 
-<!-- ══════════ TECH NEWS (global, always visible at bottom) ══════════ -->
-  <div class="section-bg">
-    <div class="page-wrap">
-      <div class="section-header" style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:.75rem">
-        <div>
-          <p class="accent-label">// live feed</p>
-          <h2>Tech &amp; Android News</h2>
-        </div>
-        <div style="display:flex;gap:.4rem;flex-wrap:wrap">
-          <button class="news-ft btn btn-sm btn-ghost" style="border-color:var(--accent);background:rgba(88,230,168,.1);color:var(--accent)" onclick="setNewsFilter('all')">All</button>
-          <button class="news-ft btn btn-sm btn-ghost" onclick="setNewsFilter('android')">Android</button>
-          <button class="news-ft btn btn-sm btn-ghost" onclick="setNewsFilter('kotlin')">Kotlin</button>
-          <button class="news-ft btn btn-sm btn-ghost" onclick="setNewsFilter('ai')">AI / Dev</button>
-        </div>
-      </div>
-      <div class="news-grid" id="news-grid">
-        <div style="grid-column:1/-1;text-align:center;padding:2.5rem;color:var(--text3);font-family:var(--mono);font-size:.78rem">
-          <span class="spinner" style="display:block;margin:0 auto .75rem"></span>Fetching latest news…
-        </div>
-      </div>
-      <p style="font-family:var(--mono);font-size:.62rem;color:var(--text3);margin-top:.75rem">Sources: Android Dev Blog · Android Authority · Kotlin Blog · Hacker News · The Verge</p>
-    </div>
-  </div>
 
 <!-- ══════════ ARTICLES ═══════════════════════════════════════ -->
 <div id="page-articles" class="page">
@@ -249,24 +226,28 @@
 
 <!-- ══════════ CONTACT ═══════════════════════════════════════ -->
 <div id="page-contact" class="page">
-  <div class="page-wrap" style="padding-top:3rem;padding-bottom:4rem">
+  <div class="page-wrap" style="padding-top:3rem;padding-bottom:4rem;max-width:860px">
     <p class="accent-label">// get in touch</p>
-    <h2 style="font-size:clamp(1.75rem,4vw,2.5rem);margin-bottom:.5rem">Let's Talk</h2>
-    <p style="margin-bottom:3rem">Senior Full Stack &amp; Android developer with 11 years at enterprise scale.</p>
-    <div class="contact-grid">
-      <div>
-        <a class="contact-link" href="mailto:codeninjaa@gmail.com"><span class="icon">✉</span>codeninjaa@gmail.com</a>
-        <a class="contact-link" href="tel:+972587883005"><span class="icon">📞</span>+972-587-883-005</a>
-        <a class="contact-link" href="https://www.linkedin.com/in/shahar-zohar-b8096649/" target="_blank"><span class="icon">💼</span>LinkedIn Profile</a>
-        <a class="contact-link" href="https://github.com/ShaharZohar" target="_blank"><span class="icon">🐙</span>GitHub Profile</a>
+    <h2 style="font-size:clamp(1.75rem,4vw,2.5rem);margin-bottom:.4rem">Let's Talk</h2>
+    <p style="margin-bottom:2.5rem;color:var(--text2)">Open to interesting projects, collaborations, and conversations.</p>
+
+    <!-- Contact links row -->
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:.75rem;margin-bottom:2.5rem">
+      <a class="contact-link" href="mailto:codeninjaa@gmail.com"><span class="icon">✉</span>codeninjaa@gmail.com</a>
+      <a class="contact-link" href="tel:+972587883005"><span class="icon">📞</span>+972-587-883-005</a>
+      <a class="contact-link" href="https://www.linkedin.com/in/shahar-zohar-b8096649/" target="_blank"><span class="icon">💼</span>LinkedIn</a>
+      <a class="contact-link" href="https://github.com/ShaharZohar" target="_blank"><span class="icon">🐙</span>GitHub</a>
+    </div>
+
+    <!-- Message form -->
+    <div style="background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:2rem">
+      <div id="cf-msg" style="display:none"></div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-bottom:1rem">
+        <div class="input-group"><label>Name</label><input id="cf-name" class="input" type="text" placeholder="Your name"></div>
+        <div class="input-group"><label>Email</label><input id="cf-email" class="input" type="email" placeholder="your@email.com"></div>
       </div>
-      <div style="background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:1.75rem">
-        <div id="cf-msg" style="display:none"></div>
-        <div class="input-group" style="margin-bottom:1rem"><label>Name</label><input id="cf-name" class="input" type="text" placeholder="Your name"></div>
-        <div class="input-group" style="margin-bottom:1rem"><label>Email</label><input id="cf-email" class="input" type="email" placeholder="your@email.com"></div>
-        <div class="input-group" style="margin-bottom:1.25rem"><label>Message</label><textarea id="cf-body" class="textarea" rows="4"></textarea></div>
-        <button id="cf-send" class="btn btn-primary" style="width:100%;justify-content:center" onclick="sendContactForm()">Send Message →</button>
-      </div>
+      <div class="input-group" style="margin-bottom:1.25rem"><label>Message</label><textarea id="cf-body" class="textarea" rows="4" placeholder="What's on your mind?"></textarea></div>
+      <button id="cf-send" class="btn btn-primary" style="width:100%;justify-content:center" onclick="sendContactForm()">Send Message →</button>
     </div>
   </div>
 </div>

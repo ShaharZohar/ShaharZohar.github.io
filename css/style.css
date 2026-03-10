@@ -13,7 +13,7 @@
   --surface:  #0d1117;
   --surface2: #161b22;
   --border:   rgba(255,255,255,.07);
-  --text:     #e6edf3;
+  --text:     #ffffff;
   --text2:    #8b949e;
   --text3:    #484f58;
   --accent:   #58e6a8;
@@ -179,7 +179,7 @@ pre  { font-family: var(--mono); background: var(--surface2); padding: 1.25rem; 
 .nbtn {
   background: none;
   border: none;
-  color: var(--text3);
+  color: var(--text2);
   padding: .3rem .65rem;
   border-radius: 6px;
   font-size: .8rem;
@@ -188,11 +188,11 @@ pre  { font-family: var(--mono); background: var(--surface2); padding: 1.25rem; 
   transition: all .15s;
   white-space: nowrap;
 }
-.nbtn:hover    { color: var(--text); }
+.nbtn:hover    { color: #ffffff; }
 .nbtn.active   { color: var(--accent); background: rgba(88,230,168,.08); }
 .nav-ext {
   font-size: .78rem;
-  color: var(--text3);
+  color: var(--text2);
   padding: .3rem .6rem;
   border-radius: 6px;
   transition: color .15s;
@@ -450,8 +450,8 @@ pre  { font-family: var(--mono); background: var(--surface2); padding: 1.25rem; 
 .exp-desc { font-size: .82rem; color: var(--text2); font-weight: 300; line-height: 1.6; }
 
 /* ── CONTACT ─────────────────────────────────────────────────── */
-.contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 3.5rem; align-items: start; }
-.contact-link { display: flex; align-items: center; gap: .75rem; color: var(--text2); text-decoration: none; font-size: .88rem; transition: color .15s; padding: .5rem 0; }
+.contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2.5rem; align-items: start; }
+.contact-link { display: flex; align-items: center; gap: .75rem; color: var(--text); text-decoration: none; font-size: .9rem; font-weight: 500; transition: color .15s; padding: .6rem 0; border-bottom: 1px solid var(--border); }
 .contact-link:hover { color: var(--accent); }
 .contact-link .icon { width: 36px; height: 36px; background: var(--surface2); border: 1px solid var(--border); border-radius: 8px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
 
