@@ -50,13 +50,15 @@ async function loadAndRenderAll() {
     let arts = [];
     let reposCfg = { hidden: new Set(), pinned: new Set() };
     try {
-      [arts, reposCfg] = await Promise.all([
-        getPublishedArticles(),
-        getReposConfig().catch(() => ({ hidden: new Set(), pinned: new Set() }))
-      ]);
+      arts = await getPublishedArticles();
       console.log('[portfolio] Articles fetched:', arts.length);
     } catch (e) {
-      console.error('[portfolio] Firestore fetch failed:', e);
+      console.error('[portfolio] Articles fetch failed:', e.code, e.message);
+    }
+    try {
+      reposCfg = await getReposConfig();
+    } catch (e) {
+      console.warn('[portfolio] ReposConfig fetch failed (using defaults):', e.code, e.message);
     }
 
     allArticles = arts;

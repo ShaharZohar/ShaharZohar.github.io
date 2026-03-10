@@ -14,7 +14,7 @@
   --surface2: #161b22;
   --border:   rgba(255,255,255,.07);
   --text:     #ffffff;
-  --text2:    #8b949e;
+  --text2:    #c9d1d9;
   --text3:    #484f58;
   --accent:   #58e6a8;
   --accent2:  #a78bfa;
@@ -46,7 +46,7 @@ body {
 
 /* ── TYPOGRAPHY ─────────────────────────────────────────────── */
 h1, h2, h3, h4, h5, h6 { font-family: var(--font); font-weight: 800; line-height: 1.2; letter-spacing: -.02em; }
-p    { color: var(--text2); font-weight: 300; line-height: 1.75; }
+p    { color: var(--text); font-weight: 300; line-height: 1.75; }
 a    { color: var(--accent); text-decoration: none; }
 code { font-family: var(--mono); font-size: .88em; background: var(--surface2); padding: .15em .4em; border-radius: 4px; }
 pre  { font-family: var(--mono); background: var(--surface2); padding: 1.25rem; border-radius: var(--radius); overflow-x: auto; border: 1px solid var(--border); }
@@ -312,7 +312,7 @@ pre  { font-family: var(--mono); background: var(--surface2); padding: 1.25rem; 
 }
 .proj-card:hover          { border-color: rgba(88,230,168,.25); transform: translateY(-2px); }
 .proj-card .proj-name     { font-weight: 700; font-size: .95rem; color: var(--text); }
-.proj-card .proj-desc     { font-size: .82rem; color: var(--text2); font-weight: 300; line-height: 1.55; flex: 1; }
+.proj-card .proj-desc     { font-size: .82rem; color: var(--text); font-weight: 300; line-height: 1.55; flex: 1; }
 .proj-card .proj-footer   { display: flex; align-items: center; gap: 1rem; font-family: var(--mono); font-size: .65rem; color: var(--text3); margin-top: auto; }
 .proj-card .lang-dot      { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
 .proj-card .proj-stars    { display: flex; align-items: center; gap: .25rem; }
@@ -379,7 +379,7 @@ pre  { font-family: var(--mono); background: var(--surface2); padding: 1.25rem; 
 .hero-name  { font-size: clamp(3rem, 6vw, 5.5rem); font-weight: 800; letter-spacing: -.04em; line-height: 1; margin-bottom: .5rem; }
 .hero-name span { color: var(--accent); }
 .hero-title { font-family: var(--mono); font-size: .85rem; color: var(--accent); letter-spacing: .05em; margin-bottom: 1rem; }
-.hero-bio   { font-size: .95rem; color: var(--text2); font-weight: 300; line-height: 1.8; margin-bottom: 1.75rem; max-width: 520px; }
+.hero-bio   { font-size: .95rem; color: var(--text); font-weight: 300; line-height: 1.8; margin-bottom: 1.75rem; max-width: 520px; }
 .hero-ctas  { display: flex; gap: .75rem; flex-wrap: wrap; }
 .hero-stats { display: flex; gap: 2rem; margin-top: 2rem; }
 .hero-stat .num  { font-size: 1.6rem; font-weight: 800; color: var(--text); letter-spacing: -.02em; }
