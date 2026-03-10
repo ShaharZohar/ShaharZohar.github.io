@@ -123,7 +123,7 @@
 
 <!-- ══════════ ARTICLES ═══════════════════════════════════════ -->
 <div id="page-articles" class="page">
-  <div class="page-wrap" style="padding-top:3rem;padding-bottom:4rem">
+  <div class="page-wrap" style="padding-top:3rem;padding-bottom:1.5rem">
     <div class="section-header">
       <p class="accent-label">// blog</p>
       <h2>Articles <span id="articles-count" style="font-size:1rem;font-weight:400;color:var(--text3);font-family:var(--mono)"></span></h2>
@@ -138,15 +138,28 @@
 
 <!-- ══════════ ARTICLE READER ══════════════════════════════════ -->
 <div id="page-article" class="page">
-  <div class="page-wrap" style="padding-top:1.25rem;padding-bottom:4rem;max-width:800px">
-    <button id="art-back" class="btn btn-ghost btn-sm" style="margin-bottom:.75rem">← Back to Articles</button>
-    <div id="art-tags" style="display:flex;gap:.4rem;flex-wrap:wrap;margin-bottom:1rem"></div>
-    <h1 id="art-title" style="font-size:clamp(1.75rem,4vw,2.75rem);letter-spacing:-.03em;line-height:1.15;margin-bottom:1rem"></h1>
-    <div style="display:flex;align-items:center;gap:1rem;font-family:var(--mono);font-size:.72rem;color:var(--text3);margin-bottom:2.5rem;padding-bottom:1.5rem;border-bottom:1px solid var(--border)">
-      <span id="art-date"></span>
-      <span id="art-readtime"></span>
+  <!-- Reading progress bar -->
+  <div id="art-progress" style="position:fixed;top:var(--nav-h);left:0;height:2px;width:0%;background:var(--accent);z-index:500;transition:width .1s linear;box-shadow:0 0 8px var(--accent)"></div>
+
+  <!-- Article hero header -->
+  <div id="art-header" style="background:linear-gradient(180deg,rgba(88,230,168,.06) 0%,transparent 100%);border-bottom:1px solid var(--border);padding:2.5rem 0 2rem">
+    <div style="max-width:780px;margin:0 auto;padding:0 2rem">
+      <button id="art-back" class="btn btn-ghost btn-sm" style="margin-bottom:1.5rem;opacity:.8">← Back to Articles</button>
+      <div id="art-tags" style="display:flex;gap:.4rem;flex-wrap:wrap;margin-bottom:1rem"></div>
+      <h1 id="art-title" style="font-size:clamp(1.8rem,4.5vw,3rem);letter-spacing:-.03em;line-height:1.12;margin-bottom:1.25rem;color:var(--text)"></h1>
+      <div style="display:flex;align-items:center;gap:1.25rem;font-family:var(--mono);font-size:.72rem;color:var(--text3)">
+        <span id="art-date"></span>
+        <span style="color:var(--border)">·</span>
+        <span id="art-readtime"></span>
+      </div>
     </div>
-    <div id="art-body" class="article-body"></div>
+  </div>
+
+  <!-- Article body -->
+  <div id="art-scroll" style="overflow-y:auto">
+    <div style="max-width:780px;margin:0 auto;padding:2.5rem 2rem 5rem">
+      <div id="art-body" class="article-body"></div>
+    </div>
   </div>
 </div>
 
@@ -226,7 +239,7 @@
 
 <!-- ══════════ CONTACT ═══════════════════════════════════════ -->
 <div id="page-contact" class="page">
-  <div class="page-wrap" style="padding-top:3rem;padding-bottom:4rem;max-width:860px">
+  <div class="page-wrap" style="padding-top:3rem;padding-bottom:4rem">
     <p class="accent-label">// get in touch</p>
     <h2 style="font-size:clamp(1.75rem,4vw,2.5rem);margin-bottom:.4rem">Let's Talk</h2>
     <p style="margin-bottom:2.5rem;color:var(--text2)">Open to interesting projects, collaborations, and conversations.</p>

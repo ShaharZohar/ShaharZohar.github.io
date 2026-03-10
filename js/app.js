@@ -184,14 +184,39 @@ function openArticle(art) {
   document.getElementById('art-date').textContent   = formatDate(art.date);
   document.getElementById('art-tags').innerHTML     = (art.tags || []).map(t => `<span class="tag ${tagClass(t)}">${t}</span>`).join('');
   document.getElementById('art-body').innerHTML     = art.content || '';
+
   const backBtn = document.getElementById('art-back');
-  if (backBtn) { backBtn.style.display = allArticles.length ? '' : 'none'; backBtn.onclick = () => showPage('articles'); }
-  location.hash = `/article/${art.slug || art.id}`;
+  if (backBtn) {
+    backBtn.style.display = allArticles.length ? '' : 'none';
+    backBtn.onclick = () => showPage('articles');
+  }
+
   // Reading time
   const words = (art.content || '').replace(/<[^>]+>/g, '').split(/\s+/).length;
   const mins  = Math.max(1, Math.round(words / 200));
   const rt    = document.getElementById('art-readtime');
   if (rt) rt.textContent = `${mins} min read`;
+
+  // Scroll to top of article
+  const scroller = document.getElementById('art-scroll');
+  if (scroller) scroller.scrollTop = 0;
+  window.scrollTo(0, 0);
+
+  // Reading progress bar
+  const bar = document.getElementById('art-progress');
+  if (bar && scroller) {
+    bar.style.width = '0%';
+    const updateProgress = () => {
+      const scrollable = scroller.scrollHeight - scroller.clientHeight;
+      const pct = scrollable > 0 ? Math.min(100, (scroller.scrollTop / scrollable) * 100) : 100;
+      bar.style.width = pct + '%';
+    };
+    scroller.removeEventListener('scroll', scroller._progressFn);
+    scroller._progressFn = updateProgress;
+    scroller.addEventListener('scroll', updateProgress);
+  }
+
+  location.hash = `/article/${art.slug || art.id}`;
 }
 
 async function openArticleBySlug(slug) {
