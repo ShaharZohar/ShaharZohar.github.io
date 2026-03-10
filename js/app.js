@@ -373,7 +373,7 @@ function repoCardHTML(r) {
   const topics = (r.topics || []).slice(0,3).map(t=>`<span class="tag tag-default">${t}</span>`).join('');
   return `<div class="proj-card fi ${r.pinned ? 'proj-pinned':''}" onclick="window.open('${r.html_url}','_blank')">
     <div class="proj-name">${r.name}${r.pinned ? ' <span class="badge badge-purple" style="margin-left:.4rem">Pinned</span>':''}</div>
-    <p class="proj-desc">${r.description || 'No description.'}</p>
+    ${r.description ? `<p class="proj-desc">${r.description}</p>` : ''}
     ${topics ? `<div style="display:flex;gap:.3rem;flex-wrap:wrap">${topics}</div>` : ''}
     <div class="proj-footer">
       ${r.language ? `<span class="lang-dot" style="background:${color}"></span><span>${r.language}</span>` : ''}
