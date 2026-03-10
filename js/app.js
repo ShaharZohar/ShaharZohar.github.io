@@ -83,22 +83,46 @@ window.showPage = showPage;
 
 // ── HOME FEATURED ────────────────────────────────────────────
 function renderHomeFeatured() {
-  // Featured articles (latest 3)
+  // Articles (latest 3)
   const el = document.getElementById('home-articles');
-  if (!el) return;
-  const featured = allArticles.slice(0, 3);
-  if (!featured.length) { el.innerHTML = '<p class="mono" style="color:var(--text3);font-size:.8rem">No articles yet.</p>'; return; }
-  el.innerHTML = featured.map(a => articleCardHTML(a)).join('');
-  el.querySelectorAll('.art-card').forEach((c, i) => {
-    c.addEventListener('click', () => openArticle(featured[i]));
-  });
+  if (el) {
+    const featured = allArticles.slice(0, 3);
+    if (!featured.length) { el.innerHTML = '<p class="mono" style="color:var(--text3);font-size:.8rem">No articles yet.</p>'; }
+    else {
+      el.innerHTML = featured.map(a => articleCardHTML(a)).join('');
+      el.querySelectorAll('.art-card').forEach((c, i) => {
+        c.addEventListener('click', () => openArticle(featured[i]));
+      });
+    }
+  }
 
-  // Featured repos (latest 4)
+  // Full Projects section with language filters
   const rel = document.getElementById('home-repos');
   if (!rel) return;
-  const featuredRepos = allRepos.slice(0, 4);
-  rel.innerHTML = featuredRepos.map(r => repoCardHTML(r)).join('');
+  if (!allRepos.length) {
+    rel.innerHTML = emptyState('No repositories found', 'Public repositories will appear here automatically.');
+    return;
+  }
+  rel.innerHTML = allRepos.map(r => repoCardHTML(r)).join('');
+  const count = document.getElementById('home-projects-count');
+  if (count) count.textContent = allRepos.length;
+
+  const langs = [...new Set(allRepos.map(r => r.language).filter(Boolean))];
+  const lf = document.getElementById('home-lang-filters');
+  if (lf) {
+    lf.innerHTML = `<button class="btn btn-sm btn-ghost active" onclick="homeFilterByLang(null)" id="hlf-all">All</button>` +
+      langs.map(l => `<button class="btn btn-sm btn-ghost" onclick="homeFilterByLang('${l}')" id="hlf-${l}">${l}</button>`).join('');
+  }
 }
+
+window.homeFilterByLang = function(lang) {
+  document.querySelectorAll('[id^="hlf-"]').forEach(b => b.classList.remove('active'));
+  document.getElementById(lang ? \`hlf-\${lang}\` : 'hlf-all')?.classList.add('active');
+  const grid = document.getElementById('home-repos');
+  if (!grid) return;
+  const filtered = lang ? allRepos.filter(r => r.language === lang) : allRepos;
+  grid.innerHTML = filtered.map(r => repoCardHTML(r)).join('');
+};
 
 // ── ARTICLES PAGE ────────────────────────────────────────────
 function renderArticlesPage() {
